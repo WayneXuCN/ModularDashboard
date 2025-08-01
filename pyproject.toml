@@ -1,0 +1,134 @@
+[build-system]
+requires = ["hatchling", "briefcase"]
+build-backend = "hatchling.build"
+
+[project]
+name = "research-dashboard"
+version = "0.0.1"
+description = "本地化、模块化、可扩展信息聚合仪表盘"
+requires-python = ">=3.12"
+readme = "README.md"
+license = { file = "LICENSE" }
+authors = [{ name = "Wenjie Xu", email = "wenjie.xu.cn@outlook.com" }]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+]
+dependencies = [
+    "nicegui",
+    "requests",
+    "feedparser",
+    "arxiv",
+    "APScheduler",
+    "structlog",
+    "pillow",
+    "macholib",
+    "pyinstaller",
+    "briefcase",
+    "mkdocs-material",
+]
+
+[project.optional-dependencies]
+dev = ["pytest", "pytest-asyncio", "black", "flake8", "mypy"]
+packaging = ["briefcase"]
+
+[project.scripts]
+research-dashboard = "research_dashboard.__main__:main"
+research-dashboard-docs = "scripts.generate_docs:main"
+
+[project.urls]
+Homepage = "https://github.com/WayneXuCN/ResearchDashboard"
+Repository = "https://github.com/WayneXuCN/ResearchDashboard"
+Issues = "https://github.com/WayneXuCN/ResearchDashboard/issues"
+
+[tool.briefcase]
+project_name = "Research Dashboard"
+bundle = "com.example"
+version = "0.0.1"
+url = "https://github.com/WayneXuCN/ResearchDashboard"
+author = "Research Dashboard Contributors"
+author_email = "example@example.com"
+
+[tool.briefcase.app.research-dashboard]
+formal_name = "Research Dashboard"
+description = "面向科研人员的本地化、模块化、可扩展信息聚合仪表盘"
+icon = "src/research_dashboard/assets/app.iconset/icon_256x256.png"
+sources = ["src/research_dashboard"]
+requires = [
+    "nicegui",
+    "requests",
+    "feedparser",
+    "arxiv",
+    "APScheduler",
+    "structlog",
+    "pillow",
+]
+
+[tool.briefcase.app.research-dashboard.macos]
+requires = []
+
+[tool.briefcase.app.research-dashboard.linux]
+requires = []
+
+[tool.briefcase.app.research-dashboard.windows]
+requires = []
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/research_dashboard"]
+
+[tool.hatch.build]
+include = [
+    "src/research_dashboard/**/*",
+    "README.md",
+    "LICENSE",
+    "scripts/*",
+    "docs/**/*",
+]
+exclude = ["tests/", "dist/", "*.pyc", "__pycache__/"]
+
+[tool.ruff]
+# Basic settings
+line-length = 88
+target-version = "py312"
+# Excluded files and directories
+exclude = [
+    ".eggs",
+    "*.egg-info",
+    ".git",
+    ".hg",
+    ".mypy_cache",
+    "__pycache__",
+    ".tox",
+    ".venv",
+    "build",
+    "dist",
+]
+
+[tool.ruff.lint]
+# Enabled rule sets
+select = [
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # Pyflakes (syntax error checking)
+    "I",   # isort (import sorting)
+    "B",   # flake8-bugbear (common bug checking)
+    "C4",  # flake8-comprehensions (comprehension optimizations)
+    "UP",  # pyupgrade (Python version upgrade suggestions)
+    "SIM", # flake8-simplify (code simplification)
+    "Q",   # flake8-quotes (quote checking)
+]
+# Ignored rules
+ignore = [
+    "E501", # Line length (handled by formatter)
+    "B008", # Mutable default values in function arguments (sometimes needed)
+]
+
+[tool.ruff.format]
+quote-style = "double"            # Use double quotes
+indent-style = "space"            # Use space indentation
+skip-magic-trailing-comma = false # Do not skip magic trailing comma
+line-ending = "auto"              # Use automatic line ending

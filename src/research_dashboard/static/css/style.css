@@ -1,0 +1,21 @@
+/* Custom styles for Research Dashboard */
+
+/* Card hover effects */
+.card-hover {
+  transition: all 0.3s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Link styling */
+.hover-underline:hover {
+  text-decoration: underline;
+}
+
+/* Dark mode adjustments */
+.dark .card-hover:hover {
+  box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+}

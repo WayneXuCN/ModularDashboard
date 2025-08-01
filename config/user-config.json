@@ -1,0 +1,35 @@
+{
+  "version": "0.1.0",
+  "theme": "light",
+  "layout": {
+    "columns": 3,
+    "view": "grid",
+    "card_size": "medium"
+  },
+  "modules": [
+    {
+      "id": "arxiv",
+      "enabled": true,
+      "position": 1,
+      "collapsed": false,
+      "refresh_interval": 3600,
+      "config": {}
+    },
+    {
+      "id": "github",
+      "enabled": true,
+      "position": 2,
+      "collapsed": false,
+      "refresh_interval": 3600,
+      "config": {}
+    },
+    {
+      "id": "rss",
+      "enabled": true,
+      "position": 3,
+      "collapsed": false,
+      "refresh_interval": 3600,
+      "config": {}
+    }
+  ]
+}
