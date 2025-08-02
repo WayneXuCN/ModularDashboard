@@ -2,6 +2,9 @@
 __pycache__/
 *.py[codz]
 *$py.class
+*.dist-info/
+*.egg-info/
+*.egg-link
 
 # C extensions
 *.so
@@ -210,9 +213,6 @@ __marimo__/
 .AppleDB
 .AppleDesktop
 .LSOverride
-
-# Research Dashboard specific
-config/
 
 # log
 logs/

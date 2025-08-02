@@ -34,6 +34,21 @@ uv run -m research_dashboard
 uv run -m research_dashboard --native
 ```
 
+### 打包应用
+
+```bash
+# 为 macOS 打包应用（使用 Briefcase - 推荐）
+uv run python scripts/package_macos.py
+
+# 为 macOS 打包应用（手动方式）
+uv run python scripts/package_macos.py --method manual
+
+# 为 macOS 打包发布版本（不包含开发工具）
+uv run python scripts/package_macos.py --release
+```
+
+打包完成后，应用程序将位于 `dist/` 目录中。对于 macOS，将生成一个 `.app` 文件，用户可以直接运行或拖拽到 Applications 文件夹中安装。
+
 ## 开发指南
 
 ### 项目结构
@@ -50,7 +65,7 @@ research-dashboard/
 │   └── research_dashboard/     # 主要源代码
 │       ├── __init__.py
 │       ├── __main__.py         # 应用入口点
-│       ├── main.py             # 主应用逻辑
+│       ├── app.py              # 主应用逻辑
 │       │
 │       ├── config/             # 配置管理
 │       ├── modules/            # 模块系统
@@ -65,6 +80,17 @@ research-dashboard/
 ├── tests/                      # 测试代码（计划中）
 ├── docs/                       # 文档源文件
 └── dist/                       # 编译输出
+```
+
+### 应用图标
+
+应用图标位于 `src/research_dashboard/assets/app.iconset/` 目录中。该目录包含所有需要的图标尺寸，符合 macOS 应用图标要求。
+
+如需重新生成图标集，请使用以下命令：
+
+```bash
+# 从源图像生成所有图标尺寸
+uv run python scripts/generate_app_icons.py src/research_dashboard/assets/img/favicon.ico src/research_dashboard/assets/app.iconset
 ```
 
 ### 开发环境设置

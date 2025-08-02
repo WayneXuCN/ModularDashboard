@@ -82,7 +82,7 @@ uv run scripts/package.py
 
 ## 📁 项目结构
 
-```bash
+```
 research-dashboard/
 │
 ├── pyproject.toml             # uv + hatchling 配置
@@ -95,7 +95,7 @@ research-dashboard/
 │       │
 │       ├── __init__.py
 │       ├── __main__.py        # 入口：`python -m research_dashboard`
-│       ├── main.py            # 核心应用逻辑（NiceGUI 页面定义）
+│       ├── app.py             # 核心应用逻辑（NiceGUI 页面定义）
 │       │
 │       ├── config/
 │       │   ├── __init__.py
@@ -224,14 +224,14 @@ def get_module_class(module_id: str) -> type[Module]:
     return MODULE_REGISTRY.get(module_id)
 ```
 
-- ✅ 避免在 `main.py` 中硬编码导入
+- ✅ 避免在 `app.py` 中硬编码导入
 - ✅ 未来支持动态加载第三方模块（如从 `plugins/` 目录）
 
 ### 4. **入口文件**：`__main__.py`
 
 ```python
 # src/research_dashboard/__main__.py
-from .main import run_app
+from .app import run_app
 if __name__ == "__main__":
     run_app()
 ```

@@ -1,5 +1,5 @@
 [build-system]
-requires = ["hatchling", "briefcase"]
+requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
@@ -19,63 +19,33 @@ classifiers = [
     "Programming Language :: Python :: 3.12",
 ]
 dependencies = [
-    "nicegui",
-    "requests",
-    "feedparser",
-    "arxiv",
-    "APScheduler",
-    "structlog",
-    "pillow",
-    "macholib",
-    "pyinstaller",
-    "briefcase",
-    "mkdocs-material",
+    "nicegui>=2.0.0",
+    "requests>=2.25.0",
+    "beautifulsoup4>=4.9.0",
+    "lxml>=6.0.0",
+    "arxiv>=2.0.0",
+    "APScheduler>=3.0.0",
+    "structlog>=25.0.0",
+    "pillow>=11.0.0",
+    "macholib>=1.14.0",
+    "mkdocs-material>=9.0.0",
+    "loguru>=0.7.0",
+    "python-dotenv>=1.0.0",
+    "pywebview>=5.0",
 ]
 
 [project.optional-dependencies]
 dev = ["pytest", "pytest-asyncio", "black", "flake8", "mypy"]
-packaging = ["briefcase"]
 
 [project.scripts]
 research-dashboard = "research_dashboard.__main__:main"
 research-dashboard-docs = "scripts.generate_docs:main"
+research-dashboard-package-macos = "scripts.package_macos:main"
 
 [project.urls]
 Homepage = "https://github.com/WayneXuCN/ResearchDashboard"
 Repository = "https://github.com/WayneXuCN/ResearchDashboard"
 Issues = "https://github.com/WayneXuCN/ResearchDashboard/issues"
-
-[tool.briefcase]
-project_name = "Research Dashboard"
-bundle = "com.example"
-version = "0.0.1"
-url = "https://github.com/WayneXuCN/ResearchDashboard"
-author = "Research Dashboard Contributors"
-author_email = "example@example.com"
-
-[tool.briefcase.app.research-dashboard]
-formal_name = "Research Dashboard"
-description = "面向科研人员的本地化、模块化、可扩展信息聚合仪表盘"
-icon = "src/research_dashboard/assets/app.iconset/icon_256x256.png"
-sources = ["src/research_dashboard"]
-requires = [
-    "nicegui",
-    "requests",
-    "feedparser",
-    "arxiv",
-    "APScheduler",
-    "structlog",
-    "pillow",
-]
-
-[tool.briefcase.app.research-dashboard.macos]
-requires = []
-
-[tool.briefcase.app.research-dashboard.linux]
-requires = []
-
-[tool.briefcase.app.research-dashboard.windows]
-requires = []
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/research_dashboard"]
