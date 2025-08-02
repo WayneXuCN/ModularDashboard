@@ -1,6 +1,5 @@
 """Main application logic."""
 
-import argparse
 import os
 from typing import Any
 
@@ -9,7 +8,7 @@ from loguru import logger
 from nicegui import app, ui
 
 from .config.manager import load_config
-from .ui.dashboard import render_dashboard
+from .ui.dashboard import render_dashboard, render_module_detail
 
 
 def initialize_app(config: dict[str, Any]) -> None:
@@ -23,7 +22,7 @@ def initialize_app(config: dict[str, Any]) -> None:
     config : Dict[str, Any]
         The application configuration dictionary.
     """
-    logger.info(f"App config: {config}")
+    # logger.info(f"App config: {config}")
 
     # Add static files
     app.add_static_files("/static", "src/research_dashboard/static")
@@ -66,8 +65,18 @@ def run_app(native: bool = False) -> None:
         # Initialize the application
         initialize_app(config.__dict__)
 
-        # Setup the dashboard UI
-        render_dashboard(config)
+        # Setup main dashboard page
+        @ui.page("/")
+        def main_page():
+            config = load_config()
+            render_dashboard(config)
+
+        # Setup the dashboard UI routes
+        @ui.page("/module/{module_id}")
+        def module_detail_page(module_id: str):
+            """Create a page for the module detail view."""
+            config = load_config()
+            render_module_detail(module_id, config)
 
         # Determine if we should enable auto-reload based on environment
         # Default to production environment if not specified
@@ -80,7 +89,6 @@ def run_app(native: bool = False) -> None:
                 title="Dashboard",
                 native=True,
                 favicon="src/research_dashboard/assets/img/favicon.ico",
-                dark=None,
                 window_size=(1024, 786),
                 reload=reload_enabled,  # Enable auto-reload based on environment
             )
@@ -88,7 +96,6 @@ def run_app(native: bool = False) -> None:
             ui.run(
                 title="Dashboard",
                 favicon="src/research_dashboard/assets/img/favicon.ico",
-                dark=None,
                 reload=reload_enabled,  # Enable auto-reload based on environment
             )
     except Exception as e:
@@ -96,11 +103,4 @@ def run_app(native: bool = False) -> None:
         raise
 
 
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Research Dashboard")
-    parser.add_argument(
-        "--native", action="store_true", help="Run as native desktop app"
-    )
-    args = parser.parse_args()
-
-    run_app(native=args.native)
+run_app(native=False)  # Change to True for native desktop app
