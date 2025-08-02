@@ -1,7 +1,7 @@
 """Configuration schema definitions."""
 
-from typing import List, Dict, Optional
 from dataclasses import dataclass
+
 
 @dataclass
 class ModuleConfig:
@@ -10,7 +10,8 @@ class ModuleConfig:
     position: int
     collapsed: bool
     refresh_interval: int
-    config: Dict
+    config: dict
+
 
 @dataclass
 class LayoutConfig:
@@ -18,9 +19,10 @@ class LayoutConfig:
     view: str = "grid"  # "grid" | "list"
     card_size: str = "medium"
 
+
 @dataclass
 class AppConfig:
     version: str
     theme: str
     layout: LayoutConfig
-    modules: List[ModuleConfig]
+    modules: list[ModuleConfig]
