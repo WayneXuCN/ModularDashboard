@@ -1,19 +1,19 @@
-# 贡献指南
+# Contributing指南
 
-感谢您有兴趣为 Research Dashboard 做贡献！本指南将帮助您了解如何参与项目开发。
+感谢您有兴趣为 Research Dashboard 做Contributing！本指南将帮助您了解如何参与项目Development。
 
 ## 行为准则
 
 请遵守我们的行为准则，确保为所有人创造一个友好和包容的环境。
 
-## 开发环境设置
+## Development环境设置
 
 1. 在 GitHub 上 fork 仓库
 2. 本地克隆您的 fork
-3. 使用 `uv lock` 和 `uv sync` 安装依赖
+3. 使用 `uv lock` 和 `uv sync` Installation依赖
 4. 使用 `uv run -m research_dashboard.app` 运行应用程序
 
-## 贡献流程
+## Contributing流程
 
 1. Fork 仓库
 2. 创建功能分支
@@ -68,15 +68,15 @@ mkdocs serve
 4. 预期和实际行为（对于 bug）
 5. 系统信息（操作系统、Python 版本等）
 
-## 添加新模块
+## 添加新Modules
 
-要添加新模块：
+要添加新Modules：
 
-1. 创建继承自基础 `Module` 类的新模块类
+1. 创建继承自基础 `Module` 类的新Modules类
 2. 实现所有必需的方法
-3. 在 `src/research_dashboard/modules/registry.py` 中注册模块
-4. 在 `src/research_dashboard/assets/default-config.json` 中添加默认配置
-5. 在 docs 目录中记录模块
+3. 在 `src/research_dashboard/modules/registry.py` 中注册Modules
+4. 在 `src/research_dashboard/assets/default-config.json` 中添加默认Configuration
+5. 在 docs Table of Contents中记录Modules
 
 ## 代码审查
 
@@ -98,10 +98,10 @@ mkdocs serve
 
 ## 获得帮助
 
-如果您在贡献过程中需要帮助：
+如果您在Contributing过程中需要帮助：
 
 1. 查看现有文档
 2. 在 GitHub 上提交 issue
 3. 联系项目维护人员
 
-感谢您对 Research Dashboard 的贡献！
+感谢您对 Research Dashboard 的Contributing！

@@ -1,10 +1,10 @@
-# 模块基类
+# Modules基类
 
-`Module` 基类为 Research Dashboard 中的所有模块提供了基础。
+`Module` 基类为 Research Dashboard 中的所有Modules提供了基础。
 
-## 概述
+## Overview
 
-Research Dashboard 中的所有模块都继承自抽象的 `Module` 基类。这确保了一致的接口，并使得向系统添加新模块变得容易。
+Research Dashboard 中的所有Modules都继承自抽象的 `Module` 基类。这确保了一致的接口，并使得向系统添加新Modules变得容易。
 
 ## 类定义
 
@@ -12,35 +12,35 @@ Research Dashboard 中的所有模块都继承自抽象的 `Module` 基类。这
 class Module(ABC):
     def __init__(self, config: dict[str, Any] | None = None):
         """
-        使用可选配置初始化模块。
+        使用可选Configuration初始化Modules。
 
         参数:
-            config: 包含模块特定配置的可选字典
+            config: 包含Modules特定Configuration的可选字典
         """
         self.config = config or {}
 
     @property
     @abstractmethod
     def id(self) -> str:
-        """模块的唯一标识符。"""
+        """Modules的唯一标识符。"""
         pass
 
     @property
     @abstractmethod
     def name(self) -> str:
-        """模块的人类可读名称。"""
+        """Modules的人类可读名称。"""
         pass
 
     @property
     @abstractmethod
     def icon(self) -> str:
-        """模块的图标（例如，表情符号或 SVG 路径）。"""
+        """Modules的图标（例如，表情符号或 SVG 路径）。"""
         pass
 
     @property
     @abstractmethod
     def description(self) -> str:
-        """模块功能的描述。"""
+        """Modules功能的描述。"""
         pass
 
     @abstractmethod
@@ -62,46 +62,46 @@ class Module(ABC):
     @abstractmethod
     def render(self) -> None:
         """
-        使用 NiceGUI 组件渲染模块的 UI。
+        使用 NiceGUI 组件渲染Modules的 UI。
         """
         pass
 
     def render_detail(self) -> None:
         """
-        渲染模块的详细视图页面。
+        渲染Modules的详细视图页面。
         默认情况下，它显示与主视图相同的内容，
-        但模块可以覆盖此方法以提供更详细的展示。
+        但Modules可以覆盖此方法以提供更详细的展示。
         """
         self.render()
 ```
 
 ## 必需属性
 
-所有模块都必须实现以下属性：
+所有Modules都必须实现以下属性：
 
 ### id
 
-模块的唯一标识符。这应该是一个短小的、小写的、无空格的字符串。
+Modules的唯一标识符。这应该是一个短小的、小写的、无空格的字符串。
 
 ### name
 
-模块的人类可读名称。这将在 UI 中显示。
+Modules的人类可读名称。这将在 UI 中显示。
 
 ### icon
 
-模块的图标。这可以是一个表情符号或 SVG 路径。
+Modules的图标。这可以是一个表情符号或 SVG 路径。
 
 ### description
 
-模块功能的简要描述。这将在 UI 中显示。
+Modules功能的简要描述。这将在 UI 中显示。
 
 ## 必需方法
 
-所有模块都必须实现以下方法：
+所有Modules都必须实现以下方法：
 
 ### fetch
 
-从模块的数据源获取数据并返回标准化项目列表。
+从Modules的数据源获取数据并返回标准化项目列表。
 
 每个项目应该是一个包含以下键的字典：
 
@@ -114,19 +114,19 @@ class Module(ABC):
 
 ### render
 
-为仪表盘主视图渲染模块的 UI，使用 NiceGUI 组件。
+为仪表盘主视图渲染Modules的 UI，使用 NiceGUI 组件。
 
 ### render_detail
 
-为详细视图页面渲染模块的 UI。默认情况下，这会调用 `render()`，但模块可以覆盖此方法以提供更详细的展示。
+为详细视图页面渲染Modules的 UI。默认情况下，这会调用 `render()`，但Modules可以覆盖此方法以提供更详细的展示。
 
 ## 可选方法
 
-模块可以根据需要实现其他方法以满足其特定功能。
+Modules可以根据需要实现其他方法以满足其特定功能。
 
 ## 示例实现
 
-这是一个模块实现的最小示例：
+这是一个Modules实现的最小示例：
 
 ```python
 from typing import Any
@@ -140,7 +140,7 @@ class ExampleModule(Module):
 
     @property
     def name(self) -> str:
-        return "示例模块"
+        return "示例Modules"
 
     @property
     def icon(self) -> str:
@@ -148,7 +148,7 @@ class ExampleModule(Module):
 
     @property
     def description(self) -> str:
-        return "示例模块实现"
+        return "示例Modules实现"
 
     def fetch(self) -> list[dict[str, Any]]:
         return [
@@ -180,7 +180,7 @@ class ExampleModule(Module):
 
 ## 最佳实践
 
-在实现模块时：
+在实现Modules时：
 
 1. 使用 `fetch` 方法将数据获取与 UI 渲染分离
 2. 在 `fetch` 中实现缓存以避免过多的 API 调用

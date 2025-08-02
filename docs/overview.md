@@ -1,30 +1,45 @@
-# Welcome to Research Dashboard Documentation
+# 概述
 
-Research Dashboard is a localized, modular, and extensible information aggregation dashboard designed specifically for researchers. It provides a daily work portal that aggregates information from multiple sources like arXiv, GitHub, RSS feeds, and calendars through a highly customizable card-based layout.
+Research Dashboard 是一个为研究人员设计的可定制信息聚合仪表盘。它提供了一个统一的界面来查看和管理来自多个来源的信息，包括 ArXiv 论文、GitHub 活动和 RSS 订阅。
 
-## Key Features
+## 目的
 
-- **Local Operation**: No accounts, no cloud sync. Configuration files are stored locally.
-- **Modular Design**: Modules are pluggable (arXiv / GitHub / RSS / Calendar / Scholar) and independently configurable.
-- **Cross-Platform**: Supports macOS, Windows, and Linux.
-- **Customizable**: Cards can be freely dragged and sorted, collapsed/expanded, and column count can be adjusted.
-- **Privacy Focused**: All data stays on your machine.
+Research Dashboard 的主要目的是为研究人员提供一个"日常工作的第一站"，通过高度可定制的卡片式布局聚合来自多个来源的信息。这使得研究人员能够快速掌握动态信息。
 
-## Getting Started
+## 主要功能
 
-To get started with Research Dashboard:
+### 信息来源
 
-1. [Install](user-guide/installation.md) the application
-2. [Configure](user-guide/configuration.md) your modules
-3. [Run](user-guide/getting-started.md) the dashboard
+Research Dashboard 目前支持三个主要的信息来源：
 
-## Documentation Structure
+1. **ArXiv 论文**：基于您关键词的最新 ArXiv 论文
+2. **GitHub 活动**：您最近的 GitHub 活动，包括提交、问题和拉取请求
+3. **RSS 订阅**：您 RSS 订阅的最新项目
 
-- **User Guide**: Installation, configuration, and basic usage instructions
-- **Modules**: Documentation for each supported module
-- **API Reference**: Technical documentation for developers
-- **Development**: Information for contributors and developers
+每个信息来源都作为一个模块实现，可以独立启用、禁用和配置。
 
-## Support
+### 灵活的布局系统
 
-If you encounter any issues or have questions, please [open an issue](https://github.com/WayneXuCN/ResearchDashboard/issues) on GitHub.
+Research Dashboard 具有灵活的基于列的布局系统，允许您以最适合您工作流程的方式组织信息：
+
+- 配置 1-3 列，具有不同的宽度（窄或正常）
+- 将模块放置在任何列中的任何顺序
+- 自定义整体页面宽度（窄、默认或宽）
+- 选择是否显示导航元素
+- 垂直居中内容以获得更清晰的外观
+
+### 自定义
+
+Research Dashboard 提供了广泛的自定义选项：
+
+- **主题**：在浅色和深色配色方案之间切换
+- **模块配置**：独立配置每个模块及其特定设置
+- **布局**：使用基于列的系统自定义仪表盘布局
+- **原生桌面支持**：作为原生桌面应用程序运行，获得更集成的体验
+
+### 技术特性
+
+- **响应式设计**：在桌面和移动设备上都能正常工作
+- **实时更新**：基于可配置的时间间隔自动刷新信息
+- **可扩展架构**：基于模块的系统，可以轻松添加新的信息来源
+- **现代化 UI**：美观的玻璃态效果界面，带有流畅的动画

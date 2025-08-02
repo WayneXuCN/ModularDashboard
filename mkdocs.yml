@@ -29,6 +29,7 @@ theme:
         name: Switch to light mode
       primary: indigo
       accent: indigo
+  custom_dir: docs/theme
 
 nav:
   - Home: README.md
@@ -37,6 +38,7 @@ nav:
       - Installation: user-guide/installation.md
       - Getting Started: user-guide/getting-started.md
       - Configuration: user-guide/configuration.md
+      - Layout: user-guide/layout.md
       - Packaging: user-guide/packaging.md
   - Modules:
       - Overview: modules/index.md
@@ -68,3 +70,30 @@ markdown_extensions:
   - pymdownx.emoji:
       emoji_index: !!python/name:material.extensions.emoji.twemoji
       emoji_generator: !!python/name:material.extensions.emoji.to_svg
+
+plugins:
+  - i18n:
+      docs_structure: suffix
+      languages:
+        - locale: zh
+          default: true
+          name: 中文
+          build: true
+        - locale: en
+          name: English
+          build: true
+          site_name: Research Dashboard Documentation
+          nav_translations:
+            Home: Home
+            Overview: Overview
+            User Guide: User Guide
+            Installation: Installation
+            Getting Started: Getting Started
+            Configuration: Configuration
+            Layout: Layout
+            Packaging: Packaging
+            Modules: Modules
+            API Reference: API Reference
+            Development: Development
+            Project Structure: Project Structure
+            Contributing: Contributing

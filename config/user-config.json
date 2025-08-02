@@ -13,7 +13,7 @@
       },
       {
         "width": "normal",
-        "modules": ["github"]
+        "modules": ["github", "rss"]
       },
       {
         "width": "narrow",

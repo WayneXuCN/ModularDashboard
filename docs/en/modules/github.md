@@ -1,20 +1,20 @@
-# GitHub 模块
+# GitHub Modules
 
-GitHub 模块显示您最近的 GitHub 活动，包括提交、问题和拉取请求。
+GitHub Modules显示您最近的 GitHub Activity，包括提交、问题和拉取请求。
 
-## 概述
+## Overview
 
-GitHub 模块获取并显示您在 GitHub 上的最近活动。这包括您仓库的提交、您已开启或评论的问题，以及您已创建或合并的拉取请求。
+GitHub Modules获取并显示您在 GitHub 上的最近活动。这包括您仓库的提交、您已开启或评论的问题，以及您已创建或合并的拉取请求。
 
-## 配置
+## Configuration
 
-GitHub 模模块支持以下配置选项：
+GitHub 模Modules支持以下Configuration选项：
 
 - `refresh_interval`: 刷新数据的频率（以秒为单位，默认值：3600）
 - `username`: 要跟踪的 GitHub 用户名
 - `repositories`: 要跟踪的仓库名称数组
 
-配置示例：
+Configuration示例：
 
 ```json
 {
@@ -34,7 +34,7 @@ GitHub 模模块支持以下配置选项：
 
 ## 显示
 
-在主仪表盘视图中，GitHub 模块显示您最近的活动。在详细视图中，它显示最近活动的列表。
+在主仪表盘视图中，GitHub Modules显示您最近的活动。在详细视图中，它显示最近活动的列表。
 
 每个活动显示包括：
 
@@ -46,14 +46,14 @@ GitHub 模模块支持以下配置选项：
 
 ## 实现细节
 
-GitHub 模块使用 GitHub API 获取活动数据。它实现了缓存以避免过多的 API 调用并减少加载时间。
+GitHub Modules使用 GitHub API 获取活动数据。它实现了缓存以避免过多的 API 调用并减少加载时间。
 
-该模块遵循标准模块接口，实现所有必需的方法：
+该Modules遵循标准Modules接口，实现所有必需的方法：
 
 - `id`: 返回 "github"
-- `name`: 返回 "GitHub 活动"
+- `name`: 返回 "GitHub Activity"
 - `icon`: 返回章鱼表情符号 (🐙)
-- `description`: 返回 "您的最近 GitHub 活动"
+- `description`: 返回 "您的最近 GitHub Activity"
 - `fetch`: 从 GitHub API 获取活动
 - `render`: 渲染主视图 UI
 - `render_detail`: 渲染详细视图 UI

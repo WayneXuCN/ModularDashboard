@@ -1,75 +1,51 @@
-# Research Dashboard Documentation
+# Research Dashboard 文档
 
-欢迎阅读 Research Dashboard 的文档。本文档包含项目规划、开发者信息和 API 设计。
+欢迎阅读 Research Dashboard 文档。本指南将帮助您了解如何安装、配置和使用 Research Dashboard 应用程序。
 
-## 当前状态
+## 目录
 
-🚧 **项目初期**: 刚完成项目结构搭建，功能尚未完善  
-🚧 **文档规划**: 文档结构已建立，内容正在完善中  
-🚧 **持续开发**: 正在积极开发核心功能  
+- [概述](./overview.md)
+- [安装](./user-guide/installation.md)
+- [快速开始](./user-guide/getting-started.md)
+- [配置](./user-guide/configuration.md)
+- [布局系统](./user-guide/layout.md)
+- [打包](./user-guide/packaging.md)
+- [模块](./modules/index.md)
+  - [ArXiv 论文](./modules/arxiv.md)
+  - [GitHub 活动](./modules/github.md)
+  - [RSS 订阅](./modules/rss.md)
+- [API 参考](./api/index.md)
+  - [模块基类](./api/module-base.md)
+  - [配置](./api/configuration.md)
+- [开发](./development/index.md)
+  - [项目结构](./development/structure.md)
+  - [贡献](./development/contributing.md)
 
-项目仍处于超早期开发阶段，文档内容可能会随着开发进展而变化。
+## 关于 Research Dashboard
 
-## 文档结构
+Research Dashboard 是一个为研究人员设计的可定制信息聚合仪表盘。它提供了一个统一的界面来查看和管理来自多个来源的信息，包括：
 
-```
-docs/
-├── index.md                 # 首页
-├── README.md                # 项目README副本
-├── user-guide/              # 用户指南
-│   ├── installation.md      # 安装指南
-│   ├── getting-started.md   # 快速开始
-│   ├── configuration.md     # 配置说明
-│   └── packaging.md         # 打包说明
-├── modules/                 # 模块文档
-├── api/                     # API参考
-└── development/             # 开发指南
-```
+- 基于您研究兴趣的 ArXiv 论文
+- 您的 GitHub 活动
+- 您最喜欢的来源的 RSS 订阅
 
-## 浏览文档
+仪表盘具有灵活的基于列的布局系统，允许您以最适合您工作流程的方式组织信息。
 
-### 在线浏览
+## 功能特性
 
-您可以直接浏览 docs/ 目录中的 Markdown 文件。
+- **多源信息聚合**：从 ArXiv、GitHub 和 RSS 订阅收集和显示信息
+- **灵活的布局系统**：配置 1-3 列布局，可自定义列宽
+- **基于模块的架构**：可扩展的系统，用于添加新的信息来源
+- **响应式设计**：在桌面和移动设备上都能正常工作
+- **浅色/深色主题**：在浅色和深色配色方案之间切换
+- **原生桌面支持**：作为原生桌面应用程序运行
 
-### 本地预览（计划）
+## 获取帮助
 
-将来会支持使用 MkDocs 在本地预览文档网站:
+如果您需要 Research Dashboard 方面的帮助，您可以：
 
-```bash
-# 启动本地开发服务器（功能尚未完善）
-uv run mkdocs serve
+1. 查看本指南中的文档
+2. 在 [GitHub 仓库](https://github.com/WayneXuCN/ResearchDashboard) 上报告问题
+3. 提交功能请求或建议
 
-# 访问 http://localhost:8000 查看文档
-```
-
-### 构建静态网站（计划）
-
-构建静态文档网站:
-
-```bash
-# 构建文档（功能尚未完善）
-uv run mkdocs build
-
-# 输出位于 site/ 目录
-```
-
-## 文档内容
-
-文档目前包含以下内容：
-
-- [项目结构](development/structure.md) - 代码组织方式
-- [模块设计](modules/index.md) - 模块系统规划
-- [API 规划](api/module-base.md) - 核心接口设计
-
-## 贡献文档
-
-如果您想为 Research Dashboard 贡献文档，请查看以下信息：
-
-- [贡献指南](development/contributing.md) - 如何贡献代码和文档
-- 保持文档与代码同步更新
-- 使用清晰简洁的语言描述功能和用法
-
-## 技术栈
-
-有关项目使用的技术栈信息，请参阅主项目的 [README](README.md) 文件。
+有关开发相关的问题，请参阅 [开发](./development/index.md) 部分。

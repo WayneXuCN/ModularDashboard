@@ -1,15 +1,15 @@
-# 配置
+# Configuration
 
-Research Dashboard 通过位于系统配置目录中的 JSON 文件进行配置：
+Research Dashboard 通过位于系统ConfigurationTable of Contents中的 JSON 文件进行Configuration：
 
 - **Windows**: `%APPDATA%\ResearchDashboard\config.json`
 - **macOS/Linux**: `~/.config/ResearchDashboard/config.json`
 
-首次运行时，Research Dashboard 会根据 `src/research_dashboard/assets/default-config.json` 中的模板创建默认配置文件。
+首次运行时，Research Dashboard 会根据 `src/research_dashboard/assets/default-config.json` 中的模板创建默认Configuration文件。
 
-## 配置结构
+## Configuration结构
 
-配置文件具有以下结构：
+Configuration文件具有以下结构：
 
 ```json
 {
@@ -84,57 +84,57 @@ Research Dashboard 通过位于系统配置目录中的 JSON 文件进行配置�
 }
 ```
 
-## 主题配置
+## 主题Configuration
 
 - `theme`: 可以是 "light" 或 "dark"
 
-## 布局配置
+## 布局Configuration
 
-布局配置控制整体仪表盘布局：
+布局Configuration控制整体仪表盘布局：
 
 - `columns`: 列数 (1-3)
 - `width`: 页面宽度 ("default", "narrow", 或 "wide")
 - `show_nav`: 是否显示导航栏
 - `center_content`: 是否垂直居中内容
-- `column_config`: 列配置数组
+- `column_config`: 列Configuration数组
 
-每个列配置包含：
+每个列Configuration包含：
 
 - `width`: 列宽度 ("narrow" 或 "normal")
-- `modules`: 要在此列中显示的模块 ID 数组（顺序决定显示顺序）
+- `modules`: 要在此列中显示的Modules ID 数组（顺序决定显示顺序）
 
-注意：列内模块的显示顺序由列配置中 `modules` 数组的顺序决定，而不是模块配置中的单独位置字段。
+注意：列内Modules的显示顺序由列Configuration中 `modules` 数组的顺序决定，而不是ModulesConfiguration中的单独位置字段。
 
-## 模块配置
+## ModulesConfiguration
 
-每个模块具有以下配置选项：
+每个Modules具有以下Configuration选项：
 
-- `id`: 模块的唯一标识符
-- `enabled`: 模块是否启用
-- `collapsed`: 模块是否初始折叠
-- `config`: 模块特定的配置选项
+- `id`: Modules的唯一标识符
+- `enabled`: Modules是否启用
+- `collapsed`: Modules是否初始折叠
+- `config`: Modules特定的Configuration选项
 
-### ArXiv 模块配置
+### ArXiv ModulesConfiguration
 
-ArXiv 模块支持以下配置选项：
+ArXiv Modules支持以下Configuration选项：
 
 - `refresh_interval`: 刷新数据的频率（以秒为单位）
 - `keywords`: 要搜索的关键词数组
 
-### GitHub 模块配置
+### GitHub ModulesConfiguration
 
-GitHub 模块支持以下配置选项：
+GitHub Modules支持以下Configuration选项：
 
 - `refresh_interval`: 刷新数据的频率（以秒为单位）
 - `username`: 要跟踪的 GitHub 用户名
 - `repositories`: 要跟踪的仓库名称数组
 
-### RSS 模块配置
+### RSS ModulesConfiguration
 
-RSS 模块支持以下配置选项：
+RSS Modules支持以下Configuration选项：
 
 - `refresh_interval`: 刷新数据的频率（以秒为单位）
-- `feed_urls`: 要跟踪的 RSS 订阅 URL 数组
+- `feed_urls`: 要跟踪的 RSS Feeds URL 数组
 - `fetch_limit`: 每个订阅获取的最大项目数
 - `show_limit`: 在主视图中显示的最大项目数
 - `show_author`: 是否显示作者
@@ -142,7 +142,7 @@ RSS 模块支持以下配置选项：
 - `show_date`: 是否显示发布日期
 - `show_image`: 当可用时是否显示图片
 
-## 配置示例
+## Configuration示例
 
 ### 三列布局（默认）
 
@@ -196,7 +196,7 @@ RSS 模块支持以下配置选项：
 }
 ```
 
-这种布局将主要模块放在左侧，将次要模块组合在右侧。
+这种布局将主要Modules放在左侧，将次要Modules组合在右侧。
 
 ### 单列布局
 
@@ -217,4 +217,4 @@ RSS 模块支持以下配置选项：
 }
 ```
 
-这种布局将所有模块堆叠在一列中，非常适合移动设备或专注的工作流程。
+这种布局将所有Modules堆叠在一列中，非常适合移动设备或专注的工作流程。

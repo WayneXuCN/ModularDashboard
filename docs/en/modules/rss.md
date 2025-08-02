@@ -1,17 +1,17 @@
-# RSS 模块
+# RSS Modules
 
-RSS 模块显示您 RSS 订阅的最新项目。
+RSS Modules显示您 RSS Feeds的最新项目。
 
-## 概述
+## Overview
 
-RSS 模块获取并显示您配置的 RSS 订阅中的最新项目。这允许您在一个地方聚合来自多个来源的内容。
+RSS Modules获取并显示您Configuration的 RSS Feeds中的最新项目。这允许您在一个地方聚合来自多个来源的内容。
 
-## 配置
+## Configuration
 
-RSS 模块支持以下配置选项：
+RSS Modules支持以下Configuration选项：
 
 - `refresh_interval`: 刷新数据的频率（以秒为单位，默认值：3600）
-- `feed_urls`: 要跟踪的 RSS 订阅 URL 数组
+- `feed_urls`: 要跟踪的 RSS Feeds URL 数组
 - `fetch_limit`: 每个订阅获取的最大项目数
 - `show_limit`: 在主视图中显示的最大项目数
 - `show_author`: 是否显示作者
@@ -19,7 +19,7 @@ RSS 模块支持以下配置选项：
 - `show_date`: 是否显示发布日期
 - `show_image`: 当可用时是否显示图片
 
-配置示例：
+Configuration示例：
 
 ```json
 {
@@ -44,7 +44,7 @@ RSS 模块支持以下配置选项：
 
 ## 显示
 
-在主仪表盘视图中，RSS 模块显示您订阅中的最新项目（受 `show_limit` 限制）。在详细视图中，它显示来自所有订阅的项目网格（每个订阅受 `fetch_limit` 限制）。
+在主仪表盘视图中，RSS Modules显示您订阅中的最新项目（受 `show_limit` 限制）。在详细视图中，它显示来自所有订阅的项目网格（每个订阅受 `fetch_limit` 限制）。
 
 每个项目显示包括：
 
@@ -57,21 +57,21 @@ RSS 模块支持以下配置选项：
 
 ## 实现细节
 
-RSS 模块使用 `feedparser` 库解析 RSS 订阅。它实现了缓存以避免过多的请求并减少加载时间。
+RSS Modules使用 `feedparser` 库解析 RSS Feeds。它实现了缓存以避免过多的请求并减少加载时间。
 
-该模块遵循标准模块接口，实现所有必需的方法：
+该Modules遵循标准Modules接口，实现所有必需的方法：
 
 - `id`: 返回 "rss"
-- `name`: 返回 "RSS 订阅"
+- `name`: 返回 "RSS Feeds"
 - `icon`: 返回卫星表情符号 (📡)
-- `description`: 返回 "您 RSS 订阅的最新项目"
-- `fetch`: 从 RSS 订阅获取项目
+- `description`: 返回 "您 RSS Feeds的最新项目"
+- `fetch`: 从 RSS Feeds获取项目
 - `render`: 渲染主视图 UI
 - `render_detail`: 渲染详细视图 UI
 
 ## 支持的订阅类型
 
-RSS 模块支持多种订阅格式：
+RSS Modules支持多种订阅格式：
 
 - RSS 0.91, 0.92, 1.0, 2.0
 - Atom 0.3, 1.0
@@ -79,7 +79,7 @@ RSS 模块支持多种订阅格式：
 
 ## 图片支持
 
-当启用 `show_image` 时，模块会尝试使用以下方法从订阅项目中提取图片：
+当启用 `show_image` 时，Modules会尝试使用以下方法从订阅项目中提取图片：
 
 1. `media:content` 元素
 2. `media:thumbnail` 元素

@@ -1,10 +1,10 @@
-# 快速开始
+# Getting Started
 
 本指南将帮助您开始使用 Research Dashboard，从初始设置到首次运行。
 
 ## 初始设置
 
-安装依赖后，您需要设置配置。Research Dashboard 在首次运行时会自动在系统的配置目录中创建默认配置文件：
+Installation依赖后，您需要设置Configuration。Research Dashboard 在首次运行时会自动在系统的ConfigurationTable of Contents中创建默认Configuration文件：
 
 - **Windows**: `%APPDATA%\ResearchDashboard\config.json`
 - **macOS/Linux**: `~/.config/ResearchDashboard/config.json`
@@ -17,7 +17,7 @@
 uv run -m research_dashboard.app
 ```
 
-要作为原生桌面应用程序运行 Research Dashboard：
+要Run as a native desktop application Research Dashboard：
 
 ```bash
 uv run -m research_dashboard.app native
@@ -29,26 +29,26 @@ uv run -m research_dashboard.app native
 
 首次运行时，Research Dashboard 将：
 
-1. 在系统的标准配置位置创建配置目录
-2. 将默认配置复制到该目录中的 `config.json`
+1. 在系统的标准Configuration位置创建ConfigurationTable of Contents
+2. 将默认Configuration复制到该Table of Contents中的 `config.json`
 3. 启动 Web 服务器并在默认浏览器中打开仪表盘
 
-## 配置
+## Configuration
 
-Research Dashboard 是高度可配置的。配置文件采用 JSON 格式，包括以下设置：
+Research Dashboard 是高度可Configuration的。Configuration文件采用 JSON 格式，包括以下设置：
 
 - 主题（浅色/深色）
 - 布局（列数、宽度、导航）
-- 模块（启用/禁用、设置）
+- Modules（启用/禁用、设置）
 
-有关配置 Research Dashboard 的详细信息，请参阅[配置指南](./configuration.md)。
+有关Configuration Research Dashboard 的详细信息，请参阅[Configuration指南](./configuration.md)。
 
 ## 故障排除
 
 如果遇到问题：
 
-1. 检查所有依赖是否已正确安装
-2. 确保配置文件是有效的 JSON
+1. 检查所有依赖是否已正确Installation
+2. 确保Configuration文件是有效的 JSON
 3. 检查控制台输出中的错误消息
 4. 验证防火墙是否阻止了应用程序
 

@@ -33,89 +33,13 @@ uv run -m research_dashboard.app
 # 以原生桌面应用模式运行（修改 native）
 ```
 
+## 文档
+
+完整的文档可以在 [docs](./docs/README.md) 目录中找到。
+
 ## 开发指南
 
-### 项目结构
-
-```
-research-dashboard/
-├── pyproject.toml              # 项目配置和依赖管理
-├── README.md                   # 项目说明
-├── LICENSE                     # 开源许可证
-├── .gitignore                  # Git忽略文件配置
-├── mkdocs.yml                  # 文档网站配置
-│
-├── src/
-│   └── research_dashboard/     # 主要源代码
-│       ├── __init__.py
-│       ├── __main__.py         # 应用入口点
-│       ├── app.py              # 主应用逻辑
-│       │
-│       ├── config/             # 配置管理
-│       ├── modules/            # 模块系统
-│       ├── ui/                 # 用户界面组件
-│       ├── static/             # 静态资源文件
-│       ├── utils/              # 工具函数
-│       ├── assets/             # 应用资源
-│       └── docs/               # 文档生成器
-│
-├── config/                     # 用户配置（运行时生成）
-├── scripts/                    # 脚本工具
-├── tests/                      # 测试代码（计划中）
-├── docs/                       # 文档源文件
-└── dist/                       # 编译输出
-```
-
-### 开发环境设置
-
-1. 克隆项目仓库:
-
-   ```bash
-   git clone https://github.com/your-username/research-dashboard.git
-   cd research-dashboard
-   ```
-
-2. 安装依赖:
-
-   ```bash
-   uv lock
-   uv sync
-   ```
-
-### 代码规范
-
-我们使用 ruff 进行代码检查和格式化：
-
-```bash
-# 检查代码
-uv run ruff check .
-
-# 格式化代码
-uv run ruff format .
-```
-
-### 测试
-
-测试功能正在规划中，将使用 pytest 进行测试:
-
-```bash
-# 运行测试（功能尚未实现）
-uv run pytest
-```
-
-## 技术栈（计划）
-
-| 类别 | 技术 | 状态 |
-|------|------|------|
-| **项目管理** | `uv` | ✅ 已采用 |
-| **构建系统** | `hatchling` | ✅ 已采用 |
-| **应用框架** | `NiceGUI` | ✅ 已采用 |
-| **前端定制** | HTML/CSS/JS + `Tailwind CSS` | ✅ 计划采用 |
-| **数据抓取** | `requests` + `feedparser` + `arxiv` | ✅ 计划采用 |
-| **定时任务** | `APScheduler` | ✅ 计划采用 |
-| **配置存储** | JSON 文件系统 | ✅ 计划采用 |
-
-> **注意**: 项目仍处于早期阶段，部分技术栈正在实现中。
+请参阅 [开发指南](./docs/development/index.md) 了解项目结构和贡献方式。
 
 ## 贡献
 
@@ -126,4 +50,4 @@ uv run pytest
 3. 完善文档和测试
 4. 改进用户体验和界面设计
 
-请阅读 [贡献指南](docs/development/contributing.md) 了解详情。
+请阅读 [贡献指南](./docs/development/contributing.md) 了解详情。

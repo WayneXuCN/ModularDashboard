@@ -1,27 +1,27 @@
-# 开发指南
+# Development指南
 
-本指南为想要为 Research Dashboard 做贡献的开发者提供信息。
+本指南为想要为 Research Dashboard 做Contributing的Development者提供信息。
 
-## 概述
+## Overview
 
-Research Dashboard 使用 Python 构建，使用 NiceGUI 作为 Web 界面。它遵循模块化架构，使得添加新的信息来源变得容易。
+Research Dashboard 使用 Python 构建，使用 NiceGUI 作为 Web 界面。它遵循Modules化架构，使得添加新的信息来源变得容易。
 
 ## 入门
 
 1. 在 GitHub 上 fork 仓库
 2. 本地克隆您的 fork
-3. 使用 `uv lock` 和 `uv sync` 安装依赖
+3. 使用 `uv lock` 和 `uv sync` Installation依赖
 4. 使用 `uv run -m research_dashboard.app` 运行应用程序
 
-## 项目结构
+## Project Structure
 
 ```
 research-dashboard/
-├── pyproject.toml              # 项目配置和依赖
-├── README.md                   # 项目概述
+├── pyproject.toml              # 项目Configuration和依赖
+├── README.md                   # 项目Overview
 ├── LICENSE                     # 许可证信息
 ├── .gitignore                  # Git 忽略模式
-├── mkdocs.yml                  # 文档配置
+├── mkdocs.yml                  # 文档Configuration
 │
 ├── src/
 │   └── research_dashboard/     # 主要源代码
@@ -29,21 +29,21 @@ research-dashboard/
 │       ├── __main__.py         # 应用程序入口点
 │       ├── app.py              # 主应用程序逻辑
 │       │
-│       ├── config/             # 配置管理
-│       │   ├── manager.py      # 配置加载/保存
-│       │   └── schema.py       # 配置数据类
+│       ├── config/             # Configuration管理
+│       │   ├── manager.py      # Configuration加载/保存
+│       │   └── schema.py       # Configuration数据类
 │       │
-│       ├── modules/            # 模块系统
-│       │   ├── base.py         # 模块基类
-│       │   ├── registry.py     # 模块注册表
+│       ├── modules/            # Modules系统
+│       │   ├── base.py         # Modules基类
+│       │   ├── registry.py     # Modules注册表
 │       │   │
-│       │   ├── arxiv/          # ArXiv 模块
+│       │   ├── arxiv/          # ArXiv Modules
 │       │   │   └── module.py
 │       │   │
-│       │   ├── github/         # GitHub 模块
+│       │   ├── github/         # GitHub Modules
 │       │   │   └── module.py
 │       │   │
-│       │   └── rss/            # RSS 模块
+│       │   └── rss/            # RSS Modules
 │       │       └── module.py
 │       │
 │       ├── ui/                 # 用户界面组件
@@ -64,7 +64,7 @@ research-dashboard/
 │       └── docs/               # 文档生成器
 │           └── generator.py
 │
-├── config/                     # 用户配置（运行时）
+├── config/                     # 用户Configuration（运行时）
 │
 ├── scripts/                    # 实用脚本
 │   ├── create_icon.py
@@ -118,11 +118,11 @@ mkdocs serve
 文档组织成几个部分：
 
 - 用户指南：面向最终用户
-- 模块：有关每个模块的信息
-- API 参考：面向扩展应用程序的开发者
-- 开发：面向贡献者
+- Modules：有关每个Modules的信息
+- API Reference：面向扩展应用程序的Development者
+- Development：面向Contributing者
 
-## 贡献
+## Contributing
 
 1. Fork 仓库
 2. 创建功能分支
@@ -147,4 +147,4 @@ mkdocs serve
 
 ## 行为准则
 
-请注意，该项目发布了贡献者行为准则。通过参与此项目，您同意遵守其条款。
+请注意，该项目发布了Contributing者行为准则。通过参与此项目，您同意遵守其条款。

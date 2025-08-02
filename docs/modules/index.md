@@ -1,9 +1,35 @@
-# Modules Documentation
+# 模块文档
 
-This section contains documentation for all modules in the Research Dashboard.
+本节包含 Research Dashboard 中所有模块的文档。
 
-## Available Modules
+## 可用模块
 
-- [ArXiv Papers](./arxiv.md) - Latest papers from ArXiv based on your keywords
-- [GitHub Activity](./github.md) - Your recent GitHub activity
-- [RSS Feeds](./rss.md) - Latest items from your RSS feeds
+- [ArXiv 论文](./arxiv.md) - 基于您关键词的最新 ArXiv 论文
+- [GitHub 活动](./github.md) - 您最近的 GitHub 活动
+- [RSS 订阅](./rss.md) - 您 RSS 订阅的最新项目
+
+## 模块架构
+
+Research Dashboard 使用模块化架构，每个信息源都作为一个独立的模块实现。这使得扩展和自定义变得容易。
+
+### 模块接口
+
+所有模块都继承自基础 `Module` 类并实现以下方法：
+
+- `id`: 返回模块的唯一标识符
+- `name`: 返回模块的人类可读名称
+- `icon`: 返回模块的图标（emoji 或 SVG 路径）
+- `description`: 返回模块功能的描述
+- `fetch`: 从源获取数据并返回标准化项目
+- `render`: 使用 NiceGUI 组件渲染模块的 UI
+- `render_detail`: 渲染模块的详细视图页面
+
+### 模块配置
+
+每个模块都可以在主配置文件中定义自己的配置选项。这些选项在模块实例化时传递给模块。
+
+### 在仪表盘布局中使用模块
+
+模块可以排列在灵活的基于列的布局中。在配置文件中，您可以定义最多 3 列并指定每列中显示的模块。每列中模块的顺序由该列的 `modules` 数组中的顺序决定。
+
+有关如何配置仪表盘布局的详细信息，请参阅[配置指南](../user-guide/configuration.md)。
