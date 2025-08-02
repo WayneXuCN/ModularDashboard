@@ -140,7 +140,7 @@ def generate_development_docs() -> None:
         f.write("│   └── research_dashboard/    # Main source code\n")
         f.write("│       ├── __init__.py\n")
         f.write("│       ├── __main__.py        # Entry point\n")
-        f.write("│       ├── main.py            # Main application logic\n")
+        f.write("│       ├── app.py             # Main application logic\n")
         f.write("│       │\n")
         f.write("│       ├── config/            # Configuration system\n")
         f.write("│       ├── modules/           # Module system\n")
