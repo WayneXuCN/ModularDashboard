@@ -3,14 +3,28 @@
   "theme": "light",
   "layout": {
     "columns": 3,
-    "view": "grid",
-    "card_size": "medium"
+    "width": "default",
+    "show_nav": true,
+    "center_content": false,
+    "column_config": [
+      {
+        "width": "narrow",
+        "modules": ["arxiv"]
+      },
+      {
+        "width": "normal",
+        "modules": ["github", "rss"]
+      },
+      {
+        "width": "narrow",
+        "modules": ["rss"]
+      }
+    ]
   },
   "modules": [
     {
       "id": "arxiv",
       "enabled": true,
-      "position": 1,
       "collapsed": false,
       "config": {
         "refresh_interval": 3600,
@@ -24,7 +38,6 @@
     {
       "id": "github",
       "enabled": true,
-      "position": 2,
       "collapsed": false,
       "config": {
         "refresh_interval": 3600,
@@ -38,7 +51,6 @@
     {
       "id": "rss",
       "enabled": true,
-      "position": 3,
       "collapsed": false,
       "config": {
         "refresh_interval": 3600,
