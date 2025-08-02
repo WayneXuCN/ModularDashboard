@@ -12,24 +12,47 @@
       "enabled": true,
       "position": 1,
       "collapsed": false,
-      "refresh_interval": 3600,
-      "config": {}
+      "config": {
+        "refresh_interval": 3600,
+        "keywords": [
+          "machine learning",
+          "artificial intelligence",
+          "quantum computing"
+        ]
+      }
     },
     {
       "id": "github",
       "enabled": true,
       "position": 2,
       "collapsed": false,
-      "refresh_interval": 3600,
-      "config": {}
+      "config": {
+        "refresh_interval": 3600,
+        "username": "wayneXuCN",
+        "repositories": [
+          "ResearchDashboard",
+          "nicegui"
+        ]
+      }
     },
     {
       "id": "rss",
       "enabled": true,
       "position": 3,
       "collapsed": false,
-      "refresh_interval": 3600,
-      "config": {}
+      "config": {
+        "refresh_interval": 3600,
+        "feed_urls": [
+          "https://sspai.com/feed",
+          "https://waynexucn.github.io/feed.xml"
+        ],
+        "fetch_limit": 10,
+        "show_limit": 5,
+        "show_author": true,
+        "show_description": true,
+        "show_date": true,
+        "show_image": true
+      }
     }
   ]
 }

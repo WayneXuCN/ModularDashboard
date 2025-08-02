@@ -9,7 +9,6 @@ class ModuleConfig:
     enabled: bool
     position: int
     collapsed: bool
-    refresh_interval: int
     config: dict
 
 

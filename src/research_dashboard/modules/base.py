@@ -5,6 +5,15 @@ from typing import Any
 
 
 class Module(ABC):
+    def __init__(self, config: dict[str, Any] | None = None):
+        """
+        Initialize the module with optional configuration.
+
+        Args:
+            config: Optional dictionary containing module-specific configuration
+        """
+        self.config = config or {}
+
     @property
     @abstractmethod
     def id(self) -> str:

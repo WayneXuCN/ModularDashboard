@@ -34,7 +34,9 @@ def render_module_detail(module_id: str, config: AppConfig):
             ).props("flat")
         return
 
-    module = module_class()
+    # Find the module configuration
+    module_config = next((m for m in config.modules if m.id == module_id), None)
+    module = module_class(module_config.config) if module_config else module_class()
 
     # Main container with refined background
     with (
@@ -122,7 +124,7 @@ def render_dashboard(config: AppConfig) -> None:
                 ### Refresh button
                 ####################
                 ui.button(
-                    "Refresh All",
+                    icon="refresh",
                     on_click=lambda: ui.notify(
                         "Refreshing all modules...", type="positive"
                     ),
@@ -167,7 +169,8 @@ def render_dashboard(config: AppConfig) -> None:
             for module_config in sorted(config.modules, key=lambda m: m.position):
                 if module_config.enabled and module_config.id in MODULE_REGISTRY:
                     module_class = MODULE_REGISTRY[module_config.id]
-                    module = module_class()
+                    # Pass the module-specific configuration to the module instance
+                    module = module_class(module_config.config)
 
                     with (
                         ui.card()
@@ -242,9 +245,7 @@ def render_dashboard(config: AppConfig) -> None:
                     ui.label("请选择操作").classes("text-lg font-medium mb-2")
                     ui.button(
                         "新建便笺",
-                        on_click=lambda: ui.notify(
-                            "新建便笺功能暂未实现", type="info"
-                        ),
+                        on_click=lambda: ui.notify("新建便笺功能暂未实现", type="info"),
                     ).classes("w-full")
                     ui.button(
                         "导入新模块",
