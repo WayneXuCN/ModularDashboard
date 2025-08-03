@@ -1,7 +1,9 @@
 """Module base class."""
 
 from abc import ABC, abstractmethod
-from typing import Any
+from typing import Any, Optional
+
+from ..storage import get_storage_manager, StorageBackend, CachedStorage
 
 
 class Module(ABC):
@@ -13,6 +15,34 @@ class Module(ABC):
             config: Optional dictionary containing module-specific configuration
         """
         self.config = config or {}
+        self._storage: Optional[StorageBackend] = None
+        self._cache: Optional[CachedStorage] = None
+        self._storage_manager = get_storage_manager()
+
+    def get_storage(self) -> StorageBackend:
+        """Get module-specific storage backend."""
+        if self._storage is None:
+            self._storage = self._storage_manager.get_module_storage(self.id)
+        return self._storage
+
+    def get_cache(self, default_ttl: int = 3600) -> CachedStorage:
+        """Get module-specific cache with TTL support."""
+        if self._cache is None:
+            self._cache = self._storage_manager.get_module_cache(self.id, default_ttl)
+        return self._cache
+
+    def has_persistence(self) -> bool:
+        """Check if module requires persistent storage."""
+        return False
+
+    def has_cache(self) -> bool:
+        """Check if module uses caching."""
+        return False
+
+    def cleanup(self) -> None:
+        """Clean up module resources."""
+        if self._cache:
+            self._cache.cleanup_expired()
 
     @property
     @abstractmethod
