@@ -126,8 +126,8 @@ mypy                           # 类型检查
 
 模块化仪表盘使用 JSON 配置文件进行自定义。首次运行时，应用会在系统配置目录中创建默认配置：
 
-- **Windows**: `%APPDATA%\ModularDashboard\config.json`
-- **macOS/Linux**: `~/.config/ModularDashboard/config.json`
+- **Windows**: `%APPDATA%\modular_dashboard\config.json`
+- **macOS/Linux**: `~/.modular_dashboard/config.json`
 
 您可以自定义：
 

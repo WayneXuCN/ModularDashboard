@@ -126,8 +126,8 @@ mypy                           # Type checking
 
 Modular Dashboard uses JSON configuration files for customization. On first run, the application creates a default configuration in your system's config directory:
 
-- **Windows**: `%APPDATA%\ModularDashboard\config.json`
-- **macOS/Linux**: `~/.config/ModularDashboard/config.json`
+- **Windows**: `%APPDATA%\modular_dashboard\config.json`
+- **macOS/Linux**: `~/.modular_dashboard/config.json`
 
 You can customize:
 

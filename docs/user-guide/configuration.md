@@ -8,9 +8,9 @@ Modular Dashboard 通过位于系统配置目录中的 JSON 配置文件进行�
 应用首次运行时会自动创建配置文件，基于 `src/modular_dashboard/assets/default-config.json` 模板。
 
 ### 配置文件路径
-- **Windows**: `%APPDATA%\ModularDashboard\config.json`
-- **macOS**: `~/Library/Application Support/ModularDashboard/config.json`
-- **Linux**: `~/.config/ModularDashboard/config.json`
+- **Windows**: `%APPDATA%\modular_dashboard\config.json`
+- **macOS**: `~/.modular_dashboard/config.json`
+- **Linux**: `~/.modular_dashboard/config.json`
 
 ### 多配置文件支持
 项目提供了多个预设配置文件模板：

@@ -8,15 +8,26 @@
     "column_config": [
       {
         "width": "normal",
-        "modules": ["arxiv", "clock"]
+        "modules": [
+          "animals",
+          "clock"
+        ]
       },
       {
         "width": "normal",
-        "modules": ["github", "weather", "todo"]
+        "modules": [
+          "github",
+          "weather",
+          "todo"
+        ]
       },
       {
         "width": "normal",
-        "modules": ["rss", "releases", "animals"]
+        "modules": [
+          "rss",
+          "releases",
+          "arxiv"
+        ]
       }
     ]
   },
@@ -118,7 +129,7 @@
         "animal_type": "cat",
         "height": 200,
         "auto_refresh": false,
-        "refresh_interval": 30,
+        "refresh_interval": 1800,
         "show_title": true,
         "border_radius": 8
       }
