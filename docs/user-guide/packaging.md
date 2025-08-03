@@ -37,7 +37,7 @@ pip install pyinstaller
 2. 创建可执行文件：
 
 ```bash
-pyinstaller --onefile --windowed src/research_dashboard/app.py
+pyinstaller --onefile --windowed src/modular_dashboard/app.py
 ```
 
 这将在 `dist/` 目录中创建一个独立的可执行文件。

@@ -18,14 +18,14 @@ def get_config_dir():
     Notes
     -----
     The configuration directory is determined as follows:
-    - Windows: %APPDATA%\\ResearchDashboard
-    - macOS/Linux: ~/.config/ResearchDashboard
+    - Windows: %APPDATA%\\ModularDashboard
+    - macOS/Linux: ~/.config/ModularDashboard
     - Other systems: ./config (fallback)
     """
     if os.name == "nt":  # Windows
-        config_dir = Path(os.environ.get("APPDATA", "")) / "ResearchDashboard"
+        config_dir = Path(os.environ.get("APPDATA", "")) / "ModularDashboard"
     elif os.name == "posix":  # POSIX systems (macOS/Linux/others)
-        config_dir = Path.home() / ".config" / "ResearchDashboard"
+        config_dir = Path.home() / ".config" / "ModularDashboard"
     else:
         # Fallback to current directory for non-standard systems
         config_dir = Path("config")

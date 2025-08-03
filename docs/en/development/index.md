@@ -11,11 +11,11 @@ Research Dashboard 使用 Python 构建，使用 NiceGUI 作为 Web 界面。它
 1. 在 GitHub 上 fork 仓库
 2. 本地克隆您的 fork
 3. 使用 `uv lock` 和 `uv sync` Installation依赖
-4. 使用 `uv run -m research_dashboard.app` 运行应用程序
+4. 使用 `uv run -m modular_dashboard.app` 运行应用程序
 
 ## Project Structure
 
-```
+```text
 research-dashboard/
 ├── pyproject.toml              # 项目Configuration和依赖
 ├── README.md                   # 项目Overview
@@ -24,7 +24,7 @@ research-dashboard/
 ├── mkdocs.yml                  # 文档Configuration
 │
 ├── src/
-│   └── research_dashboard/     # 主要源代码
+│   └── modular_dashboard/     # 主要源代码
 │       ├── __init__.py
 │       ├── __main__.py         # 应用程序入口点
 │       ├── app.py              # 主应用程序逻辑

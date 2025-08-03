@@ -26,7 +26,6 @@ Research Dashboard 支持灵活的基于列的布局，允许您以最适合您�
 ### 导航和定位
 
 - `show_nav` - 切换顶部导航栏的可见性
-- `center_content` - 垂直居中仪表盘内容
 
 ## 布局示例
 
@@ -79,7 +78,6 @@ Research Dashboard 支持灵活的基于列的布局，允许您以最适合您�
     "columns": 2,
     "width": "default",
     "show_nav": true,
-    "center_content": false,
     "column_config": [
       {
         "width": "normal",

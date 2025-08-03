@@ -1,6 +1,6 @@
-# Research Dashboard Documentation
+# Modular Dashboard Documentation
 
-Welcome to the Research Dashboard documentation. This guide will help you understand how to install, configure, and use the Research Dashboard application.
+Welcome to the Modular Dashboard documentation. This guide will help you understand how to install, configure, and use the Modular Dashboard application.
 
 ## Table of Contents
 
@@ -21,11 +21,11 @@ Welcome to the Research Dashboard documentation. This guide will help you unders
   - [Project Structure](./development/structure.md)
   - [Contributing](./development/contributing.md)
 
-## About Research Dashboard
+## About Modular Dashboard
 
-Research Dashboard is a customizable information aggregation dashboard designed for researchers. It provides a unified interface to view and manage information from multiple sources including:
+Modular Dashboard is a customizable information aggregation dashboard. It provides a unified interface to view and manage information from multiple sources including:
 
-- ArXiv papers based on your research interests
+- ArXiv papers
 - Your GitHub activity
 - RSS feeds from your favorite sources
 
@@ -42,10 +42,10 @@ The dashboard features a flexible column-based layout system that allows you to 
 
 ## Getting Help
 
-If you need help with Research Dashboard, you can:
+If you need help with Modular Dashboard, you can:
 
 1. Check the documentation in this guide
-2. Report issues on the [GitHub repository](https://github.com/WayneXuCN/ResearchDashboard)
+2. Report issues on the [GitHub repository](https://github.com/WayneXuCN/ModularDashboard)
 3. Submit feature requests or suggestions
 
 For development-related questions, see the [Development](./development/index.md) section.

@@ -1,9 +1,9 @@
 """Module base class."""
 
 from abc import ABC, abstractmethod
-from typing import Any, Optional
+from typing import Any
 
-from ..storage import get_storage_manager, StorageBackend, CachedStorage
+from ..storage import CachedStorage, StorageBackend, get_storage_manager
 
 
 class Module(ABC):
@@ -15,8 +15,8 @@ class Module(ABC):
             config: Optional dictionary containing module-specific configuration
         """
         self.config = config or {}
-        self._storage: Optional[StorageBackend] = None
-        self._cache: Optional[CachedStorage] = None
+        self._storage: StorageBackend | None = None
+        self._cache: CachedStorage | None = None
         self._storage_manager = get_storage_manager()
 
     def get_storage(self) -> StorageBackend:

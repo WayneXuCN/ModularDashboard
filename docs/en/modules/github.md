@@ -25,7 +25,7 @@ Configuration示例：
     "refresh_interval": 3600,
     "username": "wayneXuCN",
     "repositories": [
-      "ResearchDashboard",
+      "ModularDashboard",
       "nicegui"
     ]
   }

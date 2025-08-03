@@ -4,15 +4,15 @@ import argparse
 import os
 import sys
 
-# Add src to path so we can import from research_dashboard
+# Add src to path so we can import from modular_dashboard
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
-from src.research_dashboard.docs.generator import generate_documentation
+from src.modular_dashboard.docs.generator import generate_documentation
 
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Generate documentation for Research Dashboard"
+        description="Generate documentation for Modular Dashboard"
     )
     parser.add_argument(
         "--output", "-o", default="docs", help="Output directory for documentation"

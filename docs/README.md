@@ -1,6 +1,6 @@
-# Research Dashboard 文档
+# Modular Dashboard 文档
 
-欢迎阅读 Research Dashboard 文档。本指南将帮助您了解如何安装、配置和使用 Research Dashboard 应用程序。
+欢迎阅读 Modular Dashboard 文档。本指南将帮助您了解如何安装、配置和使用 Modular Dashboard 应用程序。
 
 ## 目录
 
@@ -21,11 +21,11 @@
   - [项目结构](./development/structure.md)
   - [贡献](./development/contributing.md)
 
-## 关于 Research Dashboard
+## 关于 Modular Dashboard
 
-Research Dashboard 是一个为研究人员设计的可定制信息聚合仪表盘。它提供了一个统一的界面来查看和管理来自多个来源的信息，包括：
+Modular Dashboard 是一个可定制信息聚合仪表盘。它提供了一个统一的界面来查看和管理来自多个来源的信息，包括：
 
-- 基于您研究兴趣的 ArXiv 论文
+- 来自 ArXiv 的最新论文
 - 您的 GitHub 活动
 - 您最喜欢的来源的 RSS 订阅
 
@@ -42,10 +42,10 @@ Research Dashboard 是一个为研究人员设计的可定制信息聚合仪表�
 
 ## 获取帮助
 
-如果您需要 Research Dashboard 方面的帮助，您可以：
+如果您需要 Modular Dashboard 方面的帮助，您可以：
 
 1. 查看本指南中的文档
-2. 在 [GitHub 仓库](https://github.com/WayneXuCN/ResearchDashboard) 上报告问题
+2. 在 [GitHub 仓库](https://github.com/WayneXuCN/ModularDashboard) 上报告问题
 3. 提交功能请求或建议
 
 有关开发相关的问题，请参阅 [开发](./development/index.md) 部分。

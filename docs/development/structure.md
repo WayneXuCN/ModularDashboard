@@ -4,7 +4,7 @@
 
 ## 根目录
 
-```
+```text
 research-dashboard/
 ├── pyproject.toml              # 项目配置和依赖
 ├── README.md                   # 项目概述
@@ -22,10 +22,10 @@ research-dashboard/
 
 ## 源代码目录
 
-主要源代码在 `src/research_dashboard/` 中：
+主要源代码在 `src/modular_dashboard/` 中：
 
-```
-src/research_dashboard/
+```text
+src/modular_dashboard/
 ├── __init__.py
 ├── __main__.py         # 应用程序入口点
 ├── app.py              # 主应用程序逻辑

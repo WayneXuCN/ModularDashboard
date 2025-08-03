@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "research-dashboard"
+name = "modular-dashboard"
 version = "0.0.1"
 description = "本地化、模块化、可扩展信息聚合仪表盘"
 requires-python = ">=3.12"
@@ -12,7 +12,7 @@ license = { file = "LICENSE" }
 authors = [{ name = "Wenjie Xu", email = "wenjie.xu.cn@outlook.com" }]
 classifiers = [
     "Development Status :: 3 - Alpha",
-    "Intended Audience :: Science/Research",
+    "Intended Audience :: Developers",
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 3",
@@ -40,19 +40,19 @@ dependencies = [
 dev = ["pytest", "pytest-asyncio", "black", "flake8", "mypy"]
 
 [project.scripts]
-research-dashboard-docs = "scripts.generate_docs:main"
+modular-dashboard-docs = "scripts.generate_docs:main"
 
 [project.urls]
-Homepage = "https://github.com/WayneXuCN/ResearchDashboard"
-Repository = "https://github.com/WayneXuCN/ResearchDashboard"
-Issues = "https://github.com/WayneXuCN/ResearchDashboard/issues"
+Homepage = "https://github.com/WayneXuCN/ModularDashboard"
+Repository = "https://github.com/WayneXuCN/ModularDashboard"
+Issues = "https://github.com/WayneXuCN/ModularDashboard/issues"
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/research_dashboard"]
+packages = ["src/modular_dashboard"]
 
 [tool.hatch.build]
 include = [
-    "src/research_dashboard/**/*",
+    "src/modular_dashboard/**/*",
     "README.md",
     "LICENSE",
     "scripts/*",

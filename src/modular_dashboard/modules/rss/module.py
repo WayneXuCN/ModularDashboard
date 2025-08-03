@@ -1,7 +1,6 @@
 """RSS module implementation."""
 
 import re
-import time
 from datetime import datetime
 from typing import Any
 
@@ -16,13 +15,16 @@ class RssModule(ExtendedModule):
     def __init__(self, config: dict[str, Any] | None = None):
         super().__init__(config)
         # Initialize configuration attributes
-        self.feed_urls = self.config.get("feed_urls", ["https://waynexucn.github.io/feed.xml"])
+        self.feed_urls = self.config.get(
+            "feed_urls", ["https://waynexucn.github.io/feed.xml"]
+        )
         self.refresh_interval = self.config.get("refresh_interval", 3600)
         self.fetch_limit = self.config.get("fetch_limit", 5)
         self.show_author = self.config.get("show_author", True)
         self.show_description = self.config.get("show_description", True)
         self.show_date = self.config.get("show_date", True)
         self.show_image = self.config.get("show_image", True)
+
     @property
     def id(self) -> str:
         return "rss"
@@ -44,7 +46,6 @@ class RssModule(ExtendedModule):
         return "1.0.0"
 
     def fetch(self) -> list[dict[str, Any]]:
-
         # Use cache management
         cache = self.get_cache(self.refresh_interval)
         cached_data = cache.get("feeds")
@@ -187,7 +188,7 @@ class RssModule(ExtendedModule):
         cache = self.get_cache(self.refresh_interval)
         cache.delete("feeds")
         logger.info("Cleared RSS feeds cache")
-    
+
     def has_cache(self) -> bool:
         """RSS module uses caching."""
         return True

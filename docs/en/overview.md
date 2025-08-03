@@ -1,45 +1,45 @@
 # Overview
 
-Research Dashboard 是一个为研究人员设计的可定制信息聚合仪表盘。它提供了一个统一的界面来查看和管理来自多个来源的信息，包括 ArXiv Papers、GitHub Activity和 RSS Feeds。
+Modular Dashboard is a local, modular, and extensible information aggregation dashboard. It provides a unified interface to view and manage information from multiple sources, including Papers, GitHub Activity, and RSS Feeds.
 
-## 目的
+## Purpose
 
-Research Dashboard 的主要目的是为研究人员提供一个"日常工作的第一站"，通过高度可定制的卡片式布局聚合来自多个来源的信息。这使得研究人员能够快速掌握动态信息。
+Modular Dashboard's main purpose is to provide users with a "first stop for daily information" by aggregating information from multiple sources through a highly customizable card-based layout. This allows users to quickly grasp dynamic information.
 
-## 主要功能
+## Key Features
 
-### 信息来源
+### Information Sources
 
-Research Dashboard 目前支持三个主要的信息来源：
+Modular Dashboard currently supports three main information sources:
 
-1. **ArXiv Papers**：基于您关键词的最新 ArXiv Papers
-2. **GitHub Activity**：您最近的 GitHub Activity，包括提交、问题和拉取请求
-3. **RSS Feeds**：您 RSS Feeds的最新项目
+1. **Papers**: Latest papers
+2. **GitHub Activity**: Your recent GitHub activity, including commits, issues, and pull requests
+3. **RSS Feeds**: Latest items from your RSS feeds
 
-每个信息来源都作为一个Modules实现，可以独立启用、禁用和Configuration。
+Each information source is implemented as a module that can be independently enabled, disabled, and configured.
 
-### 灵活的Layout System
+### Flexible Layout System
 
-Research Dashboard 具有灵活的基于列的Layout System，允许您以最适合您工作流程的方式组织信息：
+Modular Dashboard features a flexible column-based layout system that allows you to organize information in a way that best fits your workflow:
 
-- Configuration 1-3 列，具有不同的宽度（窄或正常）
-- 将Modules放置在任何列中的任何顺序
-- 自定义整体页面宽度（窄、默认或宽）
-- 选择是否显示导航元素
-- 垂直居中内容以获得更清晰的外观
+- Configure 1-3 columns with different widths (narrow or normal)
+- Place modules in any order in any column
+- Customize overall page width (narrow, default, or wide)
+- Choose whether to show navigation elements
+- Vertically center content for a cleaner look
 
-### 自定义
+### Customization
 
-Research Dashboard 提供了广泛的自定义选项：
+Modular Dashboard provides extensive customization options:
 
-- **主题**：Toggle between light and dark color schemes
-- **ModulesConfiguration**：独立Configuration每个Modules及其特定设置
-- **布局**：使用基于列的系统自定义仪表盘布局
-- **Native Desktop Support**：Run as a native desktop application，获得更集成的体验
+- **Theme**: Toggle between light and dark color schemes
+- **Module Configuration**: Independently configure each module and its specific settings
+- **Layout**: Customize dashboard layout using a column-based system
+- **Native Desktop Support**: Run as a native desktop application for a more integrated experience
 
-### 技术特性
+### Technical Features
 
-- **Responsive Design**：Works on desktop and mobile devices
-- **实时更新**：基于可Configuration的时间间隔自动刷新信息
-- **可扩展架构**：基于Modules的系统，可以轻松添加新的信息来源
-- **现代化 UI**：美观的玻璃态效果界面，带有流畅的动画
+- **Responsive Design**: Works on desktop and mobile devices
+- **Real-time Updates**: Automatically refresh information based on configurable intervals
+- **Extensible Architecture**: Module-based system that makes it easy to add new information sources
+- **Modern UI**: Beautiful glass-morphism interface with smooth animations

@@ -1,14 +1,14 @@
-# 📄 信息速览 Dashboard  
+# 📄 Modular Dashboard
 
-> **项目名称**：`Research Dashboard`  
-> **定位**：面向科研人员的本地化、模块化、可扩展信息聚合仪表盘  
+> **项目名称**：`Modular Dashboard`  
+> **定位**：本地化、模块化、可扩展信息聚合仪表盘  
 > **核心原则**：极简、高效、可配置、离线优先、隐私安全
 
 ---
 
 ## 项目愿景
 
-为科研人员提供一个**每日工作第一入口**的桌面级应用，通过高度可定制的卡片式布局，聚合来自 arXiv、GitHub、RSS、日历等多源信息，实现"一眼掌握学术动态"的体验。
+为用户提供一个**日常信息第一入口**的桌面级应用，通过高度可定制的卡片式布局，聚合来自多种数据源的信息，实现动态信息一眼掌握的体验。
 
 - ✅ **非操作平台**：只展示，不操作（点击跳转原站）
 - ✅ **本地运行**：无账户、无云端同步，配置文件本地存储
@@ -63,10 +63,10 @@ uv pip install -e .
 
 ```bash
 # 以 Web 应用模式运行
-uv run -m research_dashboard
+uv run -m modular_dashboard
 
 # 以原生桌面应用模式运行
-uv run -m research_dashboard --native
+uv run -m modular_dashboard --native
 ```
 
 ### 打包为桌面应用（macOS）
@@ -76,14 +76,14 @@ uv run -m research_dashboard --native
 uv run scripts/package.py
 ```
 
-打包后的应用将位于 `dist/ResearchDashboard.app`，可直接运行。
+打包后的应用将位于 `dist/ModularDashboard.app`，可直接运行。
 
 ---
 
 ## 📁 项目结构
 
 ```
-research-dashboard/
+modular-dashboard/
 │
 ├── pyproject.toml             # uv + hatchling 配置
 ├── README.md                  # 项目说明、启动、打包指南
@@ -91,10 +91,10 @@ research-dashboard/
 ├── .gitignore                 # 忽略 config/、dist/、__pycache__/
 │
 ├── src/
-│   └── research_dashboard/
+│   └── modular_dashboard/
 │       │
 │       ├── __init__.py
-│       ├── __main__.py        # 入口：`python -m research_dashboard`
+│       ├── __main__.py        # 入口：`python -m modular_dashboard`
 │       ├── app.py             # 核心应用逻辑（NiceGUI 页面定义）
 │       │
 │       ├── config/
@@ -230,13 +230,13 @@ def get_module_class(module_id: str) -> type[Module]:
 ### 4. **入口文件**：`__main__.py`
 
 ```python
-# src/research_dashboard/__main__.py
+# src/modular_dashboard/__main__.py
 from .app import run_app
 if __name__ == "__main__":
     run_app()
 ```
 
-- ✅ 支持 `python -m research_dashboard` 启动
+- ✅ 支持 `python -m modular_dashboard` 启动
 - ✅ 避免路径导入问题
 
 ### 5. **静态资源**：CDN 优先，本地回退
@@ -314,7 +314,7 @@ class Module(ABC):
 
 ### 模块页面导航
 
-Research Dashboard 为每个模块自动创建了详细页面，可通过 `/module/{module_id}` 访问。
+Modular Dashboard 为每个模块自动创建了详细页面，可通过 `/module/{module_id}` 访问。
 用户可以通过点击主页上的模块卡片进入详细页面。
 
 在详细页面中，模块可以展示比主页更丰富的信息，例如：

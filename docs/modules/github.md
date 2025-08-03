@@ -25,7 +25,7 @@ GitHub 模模块支持以下配置选项：
     "refresh_interval": 3600,
     "username": "wayneXuCN",
     "repositories": [
-      "ResearchDashboard",
+      "ModularDashboard",
       "nicegui"
     ]
   }

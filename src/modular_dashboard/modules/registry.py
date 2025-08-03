@@ -22,6 +22,7 @@ MODULE_REGISTRY = {
     "weather": WeatherModule,
 }
 
+
 def get_module_class(module_id: str) -> type[Module] | None:
     """Get module class by ID. Returns None if not found."""
     return MODULE_REGISTRY.get(module_id)

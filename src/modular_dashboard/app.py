@@ -25,7 +25,7 @@ def initialize_app(config: dict[str, Any]) -> None:
     # logger.info(f"App config: {config}")
 
     # Add static files
-    app.add_static_files("/static", "src/research_dashboard/static")
+    app.add_static_files("/static", "src/modular_dashboard/static")
 
     # Add custom CSS
     ui.add_head_html("""
@@ -88,14 +88,14 @@ def run_app(native: bool = False) -> None:
             ui.run(
                 title="Dashboard",
                 native=True,
-                favicon="src/research_dashboard/assets/img/favicon.ico",
+                favicon="src/modular_dashboard/assets/img/favicon.ico",
                 window_size=(1024, 786),
                 reload=reload_enabled,  # Enable auto-reload based on environment
             )
         else:
             ui.run(
                 title="Dashboard",
-                favicon="src/research_dashboard/assets/img/favicon.ico",
+                favicon="src/modular_dashboard/assets/img/favicon.ico",
                 reload=reload_enabled,  # Enable auto-reload based on environment
             )
     except Exception as e:

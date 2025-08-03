@@ -6,21 +6,21 @@
 
 安装依赖后，您需要设置配置。Research Dashboard 在首次运行时会自动在系统的配置目录中创建默认配置文件：
 
-- **Windows**: `%APPDATA%\ResearchDashboard\config.json`
-- **macOS/Linux**: `~/.config/ResearchDashboard/config.json`
+- **Windows**: `%APPDATA%\ModularDashboard\config.json`
+- **macOS/Linux**: `~/.config/ModularDashboard/config.json`
 
 ## 运行应用程序
 
 要作为 Web 应用程序运行 Research Dashboard：
 
 ```bash
-uv run -m research_dashboard.app
+uv run -m modular_dashboard.app
 ```
 
 要作为原生桌面应用程序运行 Research Dashboard：
 
 ```bash
-uv run -m research_dashboard.app native
+uv run -m modular_dashboard.app native
 ```
 
 默认情况下，应用程序将在 `http://localhost:8080` 上可用。
@@ -52,4 +52,4 @@ Research Dashboard 是高度可配置的。配置文件采用 JSON 格式，包�
 3. 检查控制台输出中的错误消息
 4. 验证防火墙是否阻止了应用程序
 
-如果继续遇到问题，请在 GitHub 上[报告问题](https://github.com/WayneXuCN/ResearchDashboard/issues)。
+如果继续遇到问题，请在 GitHub 上[报告问题](https://github.com/WayneXuCN/ModularDashboard/issues)。

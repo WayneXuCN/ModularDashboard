@@ -35,7 +35,7 @@ class LayoutConfig:
     columns: int = 1  # 列数 (1-3)
     width: str = "default"  # "default", "narrow", "wide"
     show_nav: bool = True  # 是否显示导航栏
-    center_content: bool = False  # 是否垂直居中内容
+
     column_config: List[ColumnConfig] = None  # 每列的Configuration
 ```
 
@@ -117,8 +117,8 @@ def get_config_dir():
     说明
     -----
     ConfigurationTable of Contents按以下方式确定：
-    - Windows: %APPDATA%\\ResearchDashboard
-    - macOS/Linux: ~/.config/ResearchDashboard
+    - Windows: %APPDATA%\\ModularDashboard
+    - macOS/Linux: ~/.config/ModularDashboard
     - 其他系统: ./config (备用)
     """
 ```
@@ -133,8 +133,8 @@ def get_config_dir():
 
 用户Configuration存储在系统特定的ConfigurationTable of Contents中：
 
-- **Windows**: `%APPDATA%\\ResearchDashboard\\config.json`
-- **macOS/Linux**: `~/.config/ResearchDashboard/config.json`
+- **Windows**: `%APPDATA%\\ModularDashboard\\config.json`
+- **macOS/Linux**: `~/.config/ModularDashboard/config.json`
 
 此文件在首次运行时创建，用户可以修改它来自定义应用程序。
 

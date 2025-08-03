@@ -14,22 +14,20 @@ class HeaderNavigation:
     def render(self) -> None:
         """Render the header navigation."""
         with (
-            ui.card().classes(
-                "w-full border-0 shadow-sm bg-white/80 backdrop-blur-sm"
-            ),
+            ui.card().classes("w-full border-0 shadow-sm bg-white/80 backdrop-blur-sm"),
             ui.row().classes(
                 "w-full justify-between items-center p-4 max-w-7xl mx-auto"
-            )
+            ),
         ):
-                # Title with gradient styling
-                ui.label("Research Dashboard").classes(
-                    "text-3xl font-light bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent"
-                )
+            # Title with gradient styling
+            ui.label("Research Dashboard").classes(
+                "text-3xl font-light bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent"
+            )
 
-                # Controls container
-                with ui.row().classes("gap-3"):
-                    self._render_refresh_button()
-                    self._render_theme_toggle()
+            # Controls container
+            with ui.row().classes("gap-3"):
+                self._render_refresh_button()
+                self._render_theme_toggle()
 
     def _render_refresh_button(self) -> None:
         """Render the refresh button."""

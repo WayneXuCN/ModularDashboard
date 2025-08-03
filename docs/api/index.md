@@ -28,7 +28,7 @@ Research Dashboard 遵循模块化架构，每个信息源都作为一个独立�
 
 ### 应用
 
-主应用程序逻辑在 `src/research_dashboard/app.py` 中。它处理：
+主应用程序逻辑在 `src/modular_dashboard/app.py` 中。它处理：
 
 - 加载配置
 - 设置路由
@@ -37,7 +37,7 @@ Research Dashboard 遵循模块化架构，每个信息源都作为一个独立�
 
 ### 配置
 
-`src/research_dashboard/config/` 中的配置系统处理：
+`src/modular_dashboard/config/` 中的配置系统处理：
 
 - 加载默认和用户配置
 - 管理配置文件
@@ -45,7 +45,7 @@ Research Dashboard 遵循模块化架构，每个信息源都作为一个独立�
 
 ### 模块
 
-`src/research_dashboard/modules/` 中的模块系统提供：
+`src/modular_dashboard/modules/` 中的模块系统提供：
 
 - 可用模块的注册表
 - 实现新模块的基类
@@ -53,7 +53,7 @@ Research Dashboard 遵循模块化架构，每个信息源都作为一个独立�
 
 ### UI
 
-`src/research_dashboard/ui/` 中的 UI 组件处理：
+`src/modular_dashboard/ui/` 中的 UI 组件处理：
 
 - 渲染主仪表盘
 - 渲染模块详细视图
@@ -65,8 +65,8 @@ Research Dashboard 遵循模块化架构，每个信息源都作为一个独立�
 
 1. 创建继承自基础 `Module` 类的新模块类
 2. 实现所有必需的方法
-3. 在 `src/research_dashboard/modules/registry.py` 中注册模块
-4. 在 `src/research_dashboard/assets/default-config.json` 中添加默认配置
+3. 在 `src/modular_dashboard/modules/registry.py` 中注册模块
+4. 在 `src/modular_dashboard/assets/default-config.json` 中添加默认配置
 5. 在 docs 目录中记录模块
 
 有关实现新模块的详细信息，请参阅[模块基类](./module-base.md)文档。

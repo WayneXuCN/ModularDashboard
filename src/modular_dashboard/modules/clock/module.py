@@ -82,20 +82,22 @@ class ClockModule(ExtendedModule):
     def fetch(self) -> list[dict[str, Any]]:
         """Fetch current time data."""
         now = self._get_current_time()
-        return [{
-            "title": "Current Time",
-            "summary": f"{self._format_time(now)} - {self._format_date(now)}",
-            "link": "",
-            "published": now.isoformat(),
-            "tags": ["time", "clock"],
-            "extra": {
-                "time": self._format_time(now),
-                "date": self._format_date(now),
-                "timezone": self.timezone,
-                "format_24h": self.format_24h,
-                "show_seconds": self.show_seconds
+        return [
+            {
+                "title": "Current Time",
+                "summary": f"{self._format_time(now)} - {self._format_date(now)}",
+                "link": "",
+                "published": now.isoformat(),
+                "tags": ["time", "clock"],
+                "extra": {
+                    "time": self._format_time(now),
+                    "date": self._format_date(now),
+                    "timezone": self.timezone,
+                    "format_24h": self.format_24h,
+                    "show_seconds": self.show_seconds,
+                },
             }
-        }]
+        ]
 
     def render(self) -> None:
         """Render the clock module UI."""
@@ -103,16 +105,12 @@ class ClockModule(ExtendedModule):
 
         with ui.column().classes("w-full items-center justify-center gap-2"):
             # Time display
-            self.time_label = ui.label(
-                self._format_time(now)
-            ).classes(
+            self.time_label = ui.label(self._format_time(now)).classes(
                 "text-4xl font-bold text-blue-600 tabular-nums"
             )
 
             # Date display
-            self.date_label = ui.label(
-                self._format_date(now)
-            ).classes(
+            self.date_label = ui.label(self._format_date(now)).classes(
                 "text-lg text-gray-600 text-center"
             )
 
@@ -128,25 +126,23 @@ class ClockModule(ExtendedModule):
 
             # Main clock display
             with ui.card().classes("w-full p-8 text-center"):
-                self.time_label = ui.label(
-                    self._format_time(now)
-                ).classes(
+                self.time_label = ui.label(self._format_time(now)).classes(
                     "text-6xl font-bold text-blue-600 tabular-nums"
                 )
 
-                self.date_label = ui.label(
-                    self._format_date(now)
-                ).classes(
+                self.date_label = ui.label(self._format_date(now)).classes(
                     "text-2xl text-gray-600 mt-4"
                 )
 
             # Time zone info
-            with ui.card().classes("w-full p-4 text-center"):
-                with ui.row().classes("w-full justify-center gap-4 text-sm"):
-                    ui.label(f"Timezone: {self.timezone.upper()}")
-                    ui.label(f"Format: {'24-hour' if self.format_24h else '12-hour'}")
-                    if self.show_seconds:
-                        ui.label("Show: Seconds")
+            with (
+                ui.card().classes("w-full p-4 text-center"),
+                ui.row().classes("w-full justify-center gap-4 text-sm"),
+            ):
+                ui.label(f"Timezone: {self.timezone.upper()}")
+                ui.label(f"Format: {'24-hour' if self.format_24h else '12-hour'}")
+                if self.show_seconds:
+                    ui.label("Show: Seconds")
 
             # Additional time zones
             ui.label("Other Time Zones").classes("text-xl font-semibold mt-4")
@@ -157,14 +153,18 @@ class ClockModule(ExtendedModule):
                 with ui.card().classes("p-4 text-center min-w-[150px]"):
                     ui.label("Local").classes("font-semibold text-gray-600")
                     ui.label(local_time.strftime("%H:%M")).classes("text-2xl font-bold")
-                    ui.label(local_time.strftime("%Y-%m-%d")).classes("text-sm text-gray-500")
+                    ui.label(local_time.strftime("%Y-%m-%d")).classes(
+                        "text-sm text-gray-500"
+                    )
 
                 # UTC time
                 utc_time = datetime.utcnow()
                 with ui.card().classes("p-4 text-center min-w-[150px]"):
                     ui.label("UTC").classes("font-semibold text-gray-600")
                     ui.label(utc_time.strftime("%H:%M")).classes("text-2xl font-bold")
-                    ui.label(utc_time.strftime("%Y-%m-%d")).classes("text-sm text-gray-500")
+                    ui.label(utc_time.strftime("%Y-%m-%d")).classes(
+                        "text-sm text-gray-500"
+                    )
 
             # Start the clock update loop
             ui.timer(self.update_interval, self._update_clock)

@@ -1,6 +1,6 @@
-# Research Dashboard
+# Modular Dashboard
 
-Research Dashboard 是一个面向科研人员的信息聚合仪表盘项目，目前处于超早期开发阶段。
+Modular Dashboard 是一个本地化、模块化、可扩展的信息聚合仪表盘项目，目前处于超早期开发阶段。
 
 ## 当前状态
 
@@ -12,7 +12,7 @@ Research Dashboard 是一个面向科研人员的信息聚合仪表盘项目，�
 
 ## 项目目标
 
-为科研人员提供一个**每日工作第一入口**的桌面级应用，通过高度可定制的卡片式布局，聚合来自 arXiv、GitHub、RSS、日历等多源信息，实现动态信息一眼掌握。
+为用户提供一个**每日信息第一入口**的桌面级应用，通过高度可定制的卡片式布局，聚合来自多种数据源的信息，实现动态信息一眼掌握。
 
 ## 快速开始
 
@@ -28,7 +28,7 @@ uv sync
 
 ```bash
 # 以 Web 应用模式运行
-uv run -m research_dashboard.app
+uv run -m modular_dashboard.app
 
 # 以原生桌面应用模式运行（修改 native）
 ```

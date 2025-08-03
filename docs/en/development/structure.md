@@ -4,7 +4,7 @@
 
 ## 根Table of Contents
 
-```
+```text
 research-dashboard/
 ├── pyproject.toml              # 项目Configuration和依赖
 ├── README.md                   # 项目Overview
@@ -22,10 +22,10 @@ research-dashboard/
 
 ## 源代码Table of Contents
 
-主要源代码在 `src/research_dashboard/` 中：
+主要源代码在 `src/modular_dashboard/` 中：
 
-```
-src/research_dashboard/
+```text
+src/modular_dashboard/
 ├── __init__.py
 ├── __main__.py         # 应用程序入口点
 ├── app.py              # 主应用程序逻辑

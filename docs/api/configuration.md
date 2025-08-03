@@ -6,9 +6,9 @@
 
 配置系统由以下部分组成：
 
-1. `src/research_dashboard/config/schema.py` 中的配置模式定义
-2. `src/research_dashboard/config/manager.py` 中的配置管理
-3. `src/research_dashboard/assets/default-config.json` 中的默认配置
+1. `src/modular_dashboard/config/schema.py` 中的配置模式定义
+2. `src/modular_dashboard/config/manager.py` 中的配置管理
+3. `src/modular_dashboard/assets/default-config.json` 中的默认配置
 
 ## 模式定义
 
@@ -35,7 +35,6 @@ class LayoutConfig:
     columns: int = 1  # 列数 (1-3)
     width: str = "default"  # "default", "narrow", "wide"
     show_nav: bool = True  # 是否显示导航栏
-    center_content: bool = False  # 是否垂直居中内容
     column_config: List[ColumnConfig] = None  # 每列的配置
 ```
 
@@ -117,8 +116,8 @@ def get_config_dir():
     说明
     -----
     配置目录按以下方式确定：
-    - Windows: %APPDATA%\\ResearchDashboard
-    - macOS/Linux: ~/.config/ResearchDashboard
+    - Windows: %APPDATA%\\ModularDashboard
+    - macOS/Linux: ~/.config/ModularDashboard
     - 其他系统: ./config (备用)
     """
 ```
@@ -127,14 +126,14 @@ def get_config_dir():
 
 ### 默认配置
 
-默认配置存储在 `src/research_dashboard/assets/default-config.json` 中。在创建新用户配置时，此文件用作模板。
+默认配置存储在 `src/modular_dashboard/assets/default-config.json` 中。在创建新用户配置时，此文件用作模板。
 
 ### 用户配置
 
 用户配置存储在系统特定的配置目录中：
 
-- **Windows**: `%APPDATA%\\ResearchDashboard\\config.json`
-- **macOS/Linux**: `~/.config/ResearchDashboard/config.json`
+- **Windows**: `%APPDATA%\\ModularDashboard\\config.json`
+- **macOS/Linux**: `~/.config/ModularDashboard/config.json`
 
 此文件在首次运行时创建，用户可以修改它来自定义应用程序。
 

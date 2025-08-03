@@ -1,15 +1,13 @@
 """Extended module base class with extended functionality."""
 
-from abc import ABC, abstractmethod
-from typing import Any, Dict, List, Optional, Callable, Union
-from datetime import datetime, timedelta
-import asyncio
-from loguru import logger
+from collections.abc import Callable
+from datetime import datetime
+from typing import Any
 
+from loguru import logger
 from nicegui import ui
 
 from .base import Module
-from ..storage import get_storage_manager, StorageBackend, CachedStorage
 
 
 class ExtendedModule(Module):
@@ -17,11 +15,11 @@ class ExtendedModule(Module):
 
     def __init__(self, config: dict[str, Any] | None = None):
         super().__init__(config)
-        self._refresh_callbacks: List[Callable] = []
-        self._error_handlers: List[Callable] = []
+        self._refresh_callbacks: list[Callable] = []
+        self._error_handlers: list[Callable] = []
         self._is_initialized = False
-        self._last_error: Optional[Exception] = None
-        self._stats: Dict[str, Any] = {
+        self._last_error: Exception | None = None
+        self._stats: dict[str, Any] = {
             "fetch_count": 0,
             "error_count": 0,
             "last_fetch": None,
@@ -39,19 +37,19 @@ class ExtendedModule(Module):
         return "general"
 
     @property
-    def supported_features(self) -> List[str]:
+    def supported_features(self) -> list[str]:
         """List of supported features."""
         return []
 
-    def get_default_config(self) -> Dict[str, Any]:
+    def get_default_config(self) -> dict[str, Any]:
         """Get default configuration for the module."""
         return {}
 
-    def validate_config(self, config: Dict[str, Any]) -> bool:
+    def validate_config(self, config: dict[str, Any]) -> bool:
         """Validate module configuration."""
         return True
 
-    def get_config_schema(self) -> Dict[str, Any]:
+    def get_config_schema(self) -> dict[str, Any]:
         """Get configuration schema for UI generation."""
         return {}
 
@@ -83,7 +81,7 @@ class ExtendedModule(Module):
             except Exception as e:
                 logger.error(f"Error in error handler: {e}")
 
-    def get_stats(self) -> Dict[str, Any]:
+    def get_stats(self) -> dict[str, Any]:
         """Get module statistics."""
         return self._stats.copy()
 
@@ -96,13 +94,13 @@ class ExtendedModule(Module):
             "last_error": None,
         }
 
-    async def async_fetch(self) -> List[Dict[str, Any]]:
+    async def async_fetch(self) -> list[dict[str, Any]]:
         """Async version of fetch method."""
         return self.fetch()
 
     def fetch_with_retry(
         self, max_retries: int = 3, retry_delay: float = 1.0
-    ) -> List[Dict[str, Any]]:
+    ) -> list[dict[str, Any]]:
         """Fetch data with retry logic."""
         for attempt in range(max_retries):
             try:
@@ -115,7 +113,9 @@ class ExtendedModule(Module):
                     self._handle_error(e)
                     raise
                 logger.warning(f"Fetch attempt {attempt + 1} failed, retrying...")
-                asyncio.sleep(retry_delay)
+                import time
+
+                time.sleep(retry_delay)
 
         return []
 

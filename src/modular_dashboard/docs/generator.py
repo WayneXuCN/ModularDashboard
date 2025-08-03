@@ -137,7 +137,7 @@ def generate_development_docs() -> None:
         f.write("├── .gitignore                 # Git ignore patterns\n")
         f.write("│\n")
         f.write("├── src/\n")
-        f.write("│   └── research_dashboard/    # Main source code\n")
+        f.write("│   └── modular_dashboard/    # Main source code\n")
         f.write("│       ├── __init__.py\n")
         f.write("│       ├── __main__.py        # Entry point\n")
         f.write("│       ├── app.py             # Main application logic\n")
@@ -163,11 +163,11 @@ def generate_development_docs() -> None:
         f.write("   ```\n\n")
         f.write("2. Run the application:\n")
         f.write("   ```bash\n")
-        f.write("   uv run -m research_dashboard\n")
+        f.write("   uv run -m modular_dashboard\n")
         f.write("   ```\n\n")
         f.write("3. Run as native desktop app:\n")
         f.write("   ```bash\n")
-        f.write("   uv run -m research_dashboard --native\n")
+        f.write("   uv run -m modular_dashboard --native\n")
         f.write("   ```\n")
 
 

@@ -29,9 +29,9 @@ def create_icon():
             draw.ellipse([x - 5, y - 5, x + 5, y + 5], fill=(65, 105, 225))
 
     # Save the image
-    img.save("src/research_dashboard/assets/app.iconset/icon_256x256.png")
+    img.save("src/modular_dashboard/assets/app.iconset/icon_256x256.png")
     print(
-        "Created placeholder icon at src/research_dashboard/assets/app.iconset/icon_256x256.png"
+        "Created placeholder icon at src/modular_dashboard/assets/app.iconset/icon_256x256.png"
     )
 
 

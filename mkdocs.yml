@@ -1,7 +1,7 @@
-site_name: Research Dashboard Documentation
-site_url: https://your-username.github.io/research-dashboard/
-repo_url: https://github.com/WayneXuCN/ResearchDashboard
-repo_name: research-dashboard
+site_name: Modular Dashboard Documentation
+site_url: https://your-username.github.io/modular-dashboard/
+repo_url: https://github.com/WayneXuCN/ModularDashboard
+repo_name: modular-dashboard
 edit_uri: edit/main/docs/
 theme:
   name: material
@@ -73,7 +73,7 @@ markdown_extensions:
 
 plugins:
   - i18n:
-      docs_structure: suffix
+      docs_structure: folder
       languages:
         - locale: zh
           default: true
@@ -82,7 +82,7 @@ plugins:
         - locale: en
           name: English
           build: true
-          site_name: Research Dashboard Documentation
+          site_name: Modular Dashboard Documentation
           nav_translations:
             Home: Home
             Overview: Overview

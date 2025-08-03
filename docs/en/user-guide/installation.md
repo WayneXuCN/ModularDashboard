@@ -42,7 +42,7 @@ pip install -r requirements.txt
 Installation依赖后，您可以通过运行以下命令验证Installation：
 
 ```bash
-uv run -m research_dashboard.app --help
+uv run -m modular_dashboard.app --help
 ```
 
 这应该会显示 Research Dashboard 应用程序的帮助信息。

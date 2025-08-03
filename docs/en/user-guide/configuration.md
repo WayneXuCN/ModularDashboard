@@ -2,10 +2,10 @@
 
 Research Dashboard 通过位于系统ConfigurationTable of Contents中的 JSON 文件进行Configuration：
 
-- **Windows**: `%APPDATA%\ResearchDashboard\config.json`
-- **macOS/Linux**: `~/.config/ResearchDashboard/config.json`
+- **Windows**: `%APPDATA%\ModularDashboard\config.json`
+- **macOS/Linux**: `~/.config/ModularDashboard/config.json`
 
-首次运行时，Research Dashboard 会根据 `src/research_dashboard/assets/default-config.json` 中的模板创建默认Configuration文件。
+首次运行时，Research Dashboard 会根据 `src/modular_dashboard/assets/default-config.json` 中的模板创建默认Configuration文件。
 
 ## Configuration结构
 
@@ -19,7 +19,6 @@ Configuration文件具有以下结构：
     "columns": 3,
     "width": "default",
     "show_nav": true,
-    "center_content": false,
     "column_config": [
       {
         "width": "narrow",
@@ -57,7 +56,7 @@ Configuration文件具有以下结构：
         "refresh_interval": 3600,
         "username": "wayneXuCN",
         "repositories": [
-          "ResearchDashboard",
+          "ModularDashboard",
           "nicegui"
         ]
       }
@@ -95,7 +94,6 @@ Configuration文件具有以下结构：
 - `columns`: 列数 (1-3)
 - `width`: 页面宽度 ("default", "narrow", 或 "wide")
 - `show_nav`: 是否显示导航栏
-- `center_content`: 是否垂直居中内容
 - `column_config`: 列Configuration数组
 
 每个列Configuration包含：
@@ -152,7 +150,6 @@ RSS Modules支持以下Configuration选项：
     "columns": 3,
     "width": "default",
     "show_nav": true,
-    "center_content": false,
     "column_config": [
       {
         "width": "narrow",
@@ -181,7 +178,6 @@ RSS Modules支持以下Configuration选项：
     "columns": 2,
     "width": "default",
     "show_nav": true,
-    "center_content": false,
     "column_config": [
       {
         "width": "normal",
@@ -206,7 +202,6 @@ RSS Modules支持以下Configuration选项：
     "columns": 1,
     "width": "default",
     "show_nav": true,
-    "center_content": false,
     "column_config": [
       {
         "width": "normal",

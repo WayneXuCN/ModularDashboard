@@ -11,7 +11,7 @@
 1. 在 GitHub 上 fork 仓库
 2. 本地克隆您的 fork
 3. 使用 `uv lock` 和 `uv sync` Installation依赖
-4. 使用 `uv run -m research_dashboard.app` 运行应用程序
+4. 使用 `uv run -m modular_dashboard.app` 运行应用程序
 
 ## Contributing流程
 
@@ -74,8 +74,8 @@ mkdocs serve
 
 1. 创建继承自基础 `Module` 类的新Modules类
 2. 实现所有必需的方法
-3. 在 `src/research_dashboard/modules/registry.py` 中注册Modules
-4. 在 `src/research_dashboard/assets/default-config.json` 中添加默认Configuration
+3. 在 `src/modular_dashboard/modules/registry.py` 中注册Modules
+4. 在 `src/modular_dashboard/assets/default-config.json` 中添加默认Configuration
 5. 在 docs Table of Contents中记录Modules
 
 ## 代码审查

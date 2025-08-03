@@ -28,16 +28,16 @@ python -m build
 
 要创建无需Installation Python 即可运行的独立可执行文件：
 
-1. Installation PyInstaller：
+- Installation PyInstaller：
 
 ```bash
 pip install pyinstaller
 ```
 
-2. 创建可执行文件：
+- 创建可执行文件：
 
 ```bash
-pyinstaller --onefile --windowed src/research_dashboard/app.py
+pyinstaller --onefile --windowed src/modular_dashboard/app.py
 ```
 
 这将在 `dist/` Table of Contents中创建一个独立的可执行文件。

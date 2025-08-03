@@ -28,7 +28,7 @@ Modules负责：
 
 ### 应用
 
-主应用程序逻辑在 `src/research_dashboard/app.py` 中。它处理：
+主应用程序逻辑在 `src/modular_dashboard/app.py` 中。它处理：
 
 - 加载Configuration
 - 设置路由
@@ -37,7 +37,7 @@ Modules负责：
 
 ### Configuration
 
-`src/research_dashboard/config/` 中的Configuration系统处理：
+`src/modular_dashboard/config/` 中的Configuration系统处理：
 
 - 加载默认和用户Configuration
 - 管理Configuration文件
@@ -45,7 +45,7 @@ Modules负责：
 
 ### Modules
 
-`src/research_dashboard/modules/` 中的Modules系统提供：
+`src/modular_dashboard/modules/` 中的Modules系统提供：
 
 - 可用Modules的注册表
 - 实现新Modules的基类
@@ -53,7 +53,7 @@ Modules负责：
 
 ### UI
 
-`src/research_dashboard/ui/` 中的 UI 组件处理：
+`src/modular_dashboard/ui/` 中的 UI 组件处理：
 
 - 渲染主仪表盘
 - 渲染Modules详细视图
@@ -65,8 +65,8 @@ Modules负责：
 
 1. 创建继承自基础 `Module` 类的新Modules类
 2. 实现所有必需的方法
-3. 在 `src/research_dashboard/modules/registry.py` 中注册Modules
-4. 在 `src/research_dashboard/assets/default-config.json` 中添加默认Configuration
+3. 在 `src/modular_dashboard/modules/registry.py` 中注册Modules
+4. 在 `src/modular_dashboard/assets/default-config.json` 中添加默认Configuration
 5. 在 docs Table of Contents中记录Modules
 
 有关实现新Modules的详细信息，请参阅[Modules基类](./module-base.md)文档。
