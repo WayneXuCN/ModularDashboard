@@ -3,9 +3,8 @@
   "theme": "light",
   "layout": {
     "columns": 3,
-    "width": "default",
+    "width": "slim",
     "show_nav": true,
-    "center_content": false,
     "column_config": [
       {
         "width": "narrow",
@@ -13,7 +12,7 @@
       },
       {
         "width": "normal",
-        "modules": ["github", "rss"]
+        "modules": ["github"]
       },
       {
         "width": "narrow",

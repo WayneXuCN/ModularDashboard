@@ -1,4 +1,78 @@
-/* Custom styles for Research Dashboard */
+/* Custom styles for Research Dashboard - Simplified for NiceGUI */
+
+/* Ensure responsive layout works correctly for 3-column mode */
+@media (max-width: 767px) {
+  /* Mobile: make columns full width */
+  .sm\\:w-1\\/2, .md\\:w-1\\/3, .lg\\:w-1\\/3 {
+    width: 100% !important;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  /* Tablet: 2 columns for 3-column layout */
+  .md\\:w-1\\/3, .lg\\:w-1\\/3 {
+    width: 50% !important;
+  }
+}
+
+/* Enhanced mobile responsiveness */
+@media (max-width: 639px) {
+  /* Ensure proper mobile layout */
+  .nicegui-container {
+    padding: 0.5rem !important;
+  }
+  
+  /* Mobile card adjustments */
+  .q-card {
+    margin-bottom: 1rem !important;
+  }
+}
+
+/* Dark mode enhancements */
+.body--dark .q-card {
+  background: rgba(30, 41, 59, 0.8) !important;
+  backdrop-filter: blur(10px);
+}
+
+.body--dark .bg-gradient-to-br {
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(30, 41, 59, 0.8) 100%) !important;
+}
+
+/* Subtle enhancements for cards */
+.q-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.q-card:hover {
+  transform: translateY(-2px);
+}
+
+/* Mobile-first responsive adjustments */
+@media (max-width: 768px) {
+  /* Ensure touch-friendly interface */
+  .q-btn {
+    min-height: 44px !important;
+  }
+  
+  /* Better mobile spacing */
+  .q-pa-md {
+    padding: 1rem !important;
+  }
+}
+
+/* Desktop-specific fixes for 3-column layout */
+@media (min-width: 1200px) {
+  /* Ensure content area uses full available space on large desktop screens */
+  .w-full.px-6 {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+  
+  /* Optimize column spacing for very large screens */
+  .row.gap-6 {
+    gap: 2rem;
+  }
+}
 
 /* Card hover effects */
 .card-hover {

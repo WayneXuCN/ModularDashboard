@@ -2,21 +2,13 @@
   "version": "0.1.0",
   "theme": "light",
   "layout": {
-    "columns": 3,
+    "columns": 1,
     "width": "default",
     "show_nav": true,
     "column_config": [
       {
-        "width": "narrow",
-        "modules": ["arxiv"]
-      },
-      {
         "width": "normal",
-        "modules": ["github"]
-      },
-      {
-        "width": "narrow",
-        "modules": ["rss"]
+        "modules": ["arxiv", "github", "rss"]
       }
     ]
   },

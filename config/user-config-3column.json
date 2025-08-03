@@ -7,7 +7,7 @@
     "show_nav": true,
     "column_config": [
       {
-        "width": "narrow",
+        "width": "normal",
         "modules": ["arxiv"]
       },
       {
@@ -15,7 +15,7 @@
         "modules": ["github"]
       },
       {
-        "width": "narrow",
+        "width": "normal",
         "modules": ["rss"]
       }
     ]

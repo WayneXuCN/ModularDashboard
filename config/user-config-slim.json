@@ -3,11 +3,11 @@
   "theme": "light",
   "layout": {
     "columns": 3,
-    "width": "default",
+    "width": "slim",
     "show_nav": true,
     "column_config": [
       {
-        "width": "narrow",
+        "width": "normal",
         "modules": ["arxiv"]
       },
       {
@@ -15,7 +15,7 @@
         "modules": ["github"]
       },
       {
-        "width": "narrow",
+        "width": "normal",
         "modules": ["rss"]
       }
     ]

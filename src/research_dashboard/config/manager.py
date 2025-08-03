@@ -73,7 +73,8 @@ def load_config() -> AppConfig:
             json.dump(config_data, f, indent=2)
 
     # Convert to AppConfig object
-    layout = LayoutConfig(**config_data.get("layout", {}))
+    layout_data = config_data.get("layout", {})
+    layout = LayoutConfig(**layout_data)
     modules = [ModuleConfig(**module) for module in config_data.get("modules", [])]
 
     return AppConfig(
