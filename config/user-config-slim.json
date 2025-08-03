@@ -10,7 +10,8 @@
         "width": "normal",
         "modules": [
           "arxiv",
-          "clock"
+          "clock",
+          "progress"
         ]
       },
       {
@@ -147,6 +148,16 @@
           "https://www.wikipedia.org",
           "https://www.stackoverflow.com"
         ]
+      }
+    },
+    {
+      "id": "progress",
+      "enabled": true,
+      "collapsed": false,
+      "config": {
+        "default_period": "day",
+        "auto_update": true,
+        "update_interval": 60
       }
     }
   ]

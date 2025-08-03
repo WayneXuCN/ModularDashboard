@@ -49,6 +49,7 @@ Modular Dashboard is a local, modular, and extensible information aggregation da
 | **RSS** | 📡 | RSS feed reader for your favorite sources | RSS Feeds | Configurable | ✅ Feeds, Refresh Rate |
 | **GitHub** | 🐙 | GitHub activity tracking for users and repositories | GitHub API | Hourly | ✅ Users, Repos, Events |
 | **Releases** | 📦 | Latest software releases tracking | GitHub Releases | Daily | ✅ Repository Selection |
+| **Time Progress** | 📊 | Visualize time progress for day, month, and year | System Time | Real-time | ✅ Period Selection |
 
 </div>
 

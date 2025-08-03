@@ -6,6 +6,7 @@ from .base import Module
 from .clock.module import ClockModule
 from .github.module import GithubModule
 from .monitor.module import MonitorModule
+from .progress.module import ProgressModule
 from .releases.module import ReleasesModule
 from .rss.module import RssModule
 from .todo.module import TodoModule
@@ -18,6 +19,7 @@ MODULE_REGISTRY = {
     "clock": ClockModule,
     "github": GithubModule,
     "monitor": MonitorModule,
+    "progress": ProgressModule,
     "releases": ReleasesModule,
     "rss": RssModule,
     "todo": TodoModule,

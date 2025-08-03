@@ -17,7 +17,8 @@
           "todo",
           "releases",
           "monitor",
-          "animals"
+          "animals",
+          "progress"
         ]
       }
     ]
@@ -135,6 +136,16 @@
         "refresh_interval": 1800,
         "show_title": true,
         "border_radius": 8
+      }
+    },
+    {
+      "id": "progress",
+      "enabled": true,
+      "collapsed": false,
+      "config": {
+        "default_period": "day",
+        "auto_update": true,
+        "update_interval": 60
       }
     }
   ]

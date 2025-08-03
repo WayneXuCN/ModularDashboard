@@ -10,7 +10,8 @@
         "width": "normal",
         "modules": [
           "animals",
-          "clock"
+          "clock",
+          "progress"
         ]
       },
       {
@@ -146,6 +147,16 @@
           "https://www.apple.com",
           "https://www.microsoft.com"
         ]
+      }
+    },
+    {
+      "id": "progress",
+      "enabled": true,
+      "collapsed": false,
+      "config": {
+        "default_period": "day",
+        "auto_update": true,
+        "update_interval": 60
       }
     }
   ]
