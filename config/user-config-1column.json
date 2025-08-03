@@ -8,7 +8,17 @@
     "column_config": [
       {
         "width": "normal",
-        "modules": ["arxiv", "github", "rss", "clock", "weather", "todo", "releases", "monitor"]
+        "modules": [
+          "arxiv",
+          "github",
+          "rss",
+          "clock",
+          "weather",
+          "todo",
+          "releases",
+          "monitor",
+          "animals"
+        ]
       }
     ]
   },
@@ -112,6 +122,19 @@
           "https://www.github.com",
           "https://www.baidu.com"
         ]
+      }
+    },
+    {
+      "id": "animals",
+      "enabled": true,
+      "collapsed": false,
+      "config": {
+        "animal_type": "cat",
+        "height": 200,
+        "auto_refresh": false,
+        "refresh_interval": 1800,
+        "show_title": true,
+        "border_radius": 8
       }
     }
   ]

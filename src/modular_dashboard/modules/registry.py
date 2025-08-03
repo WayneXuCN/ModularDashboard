@@ -1,5 +1,6 @@
 """Module registry."""
 
+from .animals.module import AnimalsModule
 from .arxiv.module import ArxivModule
 from .base import Module
 from .clock.module import ClockModule
@@ -12,6 +13,7 @@ from .weather.module import WeatherModule
 
 # Registry of all available modules
 MODULE_REGISTRY = {
+    "animals": AnimalsModule,
     "arxiv": ArxivModule,
     "clock": ClockModule,
     "github": GithubModule,

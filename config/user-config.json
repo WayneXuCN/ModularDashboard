@@ -8,15 +8,26 @@
     "column_config": [
       {
         "width": "normal",
-        "modules": ["arxiv", "clock"]
+        "modules": [
+          "arxiv",
+          "clock"
+        ]
       },
       {
-        "width": "normal", 
-        "modules": ["github", "weather", "monitor"]
+        "width": "normal",
+        "modules": [
+          "github",
+          "weather"
+        ]
       },
       {
-        "width": "normal", 
-        "modules": ["rss", "todo", "releases"]
+        "width": "normal",
+        "modules": [
+          "rss",
+          "todo",
+          "releases",
+          "animals"
+        ]
       }
     ]
   },
@@ -111,17 +122,30 @@
       }
     },
     {
+      "id": "animals",
+      "enabled": true,
+      "collapsed": false,
+      "config": {
+        "animal_type": "cat",
+        "height": 200,
+        "auto_refresh": false,
+        "refresh_interval": 1800,
+        "show_title": true,
+        "border_radius": 8
+      }
+    },
+    {
       "id": "monitor",
       "enabled": true,
       "collapsed": false,
       "config": {
-        "timeout": 10,
+        "timeout": 12,
         "sites": [
           "https://www.google.com",
           "https://www.github.com",
-          "https://www.baidu.com",
           "https://api.github.com",
-          "https://www.wikipedia.org"
+          "https://www.wikipedia.org",
+          "https://www.stackoverflow.com"
         ]
       }
     }
