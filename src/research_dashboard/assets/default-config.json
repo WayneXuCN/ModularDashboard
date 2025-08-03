@@ -2,67 +2,64 @@
   "version": "0.1.0",
   "theme": "light",
   "layout": {
-    "columns": 3,
+    "columns": 2,
     "width": "default",
     "show_nav": true,
     "column_config": [
       {
-        "width": "narrow",
-        "modules": ["arxiv"]
-      },
-      {
         "width": "normal",
-        "modules": ["github"]
+        "modules": ["clock", "weather"]
       },
       {
-        "width": "narrow",
-        "modules": ["rss"]
+        "width": "normal", 
+        "modules": ["todo", "releases"]
       }
     ]
   },
   "modules": [
     {
-      "id": "arxiv",
+      "id": "clock",
       "enabled": true,
       "collapsed": false,
       "config": {
-        "refresh_interval": 3600,
-        "keywords": [
-          "machine learning",
-          "artificial intelligence",
-          "quantum computing"
-        ]
+        "timezone": "local",
+        "format_24h": false,
+        "show_seconds": true,
+        "update_interval": 1,
+        "date_format": "%A, %B %d, %Y"
       }
     },
     {
-      "id": "github",
+      "id": "weather",
+      "enabled": true,
+      "collapsed": false,
+      "config": {
+        "city": "Beijing",
+        "api_key": ""
+      }
+    },
+    {
+      "id": "todo",
+      "enabled": true,
+      "collapsed": false,
+      "config": {
+        "max_items": 10,
+        "auto_save": true
+      }
+    },
+    {
+      "id": "releases",
       "enabled": true,
       "collapsed": false,
       "config": {
         "refresh_interval": 3600,
-        "username": "wayneXuCN",
         "repositories": [
-          "ResearchDashboard",
-          "nicegui"
-        ]
-      }
-    },
-    {
-      "id": "rss",
-      "enabled": true,
-      "collapsed": false,
-      "config": {
-        "refresh_interval": 3600,
-        "feed_urls": [
-          "https://sspai.com/feed",
-          "https://waynexucn.github.io/feed.xml"
+          "microsoft/vscode",
+          "gitlab:gitlab-org/gitlab",
+          "codeberg:forgejo/forgejo",
+          "docker:library/nginx"
         ],
-        "fetch_limit": 10,
-        "show_limit": 5,
-        "show_author": true,
-        "show_description": true,
-        "show_date": true,
-        "show_image": true
+        "max_releases": 5
       }
     }
   ]

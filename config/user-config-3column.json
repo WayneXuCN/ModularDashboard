@@ -8,15 +8,15 @@
     "column_config": [
       {
         "width": "normal",
-        "modules": ["arxiv"]
+        "modules": ["arxiv", "clock"]
       },
       {
         "width": "normal",
-        "modules": ["github"]
+        "modules": ["github", "weather", "todo"]
       },
       {
         "width": "normal",
-        "modules": ["rss"]
+        "modules": ["rss", "releases", "monitor"]
       }
     ]
   },
@@ -63,6 +63,65 @@
         "show_description": true,
         "show_date": true,
         "show_image": true
+      }
+    },
+    {
+      "id": "clock",
+      "enabled": true,
+      "collapsed": false,
+      "config": {
+        "timezone": "local",
+        "format_24h": true,
+        "show_seconds": false,
+        "update_interval": 1,
+        "date_format": "%Y-%m-%d"
+      }
+    },
+    {
+      "id": "weather",
+      "enabled": true,
+      "collapsed": false,
+      "config": {
+        "city": "Shanghai",
+        "api_key": ""
+      }
+    },
+    {
+      "id": "todo",
+      "enabled": true,
+      "collapsed": false,
+      "config": {
+        "max_items": 5,
+        "auto_save": true
+      }
+    },
+    {
+      "id": "releases",
+      "enabled": true,
+      "collapsed": false,
+      "config": {
+        "refresh_interval": 1800,
+        "repositories": [
+          "torvalds/linux",
+          "gitlab:gitlab-org/gitlab-runner",
+          "codeberg:forgejo/forgejo",
+          "docker:library/postgres"
+        ],
+        "max_releases": 3
+      }
+    },
+    {
+      "id": "monitor",
+      "enabled": true,
+      "collapsed": false,
+      "config": {
+        "timeout": 15,
+        "sites": [
+          "https://www.google.com",
+          "https://www.github.com",
+          "https://www.apple.com",
+          "https://www.microsoft.com"
+        ]
       }
     }
   ]

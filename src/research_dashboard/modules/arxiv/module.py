@@ -4,17 +4,17 @@ from typing import Any
 
 from nicegui import ui
 
-from ..base import Module
+from ..extended import ExtendedModule
 
 
-class ArxivModule(Module):
+class ArxivModule(ExtendedModule):
     @property
     def id(self) -> str:
         return "arxiv"
 
     @property
     def name(self) -> str:
-        return "ArXiv Papers"
+        return "Arxiv Papers"
 
     @property
     def icon(self) -> str:
@@ -22,7 +22,11 @@ class ArxivModule(Module):
 
     @property
     def description(self) -> str:
-        return "Latest papers from ArXiv based on your keywords"
+        return "Latest academic papers and publications based on your interests"
+
+    @property
+    def version(self) -> str:
+        return "1.0.0"
 
     def fetch(self) -> list[dict[str, Any]]:
         # Placeholder implementation

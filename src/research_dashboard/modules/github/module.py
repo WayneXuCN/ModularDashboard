@@ -4,10 +4,10 @@ from typing import Any
 
 from nicegui import ui
 
-from ..base import Module
+from ..extended import ExtendedModule
 
 
-class GithubModule(Module):
+class GithubModule(ExtendedModule):
     @property
     def id(self) -> str:
         return "github"
@@ -24,15 +24,19 @@ class GithubModule(Module):
     def description(self) -> str:
         return "Your recent GitHub activity"
 
+    @property
+    def version(self) -> str:
+        return "1.0.0"
+
     def fetch(self) -> list[dict[str, Any]]:
         # Placeholder implementation
         return [
             {
-                "title": "New commit in research-dashboard",
+                "title": "New commit in modular-dashboard",
                 "summary": "Added support for native desktop app mode",
-                "link": "https://github.com/WayneXuCN/ResearchDashboard/commit/abc123",
+                "link": "https://github.com/WayneXuCN/ModularDashboard/commit/abc123",
                 "published": "2025-07-30T15:30:00Z",
-                "tags": ["commit", "research-dashboard"],
+                "tags": ["commit", "modular-dashboard"],
                 "extra": {"author": "dev-user"},
             },
             {

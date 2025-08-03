@@ -9,10 +9,20 @@ import feedparser
 from loguru import logger
 from nicegui import ui
 
-from ..base import Module
+from ..extended import ExtendedModule
 
 
-class RssModule(Module):
+class RssModule(ExtendedModule):
+    def __init__(self, config: dict[str, Any] | None = None):
+        super().__init__(config)
+        # Initialize configuration attributes
+        self.feed_urls = self.config.get("feed_urls", ["https://waynexucn.github.io/feed.xml"])
+        self.refresh_interval = self.config.get("refresh_interval", 3600)
+        self.fetch_limit = self.config.get("fetch_limit", 5)
+        self.show_author = self.config.get("show_author", True)
+        self.show_description = self.config.get("show_description", True)
+        self.show_date = self.config.get("show_date", True)
+        self.show_image = self.config.get("show_image", True)
     @property
     def id(self) -> str:
         return "rss"
@@ -29,32 +39,17 @@ class RssModule(Module):
     def description(self) -> str:
         return "Latest items from your RSS feeds"
 
-    def fetch(self) -> list[dict[str, Any]]:
-        # Load specific configurations
-        (
-            self.feed_urls,
-            self.refresh_interval,
-            self.fetch_limit,
-            self.show_author,
-            self.show_description,
-            self.show_date,
-            self.show_image,
-        ) = (
-            self.config.get("feed_urls", ["https://waynexucn.github.io/feed.xml"]),
-            self.config.get("refresh_interval", 3600),
-            self.config.get("fetch_limit", 5),
-            self.config.get("show_author", True),
-            self.config.get("show_description", True),
-            self.config.get("show_date", True),
-            self.config.get("show_image", True),
-        )
+    @property
+    def version(self) -> str:
+        return "1.0.0"
 
-        # Cache management
-        now = time.time()
-        cache_time = getattr(self, "_feeds_cache_time", 0)
-        # Check if cache is still valid
-        if hasattr(self, "_feeds_cache") and (now - cache_time < self.refresh_interval):
-            return self._feeds_cache
+    def fetch(self) -> list[dict[str, Any]]:
+
+        # Use cache management
+        cache = self.get_cache(self.refresh_interval)
+        cached_data = cache.get("feeds")
+        if cached_data:
+            return cached_data
 
         all_entries = []
         for url in self.feed_urls:
@@ -106,12 +101,12 @@ class RssModule(Module):
         all_entries.sort(key=lambda x: x.get("published", ""), reverse=True)
 
         # Cache the results
-        self._feeds_cache = all_entries
-        self._feeds_cache_time = now
-        return self._feeds_cache
+        cache.set("feeds", all_entries)
+        return all_entries
 
     def render(self) -> None:
-        feeds = getattr(self, "_feeds_cache", None)
+        cache = self.get_cache(self.refresh_interval)
+        feeds = cache.get("feeds")
         if feeds is None:
             feeds = self.fetch()
         show_limit = getattr(self, "show_limit", 5)
@@ -135,7 +130,8 @@ class RssModule(Module):
                         )
 
     def render_detail(self) -> None:
-        feeds = getattr(self, "_feeds_cache", None)
+        cache = self.get_cache(self.refresh_interval)
+        feeds = cache.get("feeds")
         if feeds is None:
             feeds = self.fetch()
 
@@ -187,14 +183,11 @@ class RssModule(Module):
         ui.notify("Refreshed", type="positive")
 
     def clear_cache(self):
-        deleted = []
-        if hasattr(self, "_feeds_cache"):
-            del self._feeds_cache
-            deleted.append("_feeds_cache")
-        if hasattr(self, "_feeds_cache_time"):
-            del self._feeds_cache_time
-            deleted.append("_feeds_cache_time")
-        if deleted:
-            logger.info(f"Cleared cache: {', '.join(deleted)}")
-        else:
-            logger.info("No cache to clear")
+        """Clear RSS cache"""
+        cache = self.get_cache(self.refresh_interval)
+        cache.delete("feeds")
+        logger.info("Cleared RSS feeds cache")
+    
+    def has_cache(self) -> bool:
+        """RSS module uses caching."""
+        return True

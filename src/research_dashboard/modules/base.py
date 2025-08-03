@@ -68,6 +68,11 @@ class Module(ABC):
         """Description of what the module does."""
         pass
 
+    @property
+    def version(self) -> str:
+        """Module version."""
+        return "1.0.0"
+
     @abstractmethod
     def fetch(self) -> list[dict[str, Any]]:
         """

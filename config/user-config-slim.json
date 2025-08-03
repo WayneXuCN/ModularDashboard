@@ -8,15 +8,15 @@
     "column_config": [
       {
         "width": "normal",
-        "modules": ["arxiv"]
+        "modules": ["arxiv", "clock"]
       },
       {
         "width": "normal",
-        "modules": ["github"]
+        "modules": ["github", "weather"]
       },
       {
         "width": "normal",
-        "modules": ["rss"]
+        "modules": ["rss", "todo", "releases", "monitor"]
       }
     ]
   },
@@ -63,6 +63,66 @@
         "show_description": true,
         "show_date": true,
         "show_image": true
+      }
+    },
+    {
+      "id": "clock",
+      "enabled": true,
+      "collapsed": false,
+      "config": {
+        "timezone": "local",
+        "format_24h": false,
+        "show_seconds": true,
+        "update_interval": 1,
+        "date_format": "%A, %B %d, %Y"
+      }
+    },
+    {
+      "id": "weather",
+      "enabled": true,
+      "collapsed": false,
+      "config": {
+        "city": "Beijing",
+        "api_key": ""
+      }
+    },
+    {
+      "id": "todo",
+      "enabled": true,
+      "collapsed": false,
+      "config": {
+        "max_items": 10,
+        "auto_save": true
+      }
+    },
+    {
+      "id": "releases",
+      "enabled": true,
+      "collapsed": false,
+      "config": {
+        "refresh_interval": 3600,
+        "repositories": [
+          "microsoft/vscode",
+          "gitlab:gitlab-org/gitlab",
+          "codeberg:forgejo/forgejo",
+          "docker:library/nginx"
+        ],
+        "max_releases": 5
+      }
+    },
+    {
+      "id": "monitor",
+      "enabled": true,
+      "collapsed": false,
+      "config": {
+        "timeout": 12,
+        "sites": [
+          "https://www.google.com",
+          "https://www.github.com",
+          "https://api.github.com",
+          "https://www.wikipedia.org",
+          "https://www.stackoverflow.com"
+        ]
       }
     }
   ]
