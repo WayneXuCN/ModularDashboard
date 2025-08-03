@@ -11,12 +11,12 @@ from nicegui import ui
 from ..extended import ExtendedModule
 
 
-class MonitorModule(ExtendedModule):
-    """Monitor module for checking website availability and response times."""
+class SiteMonitorModule(ExtendedModule):
+    """Site Monitor module for checking website availability and response times."""
 
     @property
     def id(self) -> str:
-        return "monitor"
+        return "site_monitor"
 
     @property
     def name(self) -> str:
@@ -24,7 +24,7 @@ class MonitorModule(ExtendedModule):
 
     @property
     def icon(self) -> str:
-        return "monitor_heart"
+        return "language"
 
     @property
     def description(self) -> str:

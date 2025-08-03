@@ -73,10 +73,14 @@ class ClockModule(ExtendedModule):
     async def _update_clock(self) -> None:
         """Update the clock display."""
         while True:
-            if self.time_label and self.date_label:
-                now = self._get_current_time()
-                self.time_label.text = self._format_time(now)
-                self.date_label.text = self._format_date(now)
+            try:
+                if self.time_label and hasattr(self.time_label, 'client') and self.time_label.client and self.date_label and hasattr(self.date_label, 'client') and self.date_label.client:
+                    now = self._get_current_time()
+                    self.time_label.text = self._format_time(now)
+                    self.date_label.text = self._format_date(now)
+            except (RuntimeError, AttributeError):
+                # Client disconnected, stop updating
+                break
             await asyncio.sleep(self.update_interval)
 
     def fetch(self) -> list[dict[str, Any]]:

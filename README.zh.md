@@ -50,6 +50,7 @@
 | **GitHub活动** | 🐙 | GitHub活动跟踪，支持用户和仓库 | GitHub API | 每小时 | ✅ 用户、仓库、事件 |
 | **GitHub趋势** | 🔥 | 来自OSS Insights的GitHub趋势仓库 | OSS Insights API | 每小时 | ✅ 周期、语言、限制 |
 | **软件发布** | 📦 | 最新软件版本跟踪 | GitHub Releases | 每日 | ✅ 仓库选择 |
+| **系统监控** | 🖥️ | 实时系统资源监控与告警 | 系统指标 | 实时 | ✅ 组件、阈值 |
 | **时间进度** | 📊 | 可视化日、月、年的时间进度 | 系统时间 | 实时 | ✅ 周期选择 |
 
 </div>
@@ -75,6 +76,7 @@ requests>=2.25.0               # HTTP库
 beautifulsoup4>=4.9.0          # HTML/XML解析器
 feedparser>=6.0.0              # RSS/Atom订阅解析器
 arxiv>=2.0.0                   # ArXiv API客户端
+psutil>=5.9.0                   # 系统监控工具
 
 # 任务管理与日志
 APScheduler>=3.0.0             # 后台任务调度器

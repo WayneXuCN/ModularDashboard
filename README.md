@@ -50,6 +50,7 @@ Modular Dashboard is a local, modular, and extensible information aggregation da
 | **GitHub** | 🐙 | GitHub activity tracking for users and repositories | GitHub API | Hourly | ✅ Users, Repos, Events |
 | **GitHub Trending** | 🔥 | Trending GitHub repositories from OSS Insights | OSS Insights API | Hourly | ✅ Period, Language, Limit |
 | **Releases** | 📦 | Latest software releases tracking | GitHub Releases | Daily | ✅ Repository Selection |
+| **System Monitor** | 🖥️ | Real-time system resource monitoring with alerts | System Metrics | Real-time | ✅ Components, Thresholds |
 | **Time Progress** | 📊 | Visualize time progress for day, month, and year | System Time | Real-time | ✅ Period Selection |
 
 </div>
@@ -75,6 +76,7 @@ requests>=2.25.0               # HTTP library
 beautifulsoup4>=4.9.0          # HTML/XML parser
 feedparser>=6.0.0              # RSS/Atom feed parser
 arxiv>=2.0.0                   # ArXiv API client
+psutil>=5.9.0                   # System monitoring utilities
 
 # Task Management & Logging
 APScheduler>=3.0.0             # Background task scheduler

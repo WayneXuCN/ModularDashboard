@@ -12,6 +12,7 @@
           "github_trending",
           "animals",
           "clock",
+          "system_monitor",
           "progress"
         ]
       },
@@ -137,7 +138,7 @@
       }
     },
     {
-      "id": "monitor",
+      "id": "site_monitor",
       "enabled": true,
       "collapsed": false,
       "config": {
@@ -169,6 +170,34 @@
         "default_period": "day",
         "auto_update": true,
         "update_interval": 60
+      }
+    },
+    {
+      "id": "system_monitor",
+      "enabled": true,
+      "collapsed": false,
+      "config": {
+        "refresh_interval": 2,
+        "enable_cpu": true,
+        "enable_memory": true,
+        "enable_disk": true,
+        "enable_network": true,
+        "enable_temperature": true,
+        "enable_gpu": true,
+        "disk_paths": ["/"],
+        "network_interfaces": [],
+        "alerts": {
+          "cpu_percent": 80,
+          "memory_percent": 85,
+          "disk_percent": 90,
+          "temperature_celsius": 70
+        },
+        "ui": {
+          "show_charts": true,
+          "show_details": true,
+          "compact_view": false,
+          "theme": "auto"
+        }
       }
     }
   ]

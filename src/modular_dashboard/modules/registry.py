@@ -6,10 +6,11 @@ from .base import Module
 from .clock.module import ClockModule
 from .github.module import GithubModule
 from .github_trending.module import GithubTrendingModule
-from .monitor.module import MonitorModule
 from .progress.module import ProgressModule
 from .releases.module import ReleasesModule
 from .rss.module import RssModule
+from .site_monitor.module import SiteMonitorModule
+from .system_monitor.module import SystemMonitorModule
 from .todo.module import TodoModule
 from .weather.module import WeatherModule
 
@@ -20,10 +21,11 @@ MODULE_REGISTRY = {
     "clock": ClockModule,
     "github": GithubModule,
     "github_trending": GithubTrendingModule,
-    "monitor": MonitorModule,
+    "site_monitor": SiteMonitorModule,
     "progress": ProgressModule,
     "releases": ReleasesModule,
     "rss": RssModule,
+    "system_monitor": SystemMonitorModule,
     "todo": TodoModule,
     "weather": WeatherModule,
 }

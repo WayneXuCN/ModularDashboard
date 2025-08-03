@@ -85,37 +85,41 @@ class ProgressModule(ExtendedModule):
     async def _update_progress(self) -> None:
         """Update progress bars with current values."""
         while True:
-            if self.auto_update:
-                # Update main progress display
-                progress, label = self._calculate_progress(self.selected_period)
+            try:
+                if self.auto_update:
+                    # Update main progress display
+                    progress, label = self._calculate_progress(self.selected_period)
 
-                if self.main_progress_value:
-                    self.main_progress_value.text = f"{progress:.1f}%"
-                if self.main_progress_bar:
-                    self.main_progress_bar.value = progress / 100
-                if self.main_progress_label:
-                    period_labels = {
-                        "day": "Today",
-                        "month": "This Month",
-                        "year": "This Year",
-                    }
-                    self.main_progress_label.text = period_labels.get(
-                        self.selected_period, "Progress"
-                    )
-                if self.main_date_label:
-                    # Extract just the date part from the full label
-                    date_part = (
-                        label.split(" (")[1].rstrip(")") if " (" in label else label
-                    )
-                    self.main_date_label.text = date_part
+                    if self.main_progress_value and hasattr(self.main_progress_value, 'client') and self.main_progress_value.client:
+                        self.main_progress_value.text = f"{progress:.1f}%"
+                    if self.main_progress_bar and hasattr(self.main_progress_bar, 'client') and self.main_progress_bar.client:
+                        self.main_progress_bar.value = progress / 100
+                    if self.main_progress_label and hasattr(self.main_progress_label, 'client') and self.main_progress_label.client:
+                        period_labels = {
+                            "day": "Today",
+                            "month": "This Month",
+                            "year": "This Year",
+                        }
+                        self.main_progress_label.text = period_labels.get(
+                            self.selected_period, "Progress"
+                        )
+                    if self.main_date_label and hasattr(self.main_date_label, 'client') and self.main_date_label.client:
+                        # Extract just the date part from the full label
+                        date_part = (
+                            label.split(" (")[1].rstrip(")") if " (" in label else label
+                        )
+                        self.main_date_label.text = date_part
 
-                # Update individual progress displays
-                for period in ["day", "month", "year"]:
-                    progress, label = self._calculate_progress(period)
-                    if period in self.progress_bars:
-                        self.progress_bars[period].value = progress / 100
-                    if period in self.progress_labels:
-                        self.progress_labels[period].text = f"{progress:.1f}%"
+                    # Update individual progress displays
+                    for period in ["day", "month", "year"]:
+                        progress, label = self._calculate_progress(period)
+                        if period in self.progress_bars and hasattr(self.progress_bars[period], 'client') and self.progress_bars[period].client:
+                            self.progress_bars[period].value = progress / 100
+                        if period in self.progress_labels and hasattr(self.progress_labels[period], 'client') and self.progress_labels[period].client:
+                            self.progress_labels[period].text = f"{progress:.1f}%"
+            except (RuntimeError, AttributeError):
+                # Client disconnected, stop updating
+                break
             await asyncio.sleep(self.update_interval)
 
     def fetch(self) -> list[dict[str, Any]]:
@@ -211,20 +215,24 @@ class ProgressModule(ExtendedModule):
 
     async def _update_progress_single(self) -> None:
         """Update progress display once."""
-        progress, label = self._calculate_progress(self.selected_period)
+        try:
+            progress, label = self._calculate_progress(self.selected_period)
 
-        if self.main_progress_value:
-            self.main_progress_value.text = f"{progress:.1f}%"
-        if self.main_progress_bar:
-            self.main_progress_bar.value = progress / 100
-        if self.main_progress_label:
-            period_labels = {"day": "Today", "month": "This Month", "year": "This Year"}
-            self.main_progress_label.text = period_labels.get(
-                self.selected_period, "Progress"
-            )
-        if self.main_date_label:
-            date_part = label.split(" (")[1].rstrip(")") if " (" in label else label
-            self.main_date_label.text = date_part
+            if self.main_progress_value and hasattr(self.main_progress_value, 'client') and self.main_progress_value.client:
+                self.main_progress_value.text = f"{progress:.1f}%"
+            if self.main_progress_bar and hasattr(self.main_progress_bar, 'client') and self.main_progress_bar.client:
+                self.main_progress_bar.value = progress / 100
+            if self.main_progress_label and hasattr(self.main_progress_label, 'client') and self.main_progress_label.client:
+                period_labels = {"day": "Today", "month": "This Month", "year": "This Year"}
+                self.main_progress_label.text = period_labels.get(
+                    self.selected_period, "Progress"
+                )
+            if self.main_date_label and hasattr(self.main_date_label, 'client') and self.main_date_label.client:
+                date_part = label.split(" (")[1].rstrip(")") if " (" in label else label
+                self.main_date_label.text = date_part
+        except (RuntimeError, AttributeError):
+            # Client disconnected, ignore
+            pass
 
     def render_detail(self) -> None:
         """Render detailed progress view."""
