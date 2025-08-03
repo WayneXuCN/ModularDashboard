@@ -1,6 +1,9 @@
 """Main application logic."""
 
 import os
+import pathlib
+import platform
+import sys
 from typing import Any
 
 from dotenv import load_dotenv
@@ -83,6 +86,14 @@ def run_app(native: bool = False) -> None:
         environment = os.getenv("ENVIRONMENT", "production").lower()
         reload_enabled = environment == "development"
 
+        # On Windows, set the WebView2 runtime path
+        # Reference: https://learn.microsoft.com/zh-cn/microsoft-edge/webview2/concepts/distribution?tabs=dotnetcsharp#details-about-the-fixed-version-runtime-distribution-mode
+        if native and platform.system() == "Windows":
+            os.environ["WEBVIEW2_BROWSER_EXECUTABLE_FOLDER"] = str(
+                pathlib.Path(__file__).parent.parent.parent
+                / r"runtime\Microsoft.WebView2.FixedVersionRuntime.138.0.3351.121.x64"
+            )
+
         # Run the application
         if native:
             ui.run(
@@ -103,4 +114,4 @@ def run_app(native: bool = False) -> None:
         raise
 
 
-run_app(native=False)  # Change to True for native desktop app
+run_app(native="--native" in sys.argv)

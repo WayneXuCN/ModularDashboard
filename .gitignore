@@ -219,3 +219,6 @@ logs/
 
 # LLMs
 .claude/
+
+# WebView2 
+runtime/
