@@ -48,6 +48,7 @@ Modular Dashboard is a local, modular, and extensible information aggregation da
 | **Animals** | 🐱 | Cute animal images to brighten your day | Random APIs | On Refresh | ✅ Animal Types |
 | **RSS** | 📡 | RSS feed reader for your favorite sources | RSS Feeds | Configurable | ✅ Feeds, Refresh Rate |
 | **GitHub** | 🐙 | GitHub activity tracking for users and repositories | GitHub API | Hourly | ✅ Users, Repos, Events |
+| **GitHub Trending** | 🔥 | Trending GitHub repositories from OSS Insights | OSS Insights API | Hourly | ✅ Period, Language, Limit |
 | **Releases** | 📦 | Latest software releases tracking | GitHub Releases | Daily | ✅ Repository Selection |
 | **Time Progress** | 📊 | Visualize time progress for day, month, and year | System Time | Real-time | ✅ Period Selection |
 

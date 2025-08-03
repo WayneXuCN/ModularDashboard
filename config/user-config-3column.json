@@ -9,6 +9,7 @@
       {
         "width": "normal",
         "modules": [
+          "github_trending",
           "animals",
           "clock",
           "progress"
@@ -147,6 +148,17 @@
           "https://www.apple.com",
           "https://www.microsoft.com"
         ]
+      }
+    },
+    {
+      "id": "github_trending",
+      "enabled": true,
+      "collapsed": false,
+      "config": {
+        "period": "weekly",
+        "language": "",
+        "limit": 10,
+        "cache_ttl": 3600
       }
     },
     {

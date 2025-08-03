@@ -9,6 +9,7 @@
       {
         "width": "normal",
         "modules": [
+          "github_trending",
           "arxiv",
           "clock",
           "progress"
@@ -148,6 +149,17 @@
           "https://www.wikipedia.org",
           "https://www.stackoverflow.com"
         ]
+      }
+    },
+    {
+      "id": "github_trending",
+      "enabled": true,
+      "collapsed": false,
+      "config": {
+        "period": "weekly",
+        "language": "",
+        "limit": 10,
+        "cache_ttl": 3600
       }
     },
     {
