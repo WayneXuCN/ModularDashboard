@@ -1,8 +1,10 @@
-site_name: Modular Dashboard Documentation
-site_url: https://your-username.github.io/modular-dashboard/
+site_name: Modular Dashboard
+site_description: 一个现代化的模块化仪表盘系统
+site_url: https://wayneXuCN.github.io/ModularDashboard/
 repo_url: https://github.com/WayneXuCN/ModularDashboard
-repo_name: modular-dashboard
+repo_name: ModularDashboard
 edit_uri: edit/main/docs/
+
 theme:
   name: material
   features:
@@ -10,49 +12,62 @@ theme:
     - navigation.sections
     - toc.integrate
     - navigation.top
+    - navigation.prune
     - search.suggest
     - search.highlight
     - content.tabs.link
     - content.code.annotation
     - content.code.copy
+    - content.action.edit
+    - content.action.view
   language: zh
   palette:
     - scheme: default
       toggle:
         icon: material/toggle-switch-off-outline
-        name: Switch to dark mode
+        name: 切换到暗色模式
       primary: indigo
       accent: indigo
     - scheme: slate
       toggle:
         icon: material/toggle-switch
-        name: Switch to light mode
+        name: 切换到亮色模式
       primary: indigo
       accent: indigo
-  custom_dir: docs/theme
-
+  
 nav:
-  - Home: README.md
-  - Overview: overview.md
-  - User Guide:
-      - Installation: user-guide/installation.md
-      - Getting Started: user-guide/getting-started.md
-      - Configuration: user-guide/configuration.md
-      - Layout: user-guide/layout.md
-      - Packaging: user-guide/packaging.md
-  - Modules:
-      - Overview: modules/index.md
-      - ArXiv: modules/arxiv.md
-      - GitHub: modules/github.md
-      - RSS: modules/rss.md
-  - API Reference:
-      - Overview: api/index.md
-      - Module Base: api/module-base.md
-      - Configuration: api/configuration.md
-  - Development:
-      - Overview: development/index.md
-      - Project Structure: development/structure.md
-      - Contributing: development/contributing.md
+  - 首页: index.md
+  - 项目概述: overview.md
+  - 快速开始: getting-started.md
+  - 用户指南:
+      - user-guide/index.md
+      - 安装指南: user-guide/installation.md
+      - 配置管理: user-guide/configuration.md
+      - 布局配置: user-guide/layout.md
+      - 模块使用: user-guide/modules.md
+  - 开发者指南:
+      - developer-guide/index.md
+      - 架构设计: developer-guide/architecture.md
+      - 模块开发: developer-guide/module-development.md
+      - 项目结构: developer-guide/project-structure.md
+      - 贡献指南: developer-guide/contributing.md
+  - API 参考:
+      - api-reference/index.md
+      - 模块基类: api-reference/module-base.md
+      - 配置 API: api-reference/configuration.md
+      - 存储 API: api-reference/storage.md
+  - 内置模块:
+      - modules/index.md
+      - ArXiv 模块: modules/arxiv.md
+      - GitHub 模块: modules/github.md
+      - RSS 模块: modules/rss.md
+      - 天气模块: modules/weather.md
+      - 待办事项: modules/todo.md
+  - 附录:
+      - appendix/index.md
+      - 故障排除: appendix/troubleshooting.md
+      - 更新日志: appendix/changelog.md
+      - 术语表: appendix/glossary.md
 
 markdown_extensions:
   - pymdownx.highlight:
@@ -70,30 +85,20 @@ markdown_extensions:
   - pymdownx.emoji:
       emoji_index: !!python/name:material.extensions.emoji.twemoji
       emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.tilde
+  - pymdownx.caret
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
 
 plugins:
-  - i18n:
-      docs_structure: folder
-      languages:
-        - locale: zh
-          default: true
-          name: 中文
-          build: true
-        - locale: en
-          name: English
-          build: true
-          site_name: Modular Dashboard Documentation
-          nav_translations:
-            Home: Home
-            Overview: Overview
-            User Guide: User Guide
-            Installation: Installation
-            Getting Started: Getting Started
-            Configuration: Configuration
-            Layout: Layout
-            Packaging: Packaging
-            Modules: Modules
-            API Reference: API Reference
-            Development: Development
-            Project Structure: Project Structure
-            Contributing: Contributing
+  - search:
+      lang: zh
+  - minify:
+      minify_html: true
+  - git-revision-date-localized:
+      type: iso_date
+      timezone: Asia/Shanghai
+      locale: zh
+      fallback_to_build_date: true
