@@ -1,0 +1,47 @@
+{
+  "base_dir": "./update_system",
+  "background_checks": true,
+  "auto_update": false,
+  "policy": {
+    "auto_update": false,
+    "update_types": ["patch", "security"],
+    "check_interval": 3600,
+    "backup_before_update": true,
+    "prerelease_updates": false
+  },
+  "security": {
+    "require_signature": true,
+    "require_checksum": true
+  },
+  "sources": {
+    "github": {
+      "example_module": {
+        "owner": "your-username",
+        "repo": "example-module",
+        "token": null
+      }
+    },
+    "pypi": {
+      "example_package": {
+        "package": "example-package"
+      }
+    }
+  },
+  "ui": {
+    "show_update_badge": true,
+    "notification_sound": true,
+    "auto_refresh": true
+  },
+  "modules": {
+    "weather": {
+      "update_source": "github",
+      "update_channel": "stable",
+      "auto_update": false
+    },
+    "system_monitor": {
+      "update_source": "github",
+      "update_channel": "stable",
+      "auto_update": false
+    }
+  }
+}

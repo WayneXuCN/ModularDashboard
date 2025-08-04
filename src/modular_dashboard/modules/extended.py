@@ -11,7 +11,23 @@ from .base import Module
 
 
 class ExtendedModule(Module):
-    """Extended module with extended functionality."""
+    """Extended module with additional functionality.
+
+    This class extends the basic Module class with additional features
+    commonly needed by more complex modules. It provides statistics
+    tracking, retry logic, configuration management, data import/export,
+    and UI components for module management.
+
+    Parameters
+    ----------
+    config : dict[str, Any] | None, default=None
+        Optional dictionary containing module-specific configuration.
+
+    Attributes
+    ----------
+    config : dict[str, Any]
+        Configuration dictionary for the module.
+    """
 
     def __init__(self, config: dict[str, Any] | None = None):
         super().__init__(config)
@@ -28,41 +44,125 @@ class ExtendedModule(Module):
 
     @property
     def version(self) -> str:
-        """Module version."""
+        """Module version.
+
+        Returns the current version of the module. Defaults to "1.0.0"
+        but can be overridden by subclasses.
+
+        Returns
+        -------
+        str
+            Semantic version string (e.g., "1.0.0").
+        """
         return "1.0.0"
 
     @property
     def category(self) -> str:
-        """Module category."""
+        """Module category.
+
+        Returns the category this module belongs to. Used for
+        organizing modules in the UI.
+
+        Returns
+        -------
+        str
+            Category name (default: "general").
+        """
         return "general"
 
     @property
     def supported_features(self) -> list[str]:
-        """List of supported features."""
+        """List of supported features.
+
+        Returns a list of feature identifiers that this module supports.
+        Can be used by the UI to enable/disable certain functionality.
+
+        Returns
+        -------
+        list[str]
+            List of supported feature identifiers.
+        """
         return []
 
     def get_default_config(self) -> dict[str, Any]:
-        """Get default configuration for the module."""
+        """Get default configuration for the module.
+
+        Returns the default configuration values for this module.
+        Subclasses should override this to provide module-specific
+        default values.
+
+        Returns
+        -------
+        dict[str, Any]
+            Dictionary containing default configuration values.
+        """
         return {}
 
     def validate_config(self, config: dict[str, Any]) -> bool:
-        """Validate module configuration."""
+        """Validate module configuration.
+
+        Validate that the provided configuration is valid for this module.
+        Subclasses should override this to implement module-specific
+        validation logic.
+
+        Parameters
+        ----------
+        config : dict[str, Any]
+            Configuration dictionary to validate.
+
+        Returns
+        -------
+        bool
+            True if configuration is valid, False otherwise.
+        """
         return True
 
     def get_config_schema(self) -> dict[str, Any]:
-        """Get configuration schema for UI generation."""
+        """Get configuration schema for UI generation.
+
+        Returns a schema describing the configuration options for this
+        module. This schema is used to automatically generate configuration
+        UI elements.
+
+        Returns
+        -------
+        dict[str, Any]
+            Configuration schema with field definitions.
+        """
         return {}
 
     def add_refresh_callback(self, callback: Callable) -> None:
-        """Add a callback to be called when data is refreshed."""
+        """Add a callback to be called when data is refreshed.
+
+        Register a callback function that will be called whenever
+        the module's data is refreshed.
+
+        Parameters
+        ----------
+        callback : Callable
+            Function to call when data is refreshed.
+        """
         self._refresh_callbacks.append(callback)
 
     def add_error_handler(self, handler: Callable) -> None:
-        """Add an error handler."""
+        """Add an error handler.
+
+        Register an error handler function that will be called
+        whenever an error occurs in the module.
+
+        Parameters
+        ----------
+        handler : Callable
+            Function to call when an error occurs.
+        """
         self._error_handlers.append(handler)
 
     def _notify_refresh(self) -> None:
-        """Notify all refresh callbacks."""
+        """Notify all refresh callbacks.
+
+        Call all registered refresh callbacks. Errors in callbacks
+        are caught and logged but don't stop the notification process.
+        """
         for callback in self._refresh_callbacks:
             try:
                 callback()
@@ -70,7 +170,16 @@ class ExtendedModule(Module):
                 logger.error(f"Error in refresh callback: {e}")
 
     def _handle_error(self, error: Exception) -> None:
-        """Handle error with registered handlers."""
+        """Handle error with registered handlers.
+
+        Record the error in statistics and call all registered error handlers.
+        Errors in handlers are caught and logged but don't stop the process.
+
+        Parameters
+        ----------
+        error : Exception
+            The error to handle.
+        """
         self._last_error = error
         self._stats["error_count"] += 1
         self._stats["last_error"] = datetime.now()
@@ -82,11 +191,26 @@ class ExtendedModule(Module):
                 logger.error(f"Error in error handler: {e}")
 
     def get_stats(self) -> dict[str, Any]:
-        """Get module statistics."""
+        """Get module statistics.
+
+        Returns a copy of the module's internal statistics.
+
+        Returns
+        -------
+        dict[str, Any]
+            Dictionary containing module statistics:
+            - fetch_count: Number of successful fetch operations
+            - error_count: Number of errors encountered
+            - last_fetch: Timestamp of last successful fetch
+            - last_error: Timestamp of last error
+        """
         return self._stats.copy()
 
     def reset_stats(self) -> None:
-        """Reset module statistics."""
+        """Reset module statistics.
+
+        Reset all statistics counters to their initial values.
+        """
         self._stats = {
             "fetch_count": 0,
             "error_count": 0,
@@ -95,13 +219,42 @@ class ExtendedModule(Module):
         }
 
     async def async_fetch(self) -> list[dict[str, Any]]:
-        """Async version of fetch method."""
+        """Async version of fetch method.
+
+        Asynchronous version of the fetch method that can be used
+        in async contexts.
+
+        Returns
+        -------
+        list[dict[str, Any]]
+            List of items returned by the fetch method.
+        """
         return self.fetch()
 
     def fetch_with_retry(
         self, max_retries: int = 3, retry_delay: float = 1.0
     ) -> list[dict[str, Any]]:
-        """Fetch data with retry logic."""
+        """Fetch data with retry logic.
+
+        Attempt to fetch data with automatic retries on failure.
+
+        Parameters
+        ----------
+        max_retries : int, default=3
+            Maximum number of retry attempts.
+        retry_delay : float, default=1.0
+            Delay in seconds between retry attempts.
+
+        Returns
+        -------
+        list[dict[str, Any]]
+            List of items returned by the fetch method.
+
+        Raises
+        ------
+        Exception
+            If all retry attempts fail, the last exception is raised.
+        """
         for attempt in range(max_retries):
             try:
                 result = self.fetch()
@@ -120,7 +273,11 @@ class ExtendedModule(Module):
         return []
 
     def initialize(self) -> None:
-        """Initialize the module."""
+        """Initialize the module.
+
+        Perform one-time initialization of the module. This method
+        ensures initialization only happens once.
+        """
         if not self._is_initialized:
             try:
                 self._initialize_module()
@@ -132,11 +289,18 @@ class ExtendedModule(Module):
                 raise
 
     def _initialize_module(self) -> None:
-        """Initialize module-specific resources."""
+        """Initialize module-specific resources.
+
+        Override this method to perform module-specific initialization.
+        Called once during the first call to initialize().
+        """
         pass
 
     def shutdown(self) -> None:
-        """Shutdown the module."""
+        """Shutdown the module.
+
+        Perform cleanup operations when the module is being shut down.
+        """
         try:
             self._shutdown_module()
             self.cleanup()
@@ -145,11 +309,33 @@ class ExtendedModule(Module):
             logger.error(f"Error shutting down module {self.id}: {e}")
 
     def _shutdown_module(self) -> None:
-        """Shutdown module-specific resources."""
+        """Shutdown module-specific resources.
+
+        Override this method to perform module-specific cleanup.
+        Called by shutdown().
+        """
         pass
 
     def export_data(self, format: str = "json") -> Any:
-        """Export module data in specified format."""
+        """Export module data in specified format.
+
+        Export the current module data in the specified format.
+
+        Parameters
+        ----------
+        format : str, default="json"
+            Export format. Supported formats: "json", "csv".
+
+        Returns
+        -------
+        Any
+            Exported data in the specified format.
+
+        Raises
+        ------
+        ValueError
+            If an unsupported format is specified.
+        """
         data = self.fetch()
 
         if format == "json":
@@ -170,7 +356,22 @@ class ExtendedModule(Module):
             raise ValueError(f"Unsupported export format: {format}")
 
     def import_data(self, data: Any, format: str = "json") -> bool:
-        """Import module data from specified format."""
+        """Import module data from specified format.
+
+        Import data into the module from the specified format.
+
+        Parameters
+        ----------
+        data : Any
+            Data to import.
+        format : str, default="json"
+            Import format. Currently only "json" is supported.
+
+        Returns
+        -------
+        bool
+            True if import was successful, False otherwise.
+        """
         try:
             if format == "json":
                 import json
@@ -185,11 +386,25 @@ class ExtendedModule(Module):
             return False
 
     def _process_imported_data(self, data: Any) -> None:
-        """Process imported data."""
+        """Process imported data.
+
+        Override this method to handle imported data in a
+        module-specific way.
+
+        Parameters
+        ----------
+        data : Any
+            Parsed data to process.
+        """
         pass
 
     def render_config_ui(self) -> None:
-        """Render configuration UI for the module."""
+        """Render configuration UI for the module.
+
+        Render UI components for configuring the module. Uses
+        the configuration schema to automatically generate
+        appropriate input elements.
+        """
         schema = self.get_config_schema()
         if not schema:
             ui.label("No configuration available").classes("text-gray-500")
@@ -234,7 +449,11 @@ class ExtendedModule(Module):
                         ).classes("w-full").bind_value(self.config, field_name)
 
     def render_stats_ui(self) -> None:
-        """Render statistics UI for the module."""
+        """Render statistics UI for the module.
+
+        Render UI components for displaying module statistics
+        including fetch counts, error counts, and timestamps.
+        """
         stats = self.get_stats()
 
         with ui.card().classes("w-full p-4"):
@@ -260,7 +479,11 @@ class ExtendedModule(Module):
                     )
 
     def render_action_buttons(self) -> None:
-        """Render action buttons for the module."""
+        """Render action buttons for the module.
+
+        Render UI components for common module actions such as
+        refresh, export, and data clearing.
+        """
         with ui.row().classes("w-full gap-2"):
             ui.button("Refresh", icon="refresh", on_click=self._manual_refresh).classes(
                 "bg-blue-500 text-white"
@@ -276,7 +499,10 @@ class ExtendedModule(Module):
                 ).classes("bg-red-500 text-white")
 
     def _manual_refresh(self) -> None:
-        """Manual refresh handler."""
+        """Manual refresh handler.
+
+        Handle manual refresh requests from the UI.
+        """
         try:
             self.fetch()
             self._notify_refresh()
@@ -286,7 +512,10 @@ class ExtendedModule(Module):
             ui.notify(f"Failed to refresh: {str(e)}", type="negative")
 
     def _export_data(self) -> None:
-        """Export data handler."""
+        """Export data handler.
+
+        Handle data export requests from the UI.
+        """
         try:
             data = self.export_data()
             # Create download link
@@ -300,7 +529,10 @@ class ExtendedModule(Module):
             ui.notify(f"Failed to export: {str(e)}", type="negative")
 
     def _clear_data(self) -> None:
-        """Clear data handler."""
+        """Clear data handler.
+
+        Handle data clearing requests from the UI.
+        """
         try:
             storage = self.get_storage()
             storage.clear()
