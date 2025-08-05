@@ -62,7 +62,7 @@ def run_app(native: bool = False) -> None:
         # Load environment variables from .env file
         load_dotenv()
 
-        # Load configuration
+        # Load configuration (cached)
         config = load_config()
 
         # Initialize the application
@@ -71,14 +71,12 @@ def run_app(native: bool = False) -> None:
         # Setup main dashboard page
         @ui.page("/")
         def main_page():
-            config = load_config()
             render_dashboard(config)
 
         # Setup the dashboard UI routes
         @ui.page("/module/{module_id}")
         def module_detail_page(module_id: str):
             """Create a page for the module detail view."""
-            config = load_config()
             render_module_detail(module_id, config)
 
         # Determine if we should enable auto-reload based on environment

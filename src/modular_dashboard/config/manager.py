@@ -37,6 +37,10 @@ CONFIG_DIR = get_config_dir()
 CONFIG_FILE = CONFIG_DIR / "config.json"
 DEFAULT_CONFIG_FILE = Path(__file__).parent.parent / "assets" / "default-config.json"
 
+# Configuration cache
+_cached_config: AppConfig | None = None
+_config_last_modified: float | None = None
+
 
 def load_config() -> AppConfig:
     """Load configuration from file or create default config if not exists.
@@ -57,11 +61,21 @@ def load_config() -> AppConfig:
     is loaded from the assets directory and saved to the user config directory
     on first run.
     """
+    global _cached_config, _config_last_modified
+
+    # Check if config file exists and get its modification time
+    config_exists = CONFIG_FILE.exists()
+    current_mtime = CONFIG_FILE.stat().st_mtime if config_exists else None
+
+    # Return cached config if file hasn't changed
+    if _cached_config is not None and current_mtime == _config_last_modified:
+        return _cached_config
+
     # Create config directory if it doesn't exist
     CONFIG_DIR.mkdir(parents=True, exist_ok=True)
 
     # Load config file if exists, otherwise create from default
-    if CONFIG_FILE.exists():
+    if config_exists:
         with CONFIG_FILE.open("r") as f:
             config_data = json.load(f)
     else:
@@ -77,12 +91,30 @@ def load_config() -> AppConfig:
     layout = LayoutConfig(**layout_data)
     modules = [ModuleConfig(**module) for module in config_data.get("modules", [])]
 
-    return AppConfig(
+    config = AppConfig(
         version=config_data.get("version", "0.1.0"),
         theme=config_data.get("theme", "light"),
         layout=layout,
         modules=modules,
     )
+
+    # Cache the config
+    _cached_config = config
+    _config_last_modified = (
+        CONFIG_FILE.stat().st_mtime if CONFIG_FILE.exists() else None
+    )
+
+    return config
+
+
+def invalidate_config_cache() -> None:
+    """Invalidate the configuration cache.
+
+    This should be called when the configuration file is modified externally.
+    """
+    global _cached_config, _config_last_modified
+    _cached_config = None
+    _config_last_modified = None
 
 
 def save_config(config: AppConfig) -> None:
