@@ -4,6 +4,7 @@ import os
 import pathlib
 import platform
 import sys
+import time
 from typing import Any
 
 from dotenv import load_dotenv
@@ -12,6 +13,8 @@ from nicegui import app, ui
 
 from .config.manager import load_config
 from .ui.dashboard import render_dashboard, render_module_detail
+from .ui.stats_page import render_stats_page
+from .utils.module_stats import stats_collector
 
 
 def initialize_app(config: dict[str, Any]) -> None:
@@ -68,6 +71,48 @@ def run_app(native: bool = False) -> None:
         # Initialize the application
         initialize_app(config.__dict__)
 
+        # Collect initial module statistics in development mode
+        if os.getenv("ENVIRONMENT", "production").lower() == "development":
+            import tracemalloc
+
+            from .modules.registry import MODULE_REGISTRY
+
+            tracemalloc.start()
+
+            # Force initialization of all modules to collect stats
+            for module_config in config.modules:
+                module_class = MODULE_REGISTRY.get(module_config.id)
+                if module_class:
+                    try:
+                        # Memory tracking
+                        snapshot1 = tracemalloc.take_snapshot()
+
+                        # High precision timing
+                        start_time = time.perf_counter()
+                        module_class(module_config.config)
+                        init_time = time.perf_counter() - start_time
+
+                        snapshot2 = tracemalloc.take_snapshot()
+                        memory_usage = sum(
+                            stat.size_diff
+                            for stat in snapshot2.compare_to(snapshot1, "lineno")
+                        )
+
+                        stats_collector.record_init(
+                            str(module_config.id), init_time, max(0, memory_usage)
+                        )
+                        logger.info(
+                            f"Pre-initialized {module_config.id} in {init_time:.6f}s, memory: {memory_usage} bytes"
+                        )
+                    except Exception as e:
+                        logger.warning(
+                            f"Failed to pre-initialize {module_config.id}: {e}"
+                        )
+                        # Still record failed attempts with 0 time
+                        stats_collector.record_init(str(module_config.id), 0.0, 0)
+
+            tracemalloc.stop()
+
         # Setup main dashboard page
         @ui.page("/")
         def main_page():
@@ -78,6 +123,11 @@ def run_app(native: bool = False) -> None:
         def module_detail_page(module_id: str):
             """Create a page for the module detail view."""
             render_module_detail(module_id, config)
+
+        @ui.page("/stats")
+        def stats_page():
+            """Create a page for module performance statistics."""
+            render_stats_page(stats_collector)
 
         # Determine if we should enable auto-reload based on environment
         # Default to production environment if not specified

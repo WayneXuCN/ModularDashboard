@@ -28,19 +28,22 @@ class ModuleStatsCollector:
         self, module_id: str, init_time: float, memory_usage: int = 0
     ) -> None:
         """Record module initialization statistics."""
-        if module_id not in self._stats:
-            self._stats[module_id] = ModuleInitStats(
-                module_id=module_id,
+        # Ensure module_id is a string, not a property object
+        module_id_str = str(module_id)
+
+        if module_id_str not in self._stats:
+            self._stats[module_id_str] = ModuleInitStats(
+                module_id=module_id_str,
                 init_time=init_time,
                 memory_usage=memory_usage,
                 init_count=1,
                 last_init_time=time.time(),
             )
         else:
-            self._stats[module_id].init_time = init_time
-            self._stats[module_id].memory_usage = memory_usage
-            self._stats[module_id].init_count += 1
-            self._stats[module_id].last_init_time = time.time()
+            self._stats[module_id_str].init_time = init_time
+            self._stats[module_id_str].memory_usage = memory_usage
+            self._stats[module_id_str].init_count += 1
+            self._stats[module_id_str].last_init_time = time.time()
 
         self._total_init_time += init_time
         self._total_init_count += 1
@@ -68,13 +71,17 @@ class ModuleStatsCollector:
         slowest_module = max(self._stats.values(), key=lambda x: x.init_time)
         fastest_module = min(self._stats.values(), key=lambda x: x.init_time)
 
+        # Ensure module_id is a string, not a property object
+        slowest_id = str(slowest_module.module_id)
+        fastest_id = str(fastest_module.module_id)
+
         return (
             f"Module Performance Summary:\n"
             f"- Total modules: {len(self._stats)}\n"
             f"- Total init time: {self._total_init_time:.2f}s\n"
             f"- Average init time: {self._total_init_time / max(self._total_init_count, 1):.3f}s\n"
-            f"- Slowest: {slowest_module.module_id} ({slowest_module.init_time:.3f}s)\n"
-            f"- Fastest: {fastest_module.module_id} ({fastest_module.init_time:.3f}s)"
+            f"- Slowest: {slowest_id} ({slowest_module.init_time:.3f}s)\n"
+            f"- Fastest: {fastest_id} ({fastest_module.init_time:.3f}s)"
         )
 
 
