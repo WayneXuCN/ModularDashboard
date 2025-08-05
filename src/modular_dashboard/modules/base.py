@@ -3,7 +3,7 @@
 from abc import ABC, abstractmethod
 from typing import Any
 
-from ..storage import CachedStorage, StorageBackend, get_storage_manager
+from ..utils.storage import CachedStorage, StorageBackend, get_storage_manager
 
 
 class Module(ABC):
@@ -67,6 +67,12 @@ class Module(ABC):
         """
         if self._cache is None:
             self._cache = self._storage_manager.get_module_cache(self.id, default_ttl)
+
+            # Apply module-specific cache limits from config
+            max_entries = self.config.get("max_cache_entries")
+            if max_entries and hasattr(self._cache, "max_entries"):
+                self._cache.max_entries = max_entries
+
         return self._cache
 
     def has_persistence(self) -> bool:

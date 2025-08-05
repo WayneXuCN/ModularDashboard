@@ -13,8 +13,10 @@ from nicegui import app, ui
 
 from .config.manager import load_config
 from .ui.dashboard import render_dashboard, render_module_detail
-from .ui.stats_page import render_stats_page
-from .utils.module_stats import stats_collector
+from .ui.stats_dashboard import render_stats_dashboard
+from .utils.system_monitor import get_performance_tracker
+
+stats_collector = get_performance_tracker()
 
 
 def initialize_app(config: dict[str, Any]) -> None:
@@ -126,8 +128,8 @@ def run_app(native: bool = False) -> None:
 
         @ui.page("/stats")
         def stats_page():
-            """Create a page for module performance statistics."""
-            render_stats_page(stats_collector)
+            """Create a unified page for performance and memory statistics."""
+            render_stats_dashboard()
 
         # Determine if we should enable auto-reload based on environment
         # Default to production environment if not specified

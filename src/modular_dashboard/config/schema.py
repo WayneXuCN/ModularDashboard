@@ -2,6 +2,8 @@
 
 from dataclasses import dataclass
 
+from .memory_config import MemoryConfig
+
 
 @dataclass
 class ModuleConfig:
@@ -45,3 +47,8 @@ class AppConfig:
     theme: str
     layout: LayoutConfig
     modules: list[ModuleConfig]
+    memory: MemoryConfig = None
+
+    def __post_init__(self):
+        if self.memory is None:
+            self.memory = MemoryConfig()

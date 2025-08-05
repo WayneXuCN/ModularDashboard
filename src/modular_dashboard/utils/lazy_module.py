@@ -2,10 +2,14 @@
 
 import threading
 import time
-from typing import Any, Optional
+from typing import TYPE_CHECKING, Any, Optional
 
-from ..modules.base import Module
-from .module_stats import stats_collector
+if TYPE_CHECKING:
+    from ..modules.base import Module
+
+from .system_monitor import get_performance_tracker
+
+stats_collector = get_performance_tracker()
 
 
 class LazyModuleWrapper:
@@ -17,11 +21,14 @@ class LazyModuleWrapper:
     """
 
     def __init__(
-        self, module_class: type[Module], config: dict[str, Any], module_id: str = None
+        self,
+        module_class: type["Module"],
+        config: dict[str, Any],
+        module_id: str = None,
     ):
         self._module_class = module_class
         self._config = config
-        self._instance: Optional[Module] = None
+        self._instance: Module | None = None
         self._lock = threading.RLock()
         self._module_id = module_id or getattr(module_class, "id", str(module_class))
 
@@ -41,7 +48,7 @@ class LazyModuleWrapper:
                         raise e
         return getattr(self._instance, name)
 
-    def get_instance(self) -> Module:
+    def get_instance(self) -> "Module":
         """Get the actual module instance, creating it if necessary."""
         if self._instance is None:
             with self._lock:
@@ -78,7 +85,7 @@ class ModuleCache:
         self._lock = threading.RLock()
 
     def get_or_create(
-        self, module_id: str, module_class: type[Module], config: dict[str, Any]
+        self, module_id: str, module_class: type["Module"], config: dict[str, Any]
     ) -> LazyModuleWrapper:
         """Get or create a lazy module wrapper for the given module."""
         if module_id not in self._cache:
@@ -87,7 +94,7 @@ class ModuleCache:
                     self._cache[module_id] = LazyModuleWrapper(module_class, config)
         return self._cache[module_id]
 
-    def get_instance(self, module_id: str) -> Optional[Module]:
+    def get_instance(self, module_id: str) -> Optional["Module"]:
         """Get the actual module instance if it exists."""
         wrapper = self._cache.get(module_id)
         return wrapper.get_instance() if wrapper else None
