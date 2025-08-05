@@ -1,6 +1,6 @@
 site_name: Modular Dashboard
-site_description: 一个现代化的模块化仪表盘系统
-site_url: https://wayneXuCN.github.io/ModularDashboard/
+site_description: 一个现代化、模块化、可扩展的信息聚合仪表盘应用。
+site_url: https://waynexucn.github.io/ModularDashboard/
 repo_url: https://github.com/WayneXuCN/ModularDashboard
 repo_name: ModularDashboard
 edit_uri: edit/main/docs/
@@ -34,40 +34,34 @@ theme:
         name: 切换到亮色模式
       primary: indigo
       accent: indigo
-  
+
 nav:
   - 首页: index.md
-  - 项目概述: overview.md
   - 快速开始: getting-started.md
   - 用户指南:
-      - user-guide/index.md
-      - 安装指南: user-guide/installation.md
-      - 配置管理: user-guide/configuration.md
-      - 布局配置: user-guide/layout.md
-      - 模块使用: user-guide/modules.md
-  - 开发者指南:
-      - developer-guide/index.md
-      - 架构设计: developer-guide/architecture.md
-      - 模块开发: developer-guide/module-development.md
-      - 项目结构: developer-guide/project-structure.md
-      - 贡献指南: developer-guide/contributing.md
-  - API 参考:
-      - api-reference/index.md
-      - 模块基类: api-reference/module-base.md
-      - 配置 API: api-reference/configuration.md
-      - 存储 API: api-reference/storage.md
-  - 内置模块:
+      - guide/index.md
+      - 安装指南: guide/installation.md
+      - 配置管理: guide/configuration.md
+      - 布局配置: guide/layout.md
+      - 模块使用: guide/modules.md
+  - 模块配置:
       - modules/index.md
       - ArXiv 模块: modules/arxiv.md
       - GitHub 模块: modules/github.md
       - RSS 模块: modules/rss.md
       - 天气模块: modules/weather.md
       - 待办事项: modules/todo.md
-  - 附录:
-      - appendix/index.md
-      - 故障排除: appendix/troubleshooting.md
-      - 更新日志: appendix/changelog.md
-      - 术语表: appendix/glossary.md
+  - 开发指南:
+      - developer/index.md
+      - 架构设计: developer/architecture.md
+      - 模块开发: developer/module-development.md
+      - 项目结构: developer/project-structure.md
+      - 贡献指南: developer/contributing.md
+      - API 参考: api-reference/index.md
+      - API 模块基类: api-reference/module-base.md
+      - 配置 API: api-reference/configuration.md
+      - 存储 API: api-reference/storage.md
+  - 常见问题: FAQ.md
 
 markdown_extensions:
   - pymdownx.highlight:

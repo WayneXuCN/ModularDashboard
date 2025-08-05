@@ -1,32 +1,49 @@
-# 模块开发指南
+# Module Development Guide
 
-本指南详细介绍如何为 Modular Dashboard 开发自定义模块。通过遵循本指南，您将能够创建功能丰富、符合标准的模块，无缝集成到仪表盘系统中。
+This comprehensive guide details how to develop custom modules for Modular Dashboard. By following this guide, you'll be able to create feature-rich, standards-compliant modules that seamlessly integrate into the dashboard system.
 
-## 模块系统概述
+## Table of Contents
 
-### 模块架构
+- [Architecture Overview](#architecture-overview)
+- [Module Base Classes](#module-base-classes)
+- [Creating a Basic Module](#creating-a-basic-module)
+- [Data Fetching and Format](#data-fetching-and-format)
+- [UI Rendering](#ui-rendering)
+- [Configuration Management](#configuration-management)
+- [Storage and Caching](#storage-and-caching)
+- [Asynchronous Support](#asynchronous-support)
+- [Error Handling and Recovery](#error-handling-and-recovery)
+- [Module Lifecycle](#module-lifecycle)
+- [Complete Example: RSS Reader](#complete-example-rss-reader)
+- [Testing](#testing)
+- [Best Practices](#best-practices)
+- [Publishing and Maintenance](#publishing-and-maintenance)
 
-Modular Dashboard 采用基于插件模块的架构，每个模块都是独立的组件，具有以下特点：
+## Architecture Overview
 
-- **独立封装**：每个模块都是自包含的，有自己的配置和数据
-- **标准接口**：所有模块都实现统一的接口，确保互操作性
-- **动态加载**：模块在运行时动态加载，支持热插拔
-- **生命周期管理**：完整的模块生命周期管理，包括初始化、运行和清理
+### Core Design Principles
 
-### 模块类型
+Modular Dashboard uses a plugin-based module architecture with these core characteristics:
 
-系统支持多种类型的模块：
+- **Standardized Interface**: All modules implement a unified interface ensuring interoperability
+- **Layered Design**: Provides basic and extended base classes to meet different complexity needs
+- **Complete Lifecycle**: Includes initialization, runtime, cleanup, and update management
+- **Built-in Features**: Integrated storage, caching, statistics, and error handling mechanisms
 
-1. **数据源模块**：从外部 API 获取数据（如 ArXiv、GitHub、RSS）
-2. **工具模块**：提供实用功能（如时钟、天气、待办事项）
-3. **监控模块**：监控系统和网络状态
-4. **娱乐模块**：提供娱乐内容（如动物图片、随机引用）
+### Module Types
 
-## 模块基类
+The system supports multiple types of modules:
 
-### Module 基类
+1. **Data Source Modules**: Fetch data from external APIs (e.g. ArXiv, GitHub, RSS)
+2. **Tool Modules**: Provide utility functions (e.g. clock, weather, todo list)
+3. **Monitoring Modules**: Monitor system and network status
+4. **Entertainment Modules**: Provide entertainment content (e.g. animal images, random quotes)
 
-所有模块都必须继承自 `Module` 基类：
+## Module Base Classes
+
+### Module Base Class
+
+All modules must inherit from the `Module` base class, which is the most fundamental abstract class:
 
 ```python
 from abc import ABC, abstractmethod
@@ -62,9 +79,16 @@ class Module(ABC):
     def render(self) -> None: pass
 ```
 
-### ExtendedModule 扩展基类
+**Core Features**:
 
-对于需要更复杂功能的模块，可以继承 `ExtendedModule`：
+- Storage management: `get_storage()` and `get_cache()` methods
+- Update support: Built-in module update system
+- Resource cleanup: `cleanup()` method
+- Optional methods: `render_detail()` for detailed views
+
+### ExtendedModule Class
+
+For modules requiring more complex functionality, you can inherit from `ExtendedModule`:
 
 ```python
 class ExtendedModule(Module):
@@ -80,23 +104,31 @@ class ExtendedModule(Module):
             "last_fetch": None,
             "last_error": None,
         }
-
-    # 提供额外功能：异步支持、重试机制、错误处理、统计信息等
 ```
 
-## 创建基础模块
+**Extended Features**:
 
-### 1. 模块文件结构
+- Error handling: Error handlers and retry mechanisms
+- Statistics tracking: Fetch count, error count, time statistics
+- Asynchronous support: `async_fetch()` method
+- Configuration management: Configuration schema validation and UI generation
+- Data import/export: Support for JSON, CSV and other formats
+- Lifecycle management: `initialize()` and `shutdown()` methods
+- Built-in UI components: Statistics, configuration and action buttons
+
+## Creating a Basic Module
+
+### 1. Module File Structure
 
 ```
 src/modular_dashboard/modules/
 ├── your_module/
 │   ├── __init__.py
 │   └── module.py
-└── registry.py           # 需要在此注册模块
+└── registry.py           # Register your module here
 ```
 
-### 2. 最简单的模块示例
+### 2. Simplest Module Example
 
 ```python
 # src/modular_dashboard/modules/your_module/module.py
@@ -143,9 +175,9 @@ class YourModule(Module):
                 ui.label(item["summary"]).classes("text-gray-600")
 ```
 
-### 3. 注册模块
+### 3. Registering the Module
 
-在 `registry.py` 中添加模块注册：
+Add module registration in `registry.py`:
 
 ```python
 # src/modular_dashboard/modules/registry.py
@@ -154,33 +186,33 @@ from .your_module.module import YourModule
 
 MODULE_REGISTRY = {
     "your_module": YourModule,
-    # 其他现有模块...
+    # Other existing modules...
 }
 ```
 
-## 数据获取和返回格式
+## Data Fetching and Format
 
-### 标准数据格式
+### Standard Data Format
 
-`fetch()` 方法必须返回符合以下格式的数据：
+The `fetch()` method must return data in the following format:
 
 ```python
 def fetch(self) -> list[dict[str, Any]]:
     return [
         {
-            "title": str,           # 必需：项目标题
-            "summary": str,         # 必需：项目摘要
-            "link": str,            # 必需：项目链接
-            "published": str,       # 必需：ISO8601 格式时间
-            "tags": list[str],      # 可选：标签列表
-            "extra": dict[str, Any] # 可选：额外数据
+            "title": str,           # Required: Item title
+            "summary": str,         # Required: Item summary
+            "link": str,            # Required: Item link
+            "published": str,       # Required: ISO8601 formatted time
+            "tags": list[str],      # Optional: List of tags
+            "extra": dict[str, Any] # Optional: Extra data
         }
     ]
 ```
 
-### 数据获取最佳实践
+### Data Fetching Best Practices
 
-#### 1. 网络请求处理
+#### 1. Network Request Handling
 
 ```python
 import httpx
@@ -193,14 +225,14 @@ def fetch(self) -> list[dict[str, Any]]:
             response.raise_for_status()
             data = response.json()
             
-            # 转换为标准格式
+            # Transform to standard format
             return self._transform_data(data)
     except Exception as e:
         logger.error(f"Failed to fetch data: {e}")
         return []
 
 def _transform_data(self, raw_data: Any) -> list[dict[str, Any]]:
-    """将原始数据转换为标准格式"""
+    """Transform raw data to standard format"""
     transformed = []
     for item in raw_data.get("items", []):
         transformed.append({
@@ -217,32 +249,32 @@ def _transform_data(self, raw_data: Any) -> list[dict[str, Any]]:
     return transformed
 ```
 
-#### 2. 缓存使用
+#### 2. Cache Usage
 
 ```python
 def fetch(self) -> list[dict[str, Any]]:
-    cache = self.get_cache(default_ttl=3600)  # 1小时缓存
+    cache = self.get_cache(default_ttl=3600)  # 1 hour cache
     
-    # 尝试从缓存获取
+    # Try to get from cache
     cached_data = cache.get("module_data")
     if cached_data:
         return cached_data
     
-    # 获取新数据
+    # Fetch fresh data
     data = self._fetch_from_source()
     
-    # 存储到缓存
+    # Store in cache
     cache.set("module_data", data)
     
     return data
 
 def _fetch_from_source(self) -> list[dict[str, Any]]:
-    """实际的数据获取逻辑"""
-    # 实现具体的数据获取
+    """Actual data fetching logic"""
+    # Implement actual data fetching
     pass
 ```
 
-#### 3. 错误处理和重试
+#### 3. Error Handling and Retry
 
 ```python
 def fetch_with_retry(self, max_retries: int = 3) -> list[dict[str, Any]]:
@@ -255,195 +287,147 @@ def fetch_with_retry(self, max_retries: int = 3) -> list[dict[str, Any]]:
                 return []
             logger.warning(f"Attempt {attempt + 1} failed, retrying...")
             import time
-            time.sleep(2 ** attempt)  # 指数退避
+            time.sleep(2 ** attempt)  # Exponential backoff
 ```
 
-## UI 渲染
+## UI Rendering
 
-### 基础渲染
+### Basic Rendering
 
 ```python
 def render(self) -> None:
-    """主视图渲染 - 显示在仪表盘卡片中"""
+    """Main view rendering - displayed in dashboard card"""
     items = self.fetch()
     
     with ui.card().classes("w-full"):
-        # 模块标题
+        # Module title
         with ui.row().classes("items-center justify-between w-full"):
             ui.label(self.name).classes("text-lg font-semibold")
             ui.icon(self.icon).classes("text-xl")
         
-        # 模块内容
+        # Module content
         if items:
             self._render_main_view(items)
         else:
-            ui.label("暂无数据").classes("text-gray-500")
+            ui.label("No data available").classes("text-gray-500")
         
-        # 刷新按钮
-        ui.button("刷新", on_click=self._refresh).classes("mt-2")
+        # Refresh button
+        ui.button("Refresh", on_click=self._refresh).classes("mt-2")
 
 def _render_main_view(self, items: list[dict[str, Any]]) -> None:
-    """渲染主视图内容"""
-    # 通常只显示第一个或前几个项目
-    for item in items[:2]:  # 最多显示2个项目
+    """Render main view content"""
+    # Usually only display the first or first few items
+    for item in items[:2]:  # Display at most 2 items
         with ui.element().classes("mb-2"):
             ui.label(item["title"]).classes("font-medium")
             ui.label(item["summary"][:100] + "...").classes("text-sm text-gray-600")
 ```
 
-### 详细视图渲染
+### Detailed View Rendering
 
 ```python
 def render_detail(self) -> None:
-    """详细视图渲染 - 显示在独立页面中"""
+    """Detailed view rendering - displayed on standalone page"""
     items = self.fetch()
     
     with ui.column().classes("w-full gap-4"):
-        # 页面标题
-        ui.label(f"{self.name} - 详细信息").classes("text-2xl font-bold")
+        # Page title
+        ui.label(f"{self.name} - Detailed Information").classes("text-2xl font-bold")
         
-        # 统计信息
+        # Statistics
         self._render_stats()
         
-        # 项目列表
+        # Item list
         if items:
             for item in items:
                 self._render_detail_item(item)
         else:
-            ui.label("暂无数据").classes("text-gray-500")
+            ui.label("No data available").classes("text-gray-500")
 
 def _render_detail_item(self, item: dict[str, Any]) -> None:
-    """渲染详细项目"""
+    """Render detailed item"""
     with ui.card().classes("w-full p-4"):
-        # 标题和链接
+        # Title and link
         with ui.link(target=item["link"]).classes("no-underline"):
             ui.label(item["title"]).classes("text-xl font-bold hover:underline")
         
-        # 元数据
+        # Metadata
         with ui.row().classes("items-center gap-2 my-2"):
             ui.label(item["published"][:10]).classes("text-sm text-gray-500")
             for tag in item.get("tags", [])[:3]:
                 ui.chip(tag).classes("text-xs")
         
-        # 摘要
+        # Summary
         ui.label(item["summary"]).classes("text-gray-700")
         
-        # 额外信息
+        # Extra information
         if item.get("extra"):
             self._render_extra_info(item["extra"])
 
 def _render_stats(self) -> None:
-    """渲染统计信息"""
+    """Render statistics"""
     stats = self.get_stats()
     
     with ui.card().classes("w-full p-4 bg-gray-50"):
-        ui.label("统计信息").classes("font-semibold mb-2")
+        ui.label("Statistics").classes("font-semibold mb-2")
         with ui.row().classes("gap-4"):
-            ui.label(f"获取次数: {stats['fetch_count']}").classes("text-sm")
-            ui.label(f"错误次数: {stats['error_count']}").classes("text-sm")
+            ui.label(f"Fetch count: {stats['fetch_count']}").classes("text-sm")
+            ui.label(f"Error count: {stats['error_count']}").classes("text-sm")
             if stats.get("last_fetch"):
-                ui.label(f"最后更新: {stats['last_fetch'].strftime('%H:%M')}").classes("text-sm")
+                ui.label(f"Last update: {stats['last_fetch'].strftime('%H:%M')}").classes("text-sm")
 ```
 
-### 配置界面渲染
+## Configuration Management
 
-```python
-def render_config_ui(self) -> None:
-    """渲染配置界面"""
-    schema = self.get_config_schema()
-    
-    with ui.card().classes("w-full p-4"):
-        ui.label(f"{self.name} 配置").classes("text-lg font-semibold mb-4")
-        
-        for field_name, field_config in schema.items():
-            self._render_config_field(field_name, field_config)
-
-def _render_config_field(self, field_name: str, field_config: dict[str, Any]) -> None:
-    """渲染单个配置字段"""
-    field_type = field_config.get("type", "string")
-    field_label = field_config.get("label", field_name)
-    field_default = field_config.get("default", "")
-    
-    with ui.column().classes("w-full gap-1 mb-3"):
-        ui.label(field_label).classes("text-sm font-medium")
-        
-        if field_type == "string":
-            ui.input(
-                placeholder=field_label,
-                value=self.config.get(field_name, field_default),
-            ).bind_value(self.config, field_name).classes("w-full")
-        
-        elif field_type == "number":
-            ui.number(
-                label=field_label,
-                value=self.config.get(field_name, field_default),
-            ).bind_value(self.config, field_name).classes("w-full")
-        
-        elif field_type == "boolean":
-            ui.switch(
-                text=field_label,
-                value=self.config.get(field_name, field_default),
-            ).bind_value(self.config, field_name)
-        
-        elif field_type == "select":
-            ui.select(
-                options=field_config.get("options", []),
-                label=field_label,
-                value=self.config.get(field_name, field_default),
-            ).bind_value(self.config, field_name).classes("w-full")
-```
-
-## 配置管理
-
-### 配置模式定义
+### Configuration Schema Definition
 
 ```python
 def get_config_schema(self) -> dict[str, Any]:
-    """定义配置模式"""
+    """Define configuration schema"""
     return {
         "api_key": {
             "type": "string",
-            "label": "API 密钥",
-            "description": "用于访问外部 API 的密钥",
+            "label": "API Key",
+            "description": "Key for accessing external API",
             "required": False,
             "secret": True
         },
         "refresh_interval": {
             "type": "number",
-            "label": "刷新间隔",
-            "description": "数据刷新的时间间隔（秒）",
+            "label": "Refresh Interval",
+            "description": "Data refresh interval (seconds)",
             "default": 3600,
             "min": 60,
             "max": 86400
         },
         "max_items": {
             "type": "number",
-            "label": "最大项目数",
-            "description": "显示的最大项目数量",
+            "label": "Max Items",
+            "description": "Maximum number of items to display",
             "default": 10,
             "min": 1,
             "max": 100
         },
         "enabled_categories": {
             "type": "select",
-            "label": "启用的分类",
-            "description": "选择要显示的内容分类",
-            "options": ["全部", "技术", "科学", "艺术"],
-            "default": "全部",
+            "label": "Enabled Categories",
+            "description": "Select content categories to display",
+            "options": ["All", "Technology", "Science", "Art"],
+            "default": "All",
             "multiple": True
         }
     }
 
 def get_default_config(self) -> dict[str, Any]:
-    """获取默认配置"""
+    """Get default configuration"""
     return {
         "refresh_interval": 3600,
         "max_items": 10,
-        "enabled_categories": ["全部"]
+        "enabled_categories": ["All"]
     }
 
 def validate_config(self, config: dict[str, Any]) -> bool:
-    """验证配置"""
+    """Validate configuration"""
     required_fields = ["refresh_interval", "max_items"]
     
     for field in required_fields:
@@ -451,7 +435,7 @@ def validate_config(self, config: dict[str, Any]) -> bool:
             logger.error(f"Missing required field: {field}")
             return False
     
-    # 验证数值范围
+    # Validate value ranges
     if not (60 <= config["refresh_interval"] <= 86400):
         logger.error("refresh_interval must be between 60 and 86400")
         return False
@@ -459,44 +443,44 @@ def validate_config(self, config: dict[str, Any]) -> bool:
     return True
 ```
 
-### 配置验证和默认值
+### Configuration Validation and Defaults
 
 ```python
 def __init__(self, config: dict[str, Any] | None = None):
     super().__init__(config)
     
-    # 合并默认配置
+    # Merge default configuration
     default_config = self.get_default_config()
     self.config = {**default_config, **(self.config or {})}
     
-    # 验证配置
+    # Validate configuration
     if not self.validate_config(self.config):
         logger.warning("Invalid config, using defaults")
         self.config = default_config
 ```
 
-## 存储和缓存
+## Storage and Caching
 
-### 持久化存储
+### Persistent Storage
 
 ```python
 class YourModule(Module):
     def has_persistence(self) -> bool:
-        """检查模块是否需要持久化存储"""
+        """Check if module requires persistent storage"""
         return True
 
     def save_user_preferences(self, preferences: dict[str, Any]) -> None:
-        """保存用户偏好设置"""
+        """Save user preferences"""
         storage = self.get_storage()
         storage.set("user_preferences", preferences)
 
     def load_user_preferences(self) -> dict[str, Any]:
-        """加载用户偏好设置"""
+        """Load user preferences"""
         storage = self.get_storage()
         return storage.get("user_preferences", {})
 
     def save_data(self, data: list[dict[str, Any]]) -> None:
-        """保存数据到持久化存储"""
+        """Save data to persistent storage"""
         storage = self.get_storage()
         storage.set("saved_data", {
             "data": data,
@@ -504,7 +488,7 @@ class YourModule(Module):
         })
 
     def load_saved_data(self) -> list[dict[str, Any]]:
-        """从持久化存储加载数据"""
+        """Load data from persistent storage"""
         storage = self.get_storage()
         saved = storage.get("saved_data")
         if saved:
@@ -512,48 +496,48 @@ class YourModule(Module):
         return []
 ```
 
-### 缓存使用
+### Cache Usage
 
 ```python
 class YourModule(Module):
     def has_cache(self) -> bool:
-        """检查模块是否使用缓存"""
+        """Check if module uses cache"""
         return True
 
     def fetch_with_cache(self) -> list[dict[str, Any]]:
-        """带缓存的数据获取"""
+        """Fetch data with cache"""
         cache = self.get_cache(default_ttl=self.config.get("refresh_interval", 3600))
         
-        # 尝试从缓存获取
+        # Try to get from cache
         cached_data = cache.get("fetched_data")
         if cached_data:
             logger.debug("Using cached data")
             return cached_data
         
-        # 获取新数据
+        # Fetch fresh data
         fresh_data = self._fetch_from_source()
         
-        # 存储到缓存
+        # Store in cache
         cache.set("fetched_data", fresh_data)
         
         logger.debug("Fetched fresh data")
         return fresh_data
 
     def invalidate_cache(self) -> None:
-        """使缓存失效"""
+        """Invalidate cache"""
         cache = self.get_cache()
         cache.delete("fetched_data")
         logger.info("Cache invalidated")
 ```
 
-## 异步支持
+## Asynchronous Support
 
-### 异步数据获取
+### Asynchronous Data Fetching
 
 ```python
 class YourModule(ExtendedModule):
     async def async_fetch(self) -> list[dict[str, Any]]:
-        """异步版本的数据获取"""
+        """Asynchronous version of data fetching"""
         try:
             async with httpx.AsyncClient(timeout=10.0) as client:
                 response = await client.get("https://api.example.com/data")
@@ -565,7 +549,7 @@ class YourModule(ExtendedModule):
             return []
 
     async def fetch_multiple_sources(self) -> list[dict[str, Any]]:
-        """从多个源异步获取数据"""
+        """Fetch data from multiple sources asynchronously"""
         urls = [
             "https://api.example.com/source1",
             "https://api.example.com/source2",
@@ -592,9 +576,9 @@ class YourModule(ExtendedModule):
         return results
 ```
 
-## 错误处理和恢复
+## Error Handling and Recovery
 
-### 错误处理策略
+### Error Handling Strategy
 
 ```python
 class YourModule(ExtendedModule):
@@ -604,10 +588,10 @@ class YourModule(ExtendedModule):
         self.add_error_handler(self._handle_render_error)
 
     def _handle_fetch_error(self, error: Exception) -> None:
-        """处理数据获取错误"""
+        """Handle data fetching errors"""
         logger.error(f"Fetch error in {self.id}: {error}")
         
-        # 尝试使用缓存数据
+        # Try to use cached data
         cache = self.get_cache()
         cached_data = cache.get("fetched_data")
         if cached_data:
@@ -615,33 +599,33 @@ class YourModule(ExtendedModule):
             self._cached_data = cached_data
 
     def _handle_render_error(self, error: Exception) -> None:
-        """处理渲染错误"""
+        """Handle rendering errors"""
         logger.error(f"Render error in {self.id}: {error}")
         
-        # 显示错误状态
-        ui.label("加载失败").classes("text-red-500")
-        ui.button("重试", on_click=self._retry_fetch).classes("mt-2")
+        # Display error state
+        ui.label("Failed to load").classes("text-red-500")
+        ui.button("Retry", on_click=self._retry_fetch).classes("mt-2")
 
     def _retry_fetch(self) -> None:
-        """重试数据获取"""
+        """Retry data fetching"""
         try:
             self.invalidate_cache()
             data = self.fetch_with_retry()
             if data:
-                ui.notify("数据加载成功", type="positive")
-                # 重新渲染
+                ui.notify("Data loaded successfully", type="positive")
+                # Re-render
                 self.render()
             else:
-                ui.notify("重试失败", type="negative")
+                ui.notify("Retry failed", type="negative")
         except Exception as e:
-            ui.notify(f"重试失败: {str(e)}", type="negative")
+            ui.notify(f"Retry failed: {str(e)}", type="negative")
 ```
 
-### 健康检查
+### Health Check
 
 ```python
 def health_check(self) -> dict[str, Any]:
-    """模块健康检查"""
+    """Module health check"""
     status = {
         "module_id": self.id,
         "status": "healthy",
@@ -649,7 +633,7 @@ def health_check(self) -> dict[str, Any]:
         "checks": {}
     }
     
-    # 检查配置
+    # Check configuration
     try:
         self.validate_config(self.config)
         status["checks"]["config"] = {"status": "ok"}
@@ -657,7 +641,7 @@ def health_check(self) -> dict[str, Any]:
         status["checks"]["config"] = {"status": "error", "message": str(e)}
         status["status"] = "unhealthy"
     
-    # 检查网络连接
+    # Check network connectivity
     try:
         with httpx.Client(timeout=5.0) as client:
             response = client.get("https://api.example.com/health")
@@ -667,7 +651,7 @@ def health_check(self) -> dict[str, Any]:
         status["checks"]["api"] = {"status": "error", "message": str(e)}
         status["status"] = "degraded"
     
-    # 检查缓存
+    # Check cache
     try:
         cache = self.get_cache()
         cache.get("health_check_test")
@@ -679,17 +663,17 @@ def health_check(self) -> dict[str, Any]:
     return status
 ```
 
-## 模块生命周期
+## Module Lifecycle
 
-### 生命周期方法
+### Lifecycle Methods
 
 ```python
 class YourModule(ExtendedModule):
     def initialize(self) -> None:
-        """模块初始化"""
+        """Module initialization"""
         if not self._is_initialized:
             try:
-                # 初始化资源
+                # Initialize resources
                 self._setup_http_client()
                 self._setup_scheduler()
                 self._load_initial_data()
@@ -701,14 +685,14 @@ class YourModule(ExtendedModule):
                 raise
 
     def _setup_http_client(self) -> None:
-        """设置 HTTP 客户端"""
+        """Setup HTTP client"""
         self._http_client = httpx.Client(
             timeout=30.0,
             limits=httpx.Limits(max_keepalive_connections=5)
         )
 
     def _setup_scheduler(self) -> None:
-        """设置定时任务"""
+        """Setup scheduled tasks"""
         from apscheduler.schedulers.background import BackgroundScheduler
         
         self._scheduler = BackgroundScheduler()
@@ -720,7 +704,7 @@ class YourModule(ExtendedModule):
         self._scheduler.start()
 
     def _load_initial_data(self) -> None:
-        """加载初始数据"""
+        """Load initial data"""
         try:
             data = self.fetch_with_cache()
             self._current_data = data
@@ -729,17 +713,17 @@ class YourModule(ExtendedModule):
             self._current_data = []
 
     def shutdown(self) -> None:
-        """模块关闭"""
+        """Module shutdown"""
         try:
-            # 停止定时任务
+            # Stop scheduled tasks
             if hasattr(self, '_scheduler'):
                 self._scheduler.shutdown()
             
-            # 关闭 HTTP 客户端
+            # Close HTTP client
             if hasattr(self, '_http_client'):
                 self._http_client.close()
             
-            # 清理缓存
+            # Cleanup cache
             self.cleanup()
             
             logger.info(f"Module {self.id} shutdown successfully")
@@ -747,18 +731,16 @@ class YourModule(ExtendedModule):
             logger.error(f"Error shutting down module {self.id}: {e}")
 
     def cleanup(self) -> None:
-        """清理资源"""
+        """Cleanup resources"""
         if self._cache:
             self._cache.cleanup_expired()
         
-        # 保存数据到持久化存储
+        # Save data to persistent storage
         if hasattr(self, '_current_data'):
             self.save_data(self._current_data)
 ```
 
-## 实际模块示例
-
-### RSS 阅读器模块
+## Complete Example: RSS Reader
 
 ```python
 # src/modular_dashboard/modules/rss_reader/module.py
@@ -779,7 +761,7 @@ class RSSReaderModule(ExtendedModule):
 
     @property
     def name(self) -> str:
-        return "RSS 阅读器"
+        return "RSS Reader"
 
     @property
     def icon(self) -> str:
@@ -787,7 +769,7 @@ class RSSReaderModule(ExtendedModule):
 
     @property
     def description(self) -> str:
-        return "订阅和阅读 RSS 源"
+        return "Subscribe and read RSS feeds"
 
     @property
     def version(self) -> str:
@@ -797,30 +779,30 @@ class RSSReaderModule(ExtendedModule):
         return {
             "feed_urls": {
                 "type": "string",
-                "label": "RSS 源 URL",
-                "description": "RSS 源的 URL，多个源用逗号分隔",
+                "label": "RSS Feed URLs",
+                "description": "RSS feed URLs, separated by commas",
                 "default": ""
             },
             "refresh_interval": {
                 "type": "number",
-                "label": "刷新间隔",
-                "description": "刷新间隔（分钟）",
+                "label": "Refresh Interval",
+                "description": "Refresh interval (minutes)",
                 "default": 30,
                 "min": 5,
                 "max": 1440
             },
             "max_items": {
                 "type": "number",
-                "label": "最大项目数",
-                "description": "每个源显示的最大项目数",
+                "label": "Max Items",
+                "description": "Maximum items to display per feed",
                 "default": 10,
                 "min": 1,
                 "max": 50
             },
             "show_description": {
                 "type": "boolean",
-                "label": "显示描述",
-                "description": "是否显示项目描述",
+                "label": "Show Description",
+                "description": "Whether to show item descriptions",
                 "default": True
             }
         }
@@ -834,7 +816,7 @@ class RSSReaderModule(ExtendedModule):
         }
 
     def fetch(self) -> list[dict[str, Any]]:
-        """获取 RSS 数据"""
+        """Fetch RSS data"""
         urls = self.config.get("feed_urls", "").split(",")
         urls = [url.strip() for url in urls if url.strip()]
         
@@ -855,32 +837,32 @@ class RSSReaderModule(ExtendedModule):
             except Exception as e:
                 logger.error(f"Failed to fetch feed {url}: {e}")
         
-        # 按时间排序
+        # Sort by publication time
         all_items.sort(key=lambda x: x["published"], reverse=True)
         
-        # 限制数量
+        # Limit total items
         max_total = self.config.get("max_items", 10) * len(urls)
         all_items = all_items[:max_total]
         
-        # 缓存数据
+        # Cache data
         cache.set("rss_data", all_items)
         
         return all_items
 
     def _fetch_feed(self, url: str) -> list[dict[str, Any]]:
-        """获取单个 RSS 源"""
+        """Fetch a single RSS feed"""
         try:
-            # 使用 httpx 获取 RSS 内容
+            # Use httpx to fetch RSS content
             with httpx.Client(timeout=10.0) as client:
                 response = client.get(url)
                 response.raise_for_status()
                 
-                # 使用 feedparser 解析
+                # Parse with feedparser
                 feed = feedparser.parse(response.content)
                 
                 items = []
                 for entry in feed.entries[:self.config.get("max_items", 10)]:
-                    # 解析发布时间
+                    # Parse publication time
                     published = entry.get("published", "")
                     if published:
                         try:
@@ -891,7 +873,7 @@ class RSSReaderModule(ExtendedModule):
                         published = datetime.now().isoformat()
                     
                     items.append({
-                        "title": entry.get("title", "无标题"),
+                        "title": entry.get("title", "Untitled"),
                         "summary": entry.get("summary", "")[:200],
                         "link": entry.get("link", ""),
                         "published": published,
@@ -910,36 +892,36 @@ class RSSReaderModule(ExtendedModule):
             return []
 
     def render(self) -> None:
-        """渲染主视图"""
+        """Render main view"""
         items = self.fetch()
         
         with ui.card().classes("w-full"):
-            # 标题栏
+            # Title bar
             with ui.row().classes("items-center justify-between w-full mb-3"):
                 with ui.row().classes("items-center gap-2"):
                     ui.icon(self.icon).classes("text-xl")
                     ui.label(self.name).classes("text-lg font-semibold")
                 
-                ui.button("刷新", on_click=self._refresh).props("flat").classes("text-sm")
+                ui.button("Refresh", on_click=self._refresh).props("flat").classes("text-sm")
             
-            # 内容区域
+            # Content area
             if items:
-                # 显示前 5 个项目
+                # Display first 5 items
                 for item in items[:5]:
                     self._render_item(item)
             else:
-                ui.label("暂无 RSS 内容").classes("text-gray-500 text-center py-4")
+                ui.label("No RSS content available").classes("text-gray-500 text-center py-4")
 
     def _render_item(self, item: dict[str, Any]) -> None:
-        """渲染单个项目"""
+        """Render a single item"""
         with ui.element().classes("border-l-2 border-blue-200 pl-3 mb-3"):
-            # 标题和链接
+            # Title and link
             with ui.link(target=item["link"]).classes("no-underline"):
                 ui.label(item["title"]).classes(
                     "font-medium text-sm hover:text-blue-600 transition-colors"
                 )
             
-            # 发布时间和来源
+            # Publication time and source
             with ui.row().classes("items-center gap-2 mt-1"):
                 ui.label(item["published"][:10]).classes("text-xs text-gray-500")
                 if item["extra"].get("source_title"):
@@ -947,75 +929,75 @@ class RSSReaderModule(ExtendedModule):
                         "text-xs text-gray-400 bg-gray-100 px-1 rounded"
                     )
             
-            # 描述
+            # Description
             if self.config.get("show_description", True) and item["summary"]:
                 ui.label(item["summary"]).classes("text-xs text-gray-600 mt-1")
 
     def render_detail(self) -> None:
-        """渲染详细视图"""
+        """Render detailed view"""
         items = self.fetch()
         
         with ui.column().classes("w-full gap-4"):
-            # 页面标题
+            # Page title
             with ui.row().classes("items-center justify-between w-full"):
                 with ui.row().classes("items-center gap-3"):
                     ui.icon(self.icon).classes("text-3xl")
                     ui.label(self.name).classes("text-2xl font-bold")
                 
-                ui.button("刷新", on_click=self._refresh).classes("bg-blue-500 text-white")
+                ui.button("Refresh", on_click=self._refresh).classes("bg-blue-500 text-white")
             
-            # 统计信息
+            # Statistics
             stats = self.get_stats()
             with ui.card().classes("w-full p-4 bg-gray-50"):
                 with ui.row().classes("gap-6"):
-                    ui.label(f"总项目数: {len(items)}").classes("text-sm")
-                    ui.label(f"获取次数: {stats['fetch_count']}").classes("text-sm")
+                    ui.label(f"Total items: {len(items)}").classes("text-sm")
+                    ui.label(f"Fetch count: {stats['fetch_count']}").classes("text-sm")
                     if stats.get("last_fetch"):
-                        ui.label(f"最后更新: {stats['last_fetch'].strftime('%H:%M:%S')}").classes("text-sm")
+                        ui.label(f"Last update: {stats['last_fetch'].strftime('%H:%M:%S')}").classes("text-sm")
             
-            # 配置
-            with ui.expansion("配置").classes("w-full"):
+            # Configuration
+            with ui.expansion("Configuration").classes("w-full"):
                 self.render_config_ui()
             
-            # 项目列表
+            # Item list
             if items:
                 for item in items:
                     self._render_detail_item(item)
             else:
-                ui.label("暂无 RSS 内容").classes("text-gray-500 text-center py-8")
+                ui.label("No RSS content available").classes("text-gray-500 text-center py-8")
 
     def _render_detail_item(self, item: dict[str, Any]) -> None:
-        """渲染详细项目"""
+        """Render detailed item"""
         with ui.card().classes("w-full p-4 hover:shadow-md transition-shadow"):
-            # 标题和链接
+            # Title and link
             with ui.link(target=item["link"]).classes("no-underline"):
                 ui.label(item["title"]).classes(
                     "text-lg font-semibold hover:text-blue-600 transition-colors"
                 )
             
-            # 元数据
+            # Metadata
             with ui.row().classes("items-center gap-3 mt-2 flex-wrap"):
                 ui.label(item["published"][:19].replace("T", " ")).classes("text-sm text-gray-500")
                 
                 if item["extra"].get("author"):
-                    ui.label(f"作者: {item['extra']['author']}").classes("text-sm text-gray-600")
+                    ui.label(f"Author: {item['extra']['author']}").classes("text-sm text-gray-600")
                 
                 if item["extra"].get("source_title"):
                     ui.label(item["extra"]["source_title"]).classes(
                         "text-sm bg-blue-100 text-blue-800 px-2 py-1 rounded"
                     )
                 
-                # 标签
+                # Tags
                 for tag in item.get("tags", [])[:3]:
                     ui.chip(tag).classes("text-xs")
 
     def _refresh(self) -> None:
-        """刷新数据"""
+        """Refresh data"""
         try:
             self.invalidate_cache()
-            ui.notify("刷新成功", type="positive")
+            ui.notify("Refresh successful", type="positive")
         except Exception as e:
-            ui.notify(f"刷新失败: {str(e)}", type="negative")
+            ui.notify(f"Refresh failed: {str(e)}", type="negative")
 
     def has_persistence(self) -> bool:
         return True
@@ -1024,9 +1006,9 @@ class RSSReaderModule(ExtendedModule):
         return True
 ```
 
-## 模块测试
+## Testing
 
-### 单元测试
+### Unit Tests
 
 ```python
 # tests/modules/test_your_module.py
@@ -1037,7 +1019,7 @@ from modular_dashboard.modules.your_module.module import YourModule
 
 class TestYourModule:
     def setup_method(self):
-        """测试前设置"""
+        """Setup before tests"""
         self.config = {
             "refresh_interval": 3600,
             "max_items": 10
@@ -1045,7 +1027,7 @@ class TestYourModule:
         self.module = YourModule(self.config)
 
     def test_module_properties(self):
-        """测试模块基本属性"""
+        """Test module basic properties"""
         assert self.module.id == "your_module"
         assert self.module.name == "Your Module"
         assert self.module.icon == "📦"
@@ -1053,8 +1035,8 @@ class TestYourModule:
 
     @patch('httpx.Client.get')
     def test_fetch_success(self, mock_get):
-        """测试成功的数据获取"""
-        # 模拟 API 响应
+        """Test successful data fetching"""
+        # Mock API response
         mock_response = Mock()
         mock_response.json.return_value = {
             "items": [
@@ -1069,10 +1051,10 @@ class TestYourModule:
         mock_response.raise_for_status.return_value = None
         mock_get.return_value = mock_response
         
-        # 执行测试
+        # Execute test
         result = self.module.fetch()
         
-        # 验证结果
+        # Verify results
         assert len(result) == 1
         assert result[0]["title"] == "Test Item"
         assert result[0]["summary"] == "Test description"
@@ -1080,43 +1062,43 @@ class TestYourModule:
 
     @patch('httpx.Client.get')
     def test_fetch_error(self, mock_get):
-        """测试错误处理"""
-        # 模拟网络错误
+        """Test error handling"""
+        # Mock network error
         mock_get.side_effect = Exception("Network error")
         
-        # 执行测试
+        # Execute test
         result = self.module.fetch()
         
-        # 验证结果
+        # Verify results
         assert result == []
 
     def test_config_validation(self):
-        """测试配置验证"""
-        # 有效配置
+        """Test configuration validation"""
+        # Valid configuration
         valid_config = {"refresh_interval": 3600, "max_items": 10}
         assert self.module.validate_config(valid_config) == True
         
-        # 无效配置
+        # Invalid configuration
         invalid_config = {"refresh_interval": -1}
         assert self.module.validate_config(invalid_config) == False
 
     def test_cache_operations(self):
-        """测试缓存操作"""
-        # 设置缓存数据
+        """Test cache operations"""
+        # Set cache data
         cache = self.module.get_cache()
         test_data = [{"title": "Cached Item"}]
         cache.set("test_key", test_data)
         
-        # 获取缓存数据
+        # Get cache data
         cached_data = cache.get("test_key")
         assert cached_data == test_data
         
-        # 删除缓存数据
+        # Delete cache data
         cache.delete("test_key")
         assert cache.get("test_key") is None
 ```
 
-### 集成测试
+### Integration Tests
 
 ```python
 # tests/integration/test_module_integration.py
@@ -1126,12 +1108,12 @@ from modular_dashboard.modules.registry import MODULE_REGISTRY
 
 class TestModuleIntegration:
     def test_module_registration(self):
-        """测试模块注册"""
+        """Test module registration"""
         assert "your_module" in MODULE_REGISTRY
         assert MODULE_REGISTRY["your_module"] == YourModule
 
     def test_module_instantiation(self):
-        """测试模块实例化"""
+        """Test module instantiation"""
         module_class = MODULE_REGISTRY["your_module"]
         module = module_class({"refresh_interval": 1800})
         
@@ -1140,48 +1122,55 @@ class TestModuleIntegration:
 
     @pytest.mark.asyncio
     async def test_async_fetch(self):
-        """测试异步数据获取"""
+        """Test asynchronous data fetching"""
         module = YourModule({})
         
-        # 如果模块支持异步获取
+        # If module supports async fetching
         if hasattr(module, 'async_fetch'):
             data = await module.async_fetch()
             assert isinstance(data, list)
 ```
 
-## 最佳实践
+## Best Practices
 
-### 1. 性能优化
+### 1. Performance Optimization
 
-- **缓存策略**：合理设置缓存时间，避免频繁的 API 调用
-- **批量请求**：合并多个 API 请求，减少网络开销
-- **懒加载**：只在需要时加载数据
-- **资源管理**：及时关闭网络连接和清理资源
+- **Caching Strategy**: Set appropriate cache times to avoid frequent API calls
+- **Batch Requests**: Combine multiple API requests to reduce network overhead
+- **Lazy Loading**: Load data only when needed
+- **Resource Management**: Close network connections and clean up resources in a timely manner
 
-### 2. 错误处理
+### 2. Error Handling
 
-- **优雅降级**：在错误情况下提供合理的默认行为
-- **重试机制**：对临时性错误实施重试策略
-- **用户反馈**：提供清晰的错误信息和建议
-- **日志记录**：记录详细的错误信息用于调试
+- **Graceful Degradation**: Provide reasonable default behavior in error situations
+- **Retry Mechanism**: Implement retry strategies for transient errors
+- **User Feedback**: Provide clear error messages and suggestions
+- **Logging**: Record detailed error information for debugging
 
-### 3. 用户体验
+### 3. User Experience
 
-- **加载状态**：在数据加载时显示进度指示器
-- **空状态**：为无数据状态提供友好的提示
-- **响应式设计**：确保在不同屏幕尺寸下正常显示
-- **交互反馈**：为用户操作提供即时反馈
+- **Loading States**: Show progress indicators when loading data
+- **Empty States**: Provide friendly prompts for no-data states
+- **Responsive Design**: Ensure proper display on different screen sizes
+- **Interactive Feedback**: Provide immediate feedback for user actions
 
-### 4. 安全考虑
+### 4. Security Considerations
 
-- **输入验证**：验证所有外部输入和数据
-- **权限控制**：限制敏感操作的访问权限
-- **数据保护**：不在日志中记录敏感信息
-- **网络安全**：使用 HTTPS 和安全的 API 调用
+- **Input Validation**: Validate all external input and data
+- **Access Control**: Limit access to sensitive operations
+- **Data Protection**: Do not log sensitive information
+- **Network Security**: Use HTTPS and secure API calls
 
-## 发布和维护
+### 5. Code Quality
 
-### 1. 版本管理
+- **Type Hints**: Use type hints to improve code readability and IDE support
+- **Docstrings**: Write detailed docstrings for all public methods
+- **Unit Tests**: Write unit tests for core functionality
+- **Code Reuse**: Extract common functionality into helper methods
+
+## Publishing and Maintenance
+
+### 1. Version Management
 
 ```python
 @property
@@ -1189,18 +1178,25 @@ def version(self) -> str:
     return "1.0.0"
 ```
 
-### 2. 文档
+### 2. Documentation
 
-- **模块说明**：详细描述模块的功能和用途
-- **配置说明**：说明所有配置选项的作用
-- **使用示例**：提供典型的使用场景和配置
-- **故障排除**：列出常见问题和解决方案
+- **Module Description**: Detailed description of module functionality and purpose
+- **Configuration Guide**: Explanation of all configuration options
+- **Usage Examples**: Typical usage scenarios and configurations
+- **Troubleshooting**: List of common issues and solutions
 
-### 3. 更新策略
+### 3. Update Strategy
 
-- **向后兼容**：保持配置和接口的向后兼容性
-- **迁移指南**：为重大变更提供迁移指导
-- **变更日志**：记录版本间的变更内容
-- **测试覆盖**：确保新功能有充分的测试覆盖
+- **Backward Compatibility**: Maintain backward compatibility of configuration and interfaces
+- **Migration Guide**: Provide migration guidance for major changes
+- **Changelog**: Record changes between versions
+- **Test Coverage**: Ensure new features have adequate test coverage
 
-通过遵循本指南，您将能够开发出高质量、易维护的 Modular Dashboard 模块，为用户提供丰富的功能和良好的体验。
+### 4. Performance Monitoring
+
+- **Statistics**: Track module usage and performance metrics
+- **Error Rate**: Monitor module error rate and success rate
+- **Response Time**: Monitor data fetching and rendering response times
+- **Resource Usage**: Monitor module memory and CPU usage
+
+By following this guide, you'll be able to develop high-quality, maintainable Modular Dashboard modules that provide rich functionality and a great user experience.

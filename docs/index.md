@@ -1,19 +1,5 @@
 # Modular Dashboard
 
-<div align="center">
-
-![Modular Dashboard Logo](assets/images/logo.png)
-
-**一个现代化的模块化仪表盘系统**
-
-[![Python Version](https://img.shields.io/badge/python-3.12+-blue.svg)](https://www.python.org/)
-[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
-[![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://github.com/WayneXuCN/ModularDashboard/actions)
-
-[快速开始](getting-started.md) • [用户指南](user-guide/index.md) • [开发者指南](developer-guide/index.md) • [API 参考](api-reference/index.md)
-
-</div>
-
 ## 🎯 项目简介
 
 Modular Dashboard 是一个基于 Python 和 NiceGUI 的现代化模块化仪表盘系统。它采用插件化架构，支持动态加载各种功能模块，为用户提供个性化的信息聚合和工作台解决方案。
@@ -45,23 +31,27 @@ uv run -m modular_dashboard.app
 ### 📚 文档导航
 
 #### 📖 用户指南
+
 - [安装指南](user-guide/installation.md) - 系统要求和安装步骤
 - [配置管理](user-guide/configuration.md) - 配置文件详解和最佳实践
 - [布局配置](user-guide/layout.md) - 仪表盘布局和界面定制
 - [模块使用](user-guide/modules.md) - 内置模块的使用方法
 
 #### 🔧 开发者指南
+
 - [架构设计](developer-guide/architecture.md) - 系统架构和技术原理
 - [模块开发](developer-guide/module-development.md) - 开发自定义模块的完整指南
 - [项目结构](developer-guide/project-structure.md) - 代码结构和文件组织
 - [贡献指南](developer-guide/contributing.md) - 参与项目开发的方法
 
 #### 📚 API 参考
+
 - [模块基类](api-reference/module-base.md) - 核心模块接口和基类
 - [配置 API](api-reference/configuration.md) - 配置管理相关接口
 - [存储 API](api-reference/storage.md) - 存储和缓存系统接口
 
 #### 🎯 内置模块
+
 - [ArXiv 模块](modules/arxiv.md) - 学术论文搜索和展示
 - [GitHub 模块](modules/github.md) - GitHub 活动监控
 - [RSS 模块](modules/rss.md) - RSS 订阅阅读器
