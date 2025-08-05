@@ -8,6 +8,7 @@ import feedparser
 from loguru import logger
 from nicegui import ui
 
+from ...ui.styles import DashboardStyles
 from ..extended import ExtendedModule
 
 
@@ -112,7 +113,9 @@ class RssModule(ExtendedModule):
             feeds = self.fetch()
         show_limit = getattr(self, "show_limit", 5)
         items = feeds[:show_limit] if feeds else []
-        with ui.column().classes("w-full gap-2"):
+        with ui.column().classes(
+            f"{DashboardStyles.FULL_WIDTH} {DashboardStyles.GAP_SM}"
+        ):
             for feed in items:
                 with ui.row().classes("items-center gap-4"):
                     with ui.link(target=feed["link"]).classes(
@@ -121,13 +124,13 @@ class RssModule(ExtendedModule):
                         ui.label(feed["title"])
                     if "published" in feed:
                         ui.label(feed["published"][:10]).classes(
-                            "text-xs text-gray-500"
+                            DashboardStyles.SUBTLE_TEXT
                         )
                     if "author" in feed:
-                        ui.label(feed["author"]).classes("text-xs text-gray-600")
+                        ui.label(feed["author"]).classes(DashboardStyles.TEXT_MUTED)
                     if "source" in feed["extra"]:
                         ui.label(feed["extra"]["source"]).classes(
-                            "text-xs text-gray-400"
+                            DashboardStyles.SUBTLE_TEXT
                         )
 
     def render_detail(self) -> None:
@@ -136,15 +139,17 @@ class RssModule(ExtendedModule):
         if feeds is None:
             feeds = self.fetch()
 
-        with ui.row().classes("w-full justify-between items-center mb-4"):
+        with ui.row().classes(f"{DashboardStyles.FLEX_BETWEEN} mb-4"):
             ui.label(f"Latest {self.fetch_limit} Feed Posts").classes(
-                "text-2xl font-bold"
+                DashboardStyles.TITLE_H1
             )
             ui.button(icon="refresh", on_click=self._refresh_feeds).props(
                 "round flat"
             ).classes("text-sm")
 
-        with ui.grid().classes("grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"):
+        with ui.grid().classes(
+            f"grid-cols-1 sm:grid-cols-2 md:grid-cols-3 {DashboardStyles.GAP_MD}"
+        ):
             for feed in feeds:
                 with (
                     ui.link(target=feed["link"]).classes("no-underline"),
@@ -157,24 +162,24 @@ class RssModule(ExtendedModule):
                             "w-full h-40 object-cover mb-2 rounded"
                         )
                     ui.label(feed["title"]).classes(
-                        "text-xl font-bold text-center mb-2 hover-underline"
+                        DashboardStyles.TITLE_H2 + " text-center mb-2 hover-underline"
                     )
                     with ui.row().classes("justify-between items-center mb-1"):
                         if "author" in feed:
                             ui.label(f"{feed['author']}").classes(
-                                "text-gray-500 text-sm"
+                                DashboardStyles.TEXT_MUTED
                             )
                         if "source" in feed["extra"]:
                             ui.label(f"{feed['extra']['source']}").classes(
-                                "text-gray-600 dark:text-gray-300 italic text-sm"
+                                DashboardStyles.SUBTLE_TEXT + " italic"
                             )
                         if "published" in feed:
                             ui.label(f"{feed['published'][:10]}").classes(
-                                "text-sm text-gray-500"
+                                DashboardStyles.SUBTLE_TEXT
                             )
                     if "summary" in feed:
                         ui.label(feed["summary"]).classes(
-                            "mt-2 text-gray-700 line-clamp-3"
+                            f"mt-2 {DashboardStyles.BODY_TEXT} line-clamp-3"
                         )
 
     def _refresh_feeds(self):

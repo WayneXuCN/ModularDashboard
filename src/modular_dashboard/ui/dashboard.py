@@ -1,4 +1,10 @@
-"""Dashboard UI components with optimized design."""
+"""Dashboard UI components with optimized design and consistent styling.
+
+This module provides organized and maintainable dashboard components with centralized
+styling and improved code structure using modern Python patterns.
+"""
+
+from typing import Any
 
 from nicegui import ui
 
@@ -8,120 +14,126 @@ from ..utils.lazy_module import module_cache
 from .fab import FloatingActionButton
 from .header import HeaderNavigation
 from .layout import DashboardLayout
+from .styles import DashboardStyles
 
 
-def render_module_detail(module_id: str, config: AppConfig):
-    """Render a module's detailed view with elegant design."""
-    # Check if module exists
-    module_class = MODULE_REGISTRY.get(module_id)
-    if not module_class:
-        _render_module_not_found(module_id)
-        return
+class ModuleDetailRenderer:
+    """Handles module detail page rendering with consistent styling."""
 
-    # Get module configuration and create lazy instance
-    module_config = next((m for m in config.modules if m.id == module_id), None)
-    lazy_module = module_cache.get_or_create(
-        module_id, module_class, module_config.config if module_config else {}
-    )
+    def __init__(self, config: AppConfig) -> None:
+        self.config = config
 
-    # Main container with refined background
-    with (
-        ui.column()
-        .classes("w-full")
-        .style(
-            "min-height: 100vh; "
-            "background: linear-gradient(135deg, rgba(248,250,252,0.9) 0%, rgba(241,245,249,0.7) 100%);"
+    def render(self, module_id: str) -> None:
+        """Render complete module detail view."""
+        module = self._get_module_instance(module_id)
+        if not module:
+            self._render_not_found(module_id)
+            return
+
+        self._render_layout(module)
+
+    def _get_module_instance(self, module_id: str) -> Any | None:
+        """Get module instance with lazy loading."""
+        module_class = MODULE_REGISTRY.get(module_id)
+        if not module_class:
+            return None
+
+        module_config = next(
+            (m for m in self.config.modules if m.id == module_id), None
         )
-    ):
-        # Header with back button and module title
-        _render_detail_header(lazy_module)
-
-        # Content area with glass morphism card
-        _render_detail_content(lazy_module)
-
-
-def _render_module_not_found(module_id: str) -> None:
-    """Render error state for missing module."""
-    with (
-        ui.column()
-        .classes("w-full items-center")
-        .style(
-            "padding: 4rem 2rem; min-height: 100vh; "
-            "background: linear-gradient(135deg, rgba(248,250,252,0.9) 0%, rgba(241,245,249,0.7) 100%);"
-        )
-    ):
-        ui.label(f"Module {module_id} not found").classes("text-3xl font-light").style(
-            "color: #475569; margin-bottom: 2rem; letter-spacing: -0.02em;"
+        return module_cache.get_or_create(
+            module_id, module_class, module_config.config if module_config else {}
         )
 
+    def _render_layout(self, module) -> None:
+        """Render main detail layout."""
+        with ui.column().classes(f"w-full min-h-screen {DashboardStyles.DETAIL_BG}"):
+            self._render_header(module)
+            self._render_content(module)
+
+    def _render_header(self, module) -> None:
+        """Render module detail header."""
+        with ui.row().classes("w-full items-center px-12 py-8 max-w-7xl mx-auto"):
+            self._render_back_button()
+            self._render_module_title(module)
+
+    def _render_back_button(self) -> None:
+        """Render back to dashboard button."""
         ui.button("← Back to Dashboard", on_click=lambda: ui.navigate.to("/")).classes(
-            "px-6 py-3 text-sm font-medium transition-all duration-300"
-        ).style(
-            "background: rgba(255,255,255,0.9); backdrop-filter: blur(10px); "
-            "border: 1px solid rgba(148,163,184,0.2); border-radius: 12px; "
-            "color: #475569; box-shadow: 0 4px 16px rgba(0,0,0,0.08); "
-            "hover:transform: translateY(-2px); hover:box-shadow: 0 8px 24px rgba(0,0,0,0.12);"
-        ).props("flat")
+            DashboardStyles.BUTTON_PRIMARY
+        )
 
+    def _render_module_title(self, module) -> None:
+        """Render module title with icon."""
+        with ui.row().classes("items-center ml-8 gap-4"):
+            ui.icon(module.icon).classes("text-3xl text-indigo-500")
+            ui.label(module.name).classes(DashboardStyles.TITLE_H2)
 
-def _render_detail_header(module) -> None:
-    """Render the detail page header."""
-    with (
-        ui.row()
-        .classes("w-full items-center")
-        .style("padding: 2rem 3rem 1rem 3rem; max-width: 1200px; margin: 0 auto;")
-    ):
-        # Back button
-        ui.button("← Back to Dashboard", on_click=lambda: ui.navigate.to("/")).classes(
-            "px-5 py-2.5 text-sm font-medium transition-all duration-300"
-        ).style(
-            "background: rgba(255,255,255,0.9); backdrop-filter: blur(12px); "
-            "border: 1px solid rgba(148,163,184,0.2); border-radius: 12px; "
-            "color: #475569; box-shadow: 0 2px 12px rgba(0,0,0,0.06); "
-            "hover:background: rgba(255,255,255,0.95); "
-            "hover:transform: translateY(-1px); hover:box-shadow: 0 4px 16px rgba(0,0,0,0.1);"
-        ).props("flat")
+    def _render_content(self, module) -> None:
+        """Render module content area."""
+        with ui.column().classes("w-full items-center px-12 pb-12 max-w-7xl mx-auto"):  # noqa: SIM117
+            with ui.card().classes(DashboardStyles.GLASS_CARD + " p-12 w-full"):
+                module.render_detail()
 
-        # Module title with icon
-        with ui.row().classes("items-center").style("margin-left: 2rem; gap: 1rem;"):
-            ui.icon(module.icon).classes("text-3xl").style("color: #6366f1;")
-            ui.label(module.name).classes("text-3xl font-light").style(
-                "color: #1e293b; letter-spacing: -0.025em; font-weight: 300;"
+    def _render_not_found(self, module_id: str) -> None:
+        """Render module not found state."""
+        with ui.column().classes(
+            f"w-full items-center justify-center min-h-screen {DashboardStyles.DETAIL_BG}"
+        ):
+            ui.label(f"Module {module_id} not found").classes(
+                DashboardStyles.ERROR_TEXT + " mb-8"
             )
+            ui.button(
+                "← Back to Dashboard", on_click=lambda: ui.navigate.to("/")
+            ).classes(DashboardStyles.BUTTON_PRIMARY)
 
 
-def _render_detail_content(module) -> None:
-    """Render the content area with module details."""
-    with (
-        ui.column()
-        .classes("w-full items-center")
-        .style("padding: 2rem 3rem; max-width: 1200px; margin: 0 auto;"),
-        ui.card()
-        .classes("w-full")
-        .style(
-            "background: rgba(255,255,255,0.85); backdrop-filter: blur(20px); "
-            "border: 1px solid rgba(255,255,255,0.3); border-radius: 24px; "
-            "box-shadow: 0 12px 40px rgba(0,0,0,0.08); padding: 3rem;"
-        ),
-    ):
-        module.render_detail()
+def render_module_detail(module_id: str, config: AppConfig) -> None:
+    """Render a module's detailed view with optimized design."""
+    renderer = ModuleDetailRenderer(config)
+    renderer.render(module_id)
+
+
+class DashboardRenderer:
+    """Main dashboard renderer with consistent styling."""
+
+    def __init__(self, config: AppConfig) -> None:
+        self.config = config
+
+    def render(self) -> None:
+        """Render the complete dashboard."""
+        ui.add_head_html(
+            """
+            <style>
+                .dashboard-body {
+                    min-height: 100vh;
+                }
+                .dashboard-container {
+                    min-height: 100vh;
+                }
+            </style>
+            """
+        )
+        with ui.column().classes(f"dashboard-container {DashboardStyles.MAIN_BG}"):
+            self._render_header()
+            self._render_content()
+            ui.separator()
+            self._render_fab()
+
+    def _render_header(self) -> None:
+        """Render dashboard header conditionally."""
+        if self.config.layout.show_nav:
+            HeaderNavigation(self.config).render()
+
+    def _render_content(self) -> None:
+        """Render main dashboard content."""
+        DashboardLayout(self.config).render()
+
+    def _render_fab(self) -> None:
+        """Render floating action button."""
+        FloatingActionButton().render()
 
 
 def render_dashboard(config: AppConfig) -> None:
-    """Render the main dashboard UI with proper NiceGUI layout."""
-    # Main container with full viewport height and background
-    with ui.column().classes(
-        "min-h-screen bg-gradient-to-br from-slate-50 to-slate-100"
-    ):
-        # Header section
-        if config.layout.show_nav:
-            header = HeaderNavigation(config)
-            header.render()
-
-        # Main content area
-        layout = DashboardLayout(config)
-        layout.render()
-
-        # Floating action button
-        fab = FloatingActionButton()
-        fab.render()
+    """Render the main dashboard UI with optimized layout."""
+    DashboardRenderer(config).render()

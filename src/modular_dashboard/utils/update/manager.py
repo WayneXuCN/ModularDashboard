@@ -1,6 +1,7 @@
 """Update manager and executor."""
 
 import asyncio
+import contextlib
 import os
 import shutil
 import tempfile
@@ -148,12 +149,14 @@ class UpdateExecutor:
                 return False
 
             # Verify signature
-            if update_info.version_info.signature:
-                if not await self.validator.verify_signature(
+            if (
+                update_info.version_info.signature
+                and not await self.validator.verify_signature(
                     download_path, update_info.version_info.signature
-                ):
-                    logger.error("Signature verification failed")
-                    return False
+                )
+            ):
+                logger.error("Signature verification failed")
+                return False
 
             return True
 
@@ -319,10 +322,8 @@ class UpdateManager:
         """Stop background update checking."""
         if self._check_task:
             self._check_task.cancel()
-            try:
+            with contextlib.suppress(asyncio.CancelledError):
                 await self._check_task
-            except asyncio.CancelledError:
-                pass
             self._check_task = None
             logger.info("Stopped background update checking")
 
@@ -355,10 +356,8 @@ class UpdateManager:
         """Stop automatic updates."""
         if self._auto_update_task:
             self._auto_update_task.cancel()
-            try:
+            with contextlib.suppress(asyncio.CancelledError):
                 await self._auto_update_task
-            except asyncio.CancelledError:
-                pass
             self._auto_update_task = None
             logger.info("Stopped automatic updates")
 

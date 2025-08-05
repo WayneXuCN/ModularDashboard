@@ -1,1 +1,1 @@
-"""Research Dashboard - A modular information aggregation dashboard for researchers."""
+"""Modular Dashboard - A modular information aggregation dashboard for researchers."""

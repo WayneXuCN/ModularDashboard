@@ -1,5 +1,7 @@
 """Storage implementation for update system."""
 
+import asyncio
+import contextlib
 import json
 from datetime import datetime
 from pathlib import Path
@@ -7,7 +9,6 @@ from pathlib import Path
 from loguru import logger
 
 from .core import UpdateInfo, UpdateStorage
-import contextlib
 
 
 class FileUpdateStorage(UpdateStorage):
@@ -292,7 +293,3 @@ class UpdateNotifier:
                     callback(module_id, error)
             except Exception as e:
                 logger.error(f"Error in update_error callback: {e}")
-
-
-# Import asyncio at the end to avoid circular imports
-import asyncio

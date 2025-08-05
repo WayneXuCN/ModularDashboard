@@ -12,6 +12,7 @@ from typing import Any
 import psutil
 from nicegui import ui
 
+from ...ui.styles import DashboardStyles
 from ..extended import ExtendedModule
 
 
@@ -633,10 +634,12 @@ class SystemMonitorModule(ExtendedModule):
         """Render the system monitor module UI."""
         data = self.fetch()
 
-        with ui.column().classes("w-full gap-3"):
+        with ui.column().classes(
+            f"{DashboardStyles.FULL_WIDTH} {DashboardStyles.GAP_SM}"
+        ):
             # Header with refresh button
             with ui.row().classes("w-full justify-between items-center mb-2"):
-                ui.label("System Monitor").classes("text-lg font-semibold")
+                ui.label("System Monitor").classes(DashboardStyles.TITLE_H2)
                 ui.button("Refresh", on_click=lambda: self.refresh_ui()).props(
                     "dense"
                 ).classes("text-xs")
@@ -659,7 +662,7 @@ class SystemMonitorModule(ExtendedModule):
         """Render a metric card."""
         with (
             ui.card().classes(
-                "flex-1 min-w-[120px] p-3 cursor-pointer hover:shadow-md transition-shadow"
+                f"flex-1 min-w-[120px] {DashboardStyles.PADDING_MD} cursor-pointer hover:shadow-md transition-shadow"
             ),
             ui.column().classes("w-full items-center gap-1"),
         ):
@@ -702,7 +705,9 @@ class SystemMonitorModule(ExtendedModule):
     def render_detail(self) -> None:
         """Render detailed system monitoring view."""
         with ui.column().classes("w-full gap-6 max-w-6xl mx-auto"):
-            ui.label("System Monitor").classes("text-3xl font-bold text-center")
+            ui.label("System Monitor").classes(
+                DashboardStyles.TITLE_H1 + " " + DashboardStyles.TEXT_CENTER
+            )
 
             # System info
             if "system" in self._current_data:
@@ -739,8 +744,10 @@ class SystemMonitorModule(ExtendedModule):
         """Render system information."""
         system_data = self._current_data["system"]
 
-        with ui.card().classes("w-full p-4"):
-            ui.label("System Information").classes("text-xl font-semibold mb-3")
+        with ui.card().classes(
+            f"{DashboardStyles.FULL_WIDTH} {DashboardStyles.PADDING_LG}"
+        ):
+            ui.label("System Information").classes(DashboardStyles.TITLE_H2 + " mb-3")
 
             with ui.row().classes("w-full gap-4 flex-wrap"):
                 if "system" in system_data:
@@ -748,64 +755,68 @@ class SystemMonitorModule(ExtendedModule):
                     with ui.column().classes("gap-2"):
                         ui.label(
                             f"Platform: {sys_info.get('platform', 'N/A')} {sys_info.get('platform_release', '')}"
-                        ).classes("text-sm")
+                        ).classes(DashboardStyles.BODY_TEXT)
                         ui.label(
                             f"Architecture: {sys_info.get('architecture', 'N/A')}"
-                        ).classes("text-sm")
+                        ).classes(DashboardStyles.BODY_TEXT)
                         ui.label(
                             f"Hostname: {sys_info.get('hostname', 'N/A')}"
-                        ).classes("text-sm")
+                        ).classes(DashboardStyles.BODY_TEXT)
                         ui.label(
                             f"Uptime: {self._format_uptime(sys_info.get('uptime_seconds', 0))}"
-                        ).classes("text-sm")
+                        ).classes(DashboardStyles.BODY_TEXT)
 
                 if "processes" in system_data:
                     proc_info = system_data["processes"]
                     with ui.column().classes("gap-2"):
                         ui.label(
                             f"Processes: {proc_info.get('count', 'N/A')} total, {proc_info.get('running', 'N/A')} running"
-                        ).classes("text-sm")
+                        ).classes(DashboardStyles.BODY_TEXT)
 
     def _render_cpu_details(self) -> None:
         """Render CPU details."""
         cpu_data = self._current_data["cpu"]
 
-        with ui.card().classes("w-full p-4"):
-            ui.label("CPU Information").classes("text-xl font-semibold mb-3")
+        with ui.card().classes(
+            f"{DashboardStyles.FULL_WIDTH} {DashboardStyles.PADDING_LG}"
+        ):
+            ui.label("CPU Information").classes(DashboardStyles.TITLE_H2 + " mb-3")
 
             with ui.row().classes("w-full gap-4 flex-wrap"):
                 # CPU usage gauge
                 with ui.column().classes("items-center gap-2"):
-                    ui.label("CPU Usage").classes("text-lg font-semibold")
+                    ui.label("CPU Usage").classes(DashboardStyles.TITLE_H2)
                     self._render_gauge(cpu_data.get("percent", 0), 100)
 
                 # CPU details
                 with ui.column().classes("gap-2 flex-1"):
                     ui.label(f"Usage: {cpu_data.get('percent', 0):.1f}%").classes(
-                        "text-sm"
+                        DashboardStyles.BODY_TEXT
                     )
                     ui.label(
                         f"Cores: {cpu_data.get('count', 'N/A')} physical, {cpu_data.get('count_logical', 'N/A')} logical"
-                    ).classes("text-sm")
+                    ).classes(DashboardStyles.BODY_TEXT)
 
                     if cpu_data.get("frequency"):
                         freq = cpu_data["frequency"]
                         ui.label(
                             f"Frequency: {freq.get('current', 0):.0f} MHz"
-                        ).classes("text-sm")
+                        ).classes(DashboardStyles.BODY_TEXT)
 
                     if cpu_data.get("load_average"):
                         load = cpu_data["load_average"]
                         ui.label(
                             f"Load Average: {load[0]:.2f}, {load[1]:.2f}, {load[2]:.2f}"
-                        ).classes("text-sm")
+                        ).classes(DashboardStyles.BODY_TEXT)
 
     def _render_memory_details(self) -> None:
         """Render memory details."""
         memory_data = self._current_data["memory"]
 
-        with ui.card().classes("w-full p-4"):
-            ui.label("Memory Information").classes("text-xl font-semibold mb-3")
+        with ui.card().classes(
+            f"{DashboardStyles.FULL_WIDTH} {DashboardStyles.PADDING_LG}"
+        ):
+            ui.label("Memory Information").classes(DashboardStyles.TITLE_H2 + " mb-3")
 
             # Virtual memory
             if "virtual" in memory_data:
@@ -815,25 +826,25 @@ class SystemMonitorModule(ExtendedModule):
                     ui.row().classes("w-full gap-4"),
                     ui.column().classes("items-center gap-2"),
                 ):
-                    ui.label("Virtual Memory").classes("text-lg font-semibold")
+                    ui.label("Virtual Memory").classes(DashboardStyles.TITLE_H2)
                     self._render_gauge(vm.get("percent", 0), 100)
                 with ui.column().classes("gap-2 flex-1"):
                     ui.label(
                         f"Total: {self._format_bytes(vm.get('total', 0))}"
-                    ).classes("text-sm")
+                    ).classes(DashboardStyles.BODY_TEXT)
                     ui.label(
                         f"Used: {self._format_bytes(vm.get('used', 0))} ({vm.get('percent', 0):.1f}%)"
-                    ).classes("text-sm")
+                    ).classes(DashboardStyles.BODY_TEXT)
                     ui.label(
                         f"Available: {self._format_bytes(vm.get('available', 0))}"
-                    ).classes("text-sm")
+                    ).classes(DashboardStyles.BODY_TEXT)
 
             # Swap memory
             if "swap" in memory_data:
                 swap = memory_data["swap"]
                 if swap.get("total", 0) > 0:
                     with ui.column().classes("gap-3 mt-3"):
-                        ui.label("Swap Memory").classes("text-lg font-semibold")
+                        ui.label("Swap Memory").classes(DashboardStyles.TITLE_H2)
                         with ui.row().classes("w-full gap-4"):
                             with ui.column().classes("items-center gap-2"):
                                 self._render_gauge(swap.get("percent", 0), 100)
@@ -841,17 +852,19 @@ class SystemMonitorModule(ExtendedModule):
                             with ui.column().classes("gap-2 flex-1"):
                                 ui.label(
                                     f"Total: {self._format_bytes(swap.get('total', 0))}"
-                                ).classes("text-sm")
+                                ).classes(DashboardStyles.BODY_TEXT)
                                 ui.label(
                                     f"Used: {self._format_bytes(swap.get('used', 0))} ({swap.get('percent', 0):.1f}%)"
-                                ).classes("text-sm")
+                                ).classes(DashboardStyles.BODY_TEXT)
 
     def _render_disk_details(self) -> None:
         """Render disk details."""
         disk_data = self._current_data["disk"]
 
-        with ui.card().classes("w-full p-4"):
-            ui.label("Disk Information").classes("text-xl font-semibold mb-3")
+        with ui.card().classes(
+            f"{DashboardStyles.FULL_WIDTH} {DashboardStyles.PADDING_LG}"
+        ):
+            ui.label("Disk Information").classes(DashboardStyles.TITLE_H2 + " mb-3")
 
             for path, disk_info in disk_data.items():
                 if path == "partitions":
@@ -862,7 +875,7 @@ class SystemMonitorModule(ExtendedModule):
                     ui.row().classes("w-full gap-4"),
                     ui.column().classes("items-center gap-2"),
                 ):
-                    ui.label(f"Disk {path}").classes("text-lg font-semibold")
+                    ui.label(f"Disk {path}").classes(DashboardStyles.TITLE_H2)
                     if "usage" in disk_info:
                         usage = disk_info["usage"]
                         self._render_gauge(usage.get("percent", 0), 100)
@@ -872,57 +885,67 @@ class SystemMonitorModule(ExtendedModule):
                         with ui.column().classes("gap-2 flex-1"):
                             ui.label(
                                 f"Total: {self._format_bytes(usage.get('total', 0))}"
-                            ).classes("text-sm")
+                            ).classes(DashboardStyles.BODY_TEXT)
                             ui.label(
                                 f"Used: {self._format_bytes(usage.get('used', 0))} ({usage.get('percent', 0):.1f}%)"
-                            ).classes("text-sm")
+                            ).classes(DashboardStyles.BODY_TEXT)
                             ui.label(
                                 f"Free: {self._format_bytes(usage.get('free', 0))}"
-                            ).classes("text-sm")
+                            ).classes(DashboardStyles.BODY_TEXT)
 
     def _render_network_details(self) -> None:
         """Render network details."""
         network_data = self._current_data["network"]
 
-        with ui.card().classes("w-full p-4"):
-            ui.label("Network Information").classes("text-xl font-semibold mb-3")
+        with ui.card().classes(
+            f"{DashboardStyles.FULL_WIDTH} {DashboardStyles.PADDING_LG}"
+        ):
+            ui.label("Network Information").classes(DashboardStyles.TITLE_H2 + " mb-3")
 
             for interface, net_info in network_data.items():
                 with ui.column().classes("gap-2 mb-3"):
-                    ui.label(f"Interface: {interface}").classes("font-semibold")
+                    ui.label(f"Interface: {interface}").classes(
+                        DashboardStyles.FONT_SEMIBOLD
+                    )
 
                     with ui.row().classes("w-full gap-4 flex-wrap"):
                         with ui.column().classes("gap-1"):
                             ui.label(
                                 f"Sent: {self._format_bytes(net_info.get('bytes_sent', 0))}"
-                            ).classes("text-sm")
+                            ).classes(DashboardStyles.BODY_TEXT)
                             ui.label(
                                 f"Packets: {net_info.get('packets_sent', 0)}"
-                            ).classes("text-sm")
+                            ).classes(DashboardStyles.BODY_TEXT)
 
                         with ui.column().classes("gap-1"):
                             ui.label(
                                 f"Received: {self._format_bytes(net_info.get('bytes_recv', 0))}"
-                            ).classes("text-sm")
+                            ).classes(DashboardStyles.BODY_TEXT)
                             ui.label(
                                 f"Packets: {net_info.get('packets_recv', 0)}"
-                            ).classes("text-sm")
+                            ).classes(DashboardStyles.BODY_TEXT)
 
                         if net_info.get("addresses", {}).get("ipv4"):
                             ui.label(f"IPv4: {net_info['addresses']['ipv4']}").classes(
-                                "text-sm"
+                                DashboardStyles.BODY_TEXT
                             )
 
     def _render_temperature_details(self) -> None:
         """Render temperature details."""
         temp_data = self._current_data["temperature"]
 
-        with ui.card().classes("w-full p-4"):
-            ui.label("Temperature Information").classes("text-xl font-semibold mb-3")
+        with ui.card().classes(
+            f"{DashboardStyles.FULL_WIDTH} {DashboardStyles.PADDING_LG}"
+        ):
+            ui.label("Temperature Information").classes(
+                DashboardStyles.TITLE_H2 + " mb-3"
+            )
 
             for sensor, temp_info in temp_data.items():
                 with ui.row().classes("w-full gap-4 items-center mb-2"):
-                    ui.label(f"{sensor}:").classes("font-medium flex-1")
+                    ui.label(f"{sensor}:").classes(
+                        DashboardStyles.FONT_MEDIUM + " flex-1"
+                    )
 
                     current = temp_info.get("current", 0)
                     high = temp_info.get("high")
@@ -935,29 +958,36 @@ class SystemMonitorModule(ExtendedModule):
                         temp_color = "orange"
 
                     ui.label(f"{current:.1f}°C").classes(
-                        f"text-sm font-semibold text-{temp_color}"
+                        DashboardStyles.BODY_TEXT
+                        + " "
+                        + DashboardStyles.FONT_SEMIBOLD
+                        + f" text-{temp_color}"
                     )
 
                     if high:
-                        ui.label(f"(High: {high}°C)").classes("text-sm text-gray-600")
+                        ui.label(f"(High: {high}°C)").classes(
+                            DashboardStyles.SUBTLE_TEXT
+                        )
 
                     if critical:
                         ui.label(f"(Critical: {critical}°C)").classes(
-                            "text-sm text-red-600"
+                            DashboardStyles.BODY_TEXT + " text-red-600"
                         )
 
     def _render_gpu_details(self) -> None:
         """Render GPU details."""
         gpu_data = self._current_data["gpu"]
 
-        with ui.card().classes("w-full p-4"):
-            ui.label("GPU Information").classes("text-xl font-semibold mb-3")
+        with ui.card().classes(
+            f"{DashboardStyles.FULL_WIDTH} {DashboardStyles.PADDING_LG}"
+        ):
+            ui.label("GPU Information").classes(DashboardStyles.TITLE_H2 + " mb-3")
 
             for gpu_id, gpu_info in gpu_data.items():
                 if isinstance(gpu_info, dict) and "name" in gpu_info:
                     with ui.column().classes("gap-3 mb-4"):
                         ui.label(f"{gpu_info['name']} ({gpu_id})").classes(
-                            "text-lg font-semibold"
+                            DashboardStyles.TITLE_H2
                         )
 
                         with ui.row().classes("w-full gap-4 flex-wrap"):
@@ -966,7 +996,9 @@ class SystemMonitorModule(ExtendedModule):
                                 util = gpu_info["utilization"]
                                 with ui.column().classes("items-center gap-2"):
                                     ui.label("GPU Utilization").classes(
-                                        "text-sm font-semibold"
+                                        DashboardStyles.BODY_TEXT
+                                        + " "
+                                        + DashboardStyles.FONT_SEMIBOLD
                                     )
                                     self._render_gauge(util.get("gpu", 0), 100)
 
@@ -975,7 +1007,9 @@ class SystemMonitorModule(ExtendedModule):
                                 mem = gpu_info["memory"]
                                 with ui.column().classes("items-center gap-2"):
                                     ui.label("Memory Usage").classes(
-                                        "text-sm font-semibold"
+                                        DashboardStyles.BODY_TEXT
+                                        + " "
+                                        + DashboardStyles.FONT_SEMIBOLD
                                     )
                                     self._render_gauge(mem.get("percent", 0), 100)
 
@@ -984,7 +1018,9 @@ class SystemMonitorModule(ExtendedModule):
                                 temp = gpu_info["temperature"]
                                 with ui.column().classes("items-center gap-2"):
                                     ui.label("Temperature").classes(
-                                        "text-sm font-semibold"
+                                        DashboardStyles.BODY_TEXT
+                                        + " "
+                                        + DashboardStyles.FONT_SEMIBOLD
                                     )
                                     temp_color = "green"
                                     if temp >= 80:
@@ -993,7 +1029,10 @@ class SystemMonitorModule(ExtendedModule):
                                         temp_color = "orange"
 
                                     ui.label(f"{temp}°C").classes(
-                                        f"text-sm font-semibold text-{temp_color}"
+                                        DashboardStyles.BODY_TEXT
+                                        + " "
+                                        + DashboardStyles.FONT_SEMIBOLD
+                                        + f" text-{temp_color}"
                                     )
 
     def _render_gauge(self, value: float, max_value: float) -> None:
@@ -1009,7 +1048,10 @@ class SystemMonitorModule(ExtendedModule):
             color = "green"
 
         # Create a simple progress bar
-        with ui.card().classes("w-16 h-16 p-1 border-2 border-gray-200"), ui.column().classes("w-full h-full justify-center items-center"):
+        with (
+            ui.card().classes("w-16 h-16 p-1 border-2 border-gray-200"),
+            ui.column().classes("w-full h-full justify-center items-center"),
+        ):
             ui.label(f"{int(percent)}%").classes(f"text-xs font-bold text-{color}")
 
     def _format_uptime(self, seconds) -> str:

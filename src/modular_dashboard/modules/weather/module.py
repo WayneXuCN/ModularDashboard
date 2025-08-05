@@ -7,6 +7,7 @@ from urllib.request import urlopen
 
 from nicegui import ui
 
+from ...ui.styles import DashboardStyles
 from ..extended import ExtendedModule
 
 
@@ -344,7 +345,10 @@ class WeatherModule(ExtendedModule):
 
                         location_text = ", ".join(filter(None, location_parts))
                         ui.label(location_text).classes(
-                            "text-sm font-medium text-gray-600 dark:text-gray-300"
+                            DashboardStyles.BODY_TEXT
+                            + " "
+                            + DashboardStyles.FONT_MEDIUM
+                            + " text-gray-600 dark:text-gray-300"
                         )
 
                     # Weather condition
@@ -352,30 +356,40 @@ class WeatherModule(ExtendedModule):
                         self.get_weather_description(
                             extra.get("weather_code", "unknown")
                         )
-                    ).classes("text-lg font-semibold text-gray-900 dark:text-white")
+                    ).classes(
+                        DashboardStyles.TITLE_H3
+                        + " "
+                        + DashboardStyles.FONT_SEMIBOLD
+                        + " text-gray-900 dark:text-white"
+                    )
 
                 # Temperature display
                 temp_unit = "°C" if extra.get("units", "metric") == "metric" else "°F"
                 with ui.column().classes("items-end gap-0.5"):
                     ui.label(f"{extra.get('temperature', '0')}").classes(
-                        "text-4xl font-light text-gray-900 dark:text-white"
+                        DashboardStyles.TITLE_H1
+                        + " font-light text-gray-900 dark:text-white"
                     )
                     ui.label(
                         f"Feels like {extra.get('apparent_temperature', 0)}{temp_unit}"
-                    ).classes("text-sm text-gray-500 dark:text-gray-400")
+                    ).classes(DashboardStyles.SUBTLE_TEXT + " dark:text-gray-400")
 
             # Weather details grid
             with ui.row().classes("w-full gap-4"):
                 # Humidity
                 if extra.get("humidity"):
                     with ui.card().classes(
-                        "flex-1 backdrop-blur-sm bg-white/5 dark:bg-black/10 border border-white/10 dark:border-white/5 rounded-2xl p-3"
+                        f"flex-1 backdrop-blur-sm bg-white/5 dark:bg-black/10 border border-white/10 dark:border-white/5 rounded-2xl {DashboardStyles.PADDING_SM}"
                     ):
                         ui.label("Humidity").classes(
-                            "text-xs text-gray-500 dark:text-gray-400 mb-1"
+                            DashboardStyles.TEXT_XS
+                            + " text-gray-500 dark:text-gray-400 mb-1"
                         )
                         ui.label(extra["humidity"]).classes(
-                            "text-sm font-medium text-gray-900 dark:text-white"
+                            DashboardStyles.BODY_TEXT
+                            + " "
+                            + DashboardStyles.FONT_MEDIUM
+                            + " text-gray-900 dark:text-white"
                         )
 
                 # Wind
@@ -405,7 +419,10 @@ class WeatherModule(ExtendedModule):
             # Hourly forecast
             if columns:
                 ui.label("Hourly Forecast").classes(
-                    "text-sm font-medium text-gray-700 dark:text-gray-300 mb-3"
+                    DashboardStyles.BODY_TEXT
+                    + " "
+                    + DashboardStyles.FONT_MEDIUM
+                    + " text-gray-700 dark:text-gray-300 mb-3"
                 )
 
                 with ui.row().classes("w-full justify-between items-end gap-2 px-2"):
@@ -419,7 +436,8 @@ class WeatherModule(ExtendedModule):
                             )
                             if show_time:
                                 ui.label(column["time"]).classes(
-                                    "text-xs text-gray-500 dark:text-gray-400"
+                                    DashboardStyles.TEXT_XS
+                                    + " text-gray-500 dark:text-gray-400"
                                 )
 
                             # Temperature bar container
@@ -462,7 +480,12 @@ class WeatherModule(ExtendedModule):
                             temp_sign = "-" if column["temperature"] < 0 else ""
                             ui.label(
                                 f"{temp_sign}{abs(column['temperature'])}°"
-                            ).classes(f"text-xs font-medium {temp_color}")
+                            ).classes(
+                                DashboardStyles.TEXT_XS
+                                + " "
+                                + DashboardStyles.FONT_MEDIUM
+                                + f" {temp_color}"
+                            )
 
             # Daylight indicator
             sunrise_col = extra.get("sunrise_column", 0)
@@ -497,47 +520,66 @@ class WeatherModule(ExtendedModule):
         weather = data[0]
         extra = weather.get("extra", {})
 
-        with ui.column().classes("w-full gap-6 max-w-4xl mx-auto p-6"):
-            ui.label("Weather Forecast").classes("text-3xl font-bold text-center mb-6")
+        with ui.column().classes(
+            f"{DashboardStyles.FULL_WIDTH} {DashboardStyles.GAP_LG} {DashboardStyles.CONTAINER_CENTER} {DashboardStyles.PADDING_XL}"
+        ):
+            ui.label("Weather Forecast").classes(
+                DashboardStyles.TITLE_H1 + " " + DashboardStyles.TEXT_CENTER + " mb-6"
+            )
 
             # Main weather card
-            with ui.card().classes("w-full p-6 mb-6"), ui.column().classes("w-full gap-4 items-center"):
-                    # Location
-                    ui.label(weather["title"]).classes("text-2xl font-semibold")
+            with (
+                ui.card().classes("w-full p-6 mb-6"),
+                ui.column().classes("w-full gap-4 items-center"),
+            ):
+                # Location
+                ui.label(weather["title"]).classes(
+                    DashboardStyles.TITLE_H2 + " " + DashboardStyles.FONT_SEMIBOLD
+                )
 
-                    # Current weather
-                    with ui.row().classes("w-full justify-center items-center gap-4"):
-                        ui.label(extra.get("temperature", "")).classes(
-                            "text-5xl font-bold text-blue-600"
+                # Current weather
+                with ui.row().classes("w-full justify-center items-center gap-4"):
+                    ui.label(extra.get("temperature", "")).classes(
+                        DashboardStyles.TITLE_H1
+                        + " "
+                        + DashboardStyles.FONT_BOLD
+                        + " text-blue-600"
+                    )
+                    with ui.column().classes("gap-2"):
+                        ui.label(
+                            self.get_weather_description(
+                                extra.get("weather_code", "unknown")
+                            )
+                        ).classes(DashboardStyles.TITLE_H2 + " text-gray-600")
+                        ui.label(
+                            f"Feels like {extra.get('apparent_temperature', 0)}°{extra.get('units', 'metric') == 'metric' and 'C' or 'F'}"
+                        ).classes(DashboardStyles.SUBTLE_TEXT)
+
+                # Additional details
+                with ui.row().classes("w-full justify-center gap-6 text-sm mt-4"):
+                    if extra.get("humidity"):
+                        ui.label(f"Humidity: {extra['humidity']}").classes(
+                            DashboardStyles.BODY_TEXT
+                            + " bg-gray-100 px-3 py-1 rounded-full"
                         )
-                        with ui.column().classes("gap-2"):
-                            ui.label(
-                                self.get_weather_description(
-                                    extra.get("weather_code", "unknown")
-                                )
-                            ).classes("text-xl text-gray-600")
-                            ui.label(
-                                f"Feels like {extra.get('apparent_temperature', 0)}°{extra.get('units', 'metric') == 'metric' and 'C' or 'F'}"
-                            ).classes("text-sm text-gray-500")
-
-                    # Additional details
-                    with ui.row().classes("w-full justify-center gap-6 text-sm mt-4"):
-                        if extra.get("humidity"):
-                            ui.label(f"Humidity: {extra['humidity']}").classes(
-                                "text-gray-600 bg-gray-100 px-3 py-1 rounded-full"
-                            )
-                        if extra.get("wind_speed"):
-                            ui.label(f"Wind: {extra['wind_speed']}").classes(
-                                "text-gray-600 bg-gray-100 px-3 py-1 rounded-full"
-                            )
+                    if extra.get("wind_speed"):
+                        ui.label(f"Wind: {extra['wind_speed']}").classes(
+                            DashboardStyles.BODY_TEXT
+                            + " bg-gray-100 px-3 py-1 rounded-full"
+                        )
 
             # Hourly forecast section
             with ui.card().classes("w-full p-6"):
-                ui.label("Hourly Forecast").classes("text-xl font-semibold mb-4")
+                ui.label("Hourly Forecast").classes(DashboardStyles.TITLE_H2 + " mb-4")
                 self.render()
 
             # Configuration info
             if not self.config.get("api_key"):
                 ui.label(
                     "💡 Configure OpenWeatherMap API key for real weather data"
-                ).classes("text-sm text-gray-500 text-center mt-4")
+                ).classes(
+                    DashboardStyles.SUBTLE_TEXT
+                    + " "
+                    + DashboardStyles.TEXT_CENTER
+                    + " mt-4"
+                )

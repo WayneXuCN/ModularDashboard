@@ -9,8 +9,8 @@ import os
 
 # Dictionary mapping Chinese terms to English translations
 translations = {
-    "Research Dashboard 文档": "Modular Dashboard Documentation",
-    "欢迎阅读 Research Dashboard 文档。本指南将帮助您了解如何安装、配置和使用 Research Dashboard 应用程序。": "Welcome to the Modular Dashboard documentation. This guide will help you understand how to install, configure, and use the Modular Dashboard application.",
+    "Modular Dashboard 文档": "Modular Dashboard Documentation",
+    "欢迎阅读 Modular Dashboard 文档。本指南将帮助您了解如何安装、配置和使用 Modular Dashboard 应用程序。": "Welcome to the Modular Dashboard documentation. This guide will help you understand how to install, configure, and use the Modular Dashboard application.",
     "目录": "Table of Contents",
     "概述": "Overview",
     "安装": "Installation",
@@ -27,8 +27,8 @@ translations = {
     "开发": "Development",
     "项目结构": "Project Structure",
     "贡献": "Contributing",
-    "关于 Research Dashboard": "About Modular Dashboard",
-    "Research Dashboard 是一个为研究人员设计的可定制信息聚合仪表盘。它提供了一个统一的界面来查看和管理来自多个来源的信息，包括：": "Modular Dashboard is a customizable information aggregation dashboard. It provides a unified interface to view and manage information from multiple sources including:",
+    "关于 Modular Dashboard": "About Modular Dashboard",
+    "Modular Dashboard 是一个为研究人员设计的可定制信息聚合仪表盘。它提供了一个统一的界面来查看和管理来自多个来源的信息，包括：": "Modular Dashboard is a customizable information aggregation dashboard. It provides a unified interface to view and manage information from multiple sources including:",
     "基于您研究兴趣的 ArXiv 论文": "ArXiv papers",
     "您的 GitHub 活动": "Your GitHub activity",
     "您最喜欢的来源的 RSS 订阅": "RSS feeds from your favorite sources",
@@ -47,7 +47,7 @@ translations = {
     "原生桌面支持": "Native Desktop Support",
     "作为原生桌面应用程序运行": "Run as a native desktop application",
     "获取帮助": "Getting Help",
-    "如果您需要 Research Dashboard 方面的帮助，您可以：": "If you need help with Modular Dashboard, you can:",
+    "如果您需要 Modular Dashboard 方面的帮助，您可以：": "If you need help with Modular Dashboard, you can:",
     "查看本指南中的文档": "Check the documentation in this guide",
     "在 [GitHub 仓库](https://github.com/WayneXuCN/ModularDashboard) 上报告问题": "Report issues on the [GitHub repository](https://github.com/WayneXuCN/ModularDashboard)",
     "提交功能请求或建议": "Submit feature requests or suggestions",

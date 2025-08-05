@@ -149,9 +149,8 @@ class UpdateSystem:
             await self.initialize()
 
         # Start background checks
-        if self.config.get("background_checks", True):
-            if self.update_manager:
-                await self.update_manager.start_background_checks()
+        if self.config.get("background_checks", True) and self.update_manager:
+            await self.update_manager.start_background_checks()
 
         # Start auto updates if enabled
         if self.config.get("auto_update", False) and self.update_manager is not None:

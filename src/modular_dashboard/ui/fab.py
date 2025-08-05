@@ -2,6 +2,8 @@
 
 from nicegui import ui
 
+from .styles import DashboardStyles
+
 
 class FloatingActionButton:
     """Floating action button component with menu."""
@@ -25,18 +27,14 @@ class FloatingActionButton:
                 ui.button(
                     "新建便笺",
                     on_click=lambda: ui.notify("新建便笺功能暂未实现", type="info"),
-                ).classes("w-full justify-start text-slate-700 hover:bg-slate-100")
+                ).classes(f"w-full justify-start {DashboardStyles.BUTTON_SECONDARY}")
                 ui.button(
                     "导入新模块",
                     on_click=lambda: ui.notify("导入新模块功能暂未实现", type="info"),
-                ).classes("w-full justify-start text-slate-700 hover:bg-slate-100")
+                ).classes(f"w-full justify-start {DashboardStyles.BUTTON_SECONDARY}")
             dialog.open()
 
         ui.button(
             icon="add",
             on_click=show_fab_menu,
-        ).classes(
-            "w-14 h-14 rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 "
-            "text-white shadow-lg hover:shadow-xl transition-all duration-300 "
-            "hover:scale-110"
-        ).props("fab")
+        ).classes(f"{DashboardStyles.FAB} {DashboardStyles.HOVER_SCALE}").props("fab")

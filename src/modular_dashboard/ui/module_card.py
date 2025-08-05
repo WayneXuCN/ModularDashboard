@@ -3,6 +3,7 @@
 from nicegui import ui
 
 from ..utils.lazy_module import module_cache
+from .styles import DashboardStyles
 
 
 class ModuleCard:
@@ -20,20 +21,18 @@ class ModuleCard:
             self.module_id, self.module_class, self.module_config.config
         )
 
-        with ui.card().classes(
-            "w-full h-full cursor-pointer transition-all duration-300 "
-            "hover:shadow-lg hover:scale-[1.02] bg-white/80 backdrop-blur-sm "
-            "border border-white/50"
-        ):
+        with ui.card().classes(f"w-full h-full {DashboardStyles.MODULE_CARD}"):
             self._render_header(lazy_module)
             self._render_content(lazy_module)
 
     def _render_header(self, lazy_module) -> None:
         """Render the module card header."""
-        with ui.row().classes("w-full justify-between items-center p-4 pb-2"):
+        with ui.row().classes(
+            f"w-full justify-between items-center {DashboardStyles.PADDING_MD} {DashboardStyles.PADDING_SM}"
+        ):
             # Module title
             title_label = ui.label(lazy_module.name).classes(
-                "text-lg font-semibold cursor-pointer text-slate-800"
+                f"{DashboardStyles.TITLE_H3} cursor-pointer {DashboardStyles.HOVER_SCALE}"
             )
             title_label.on(
                 "click",
@@ -42,8 +41,7 @@ class ModuleCard:
 
             # Module icon
             icon_element = ui.icon(lazy_module.icon).classes(
-                "text-xl cursor-pointer text-slate-600 hover:text-indigo-600 "
-                "transition-all duration-300 hover:scale-110"
+                f"text-xl cursor-pointer text-indigo-500 {DashboardStyles.HOVER_SCALE}"
             )
             icon_element.on(
                 "click",

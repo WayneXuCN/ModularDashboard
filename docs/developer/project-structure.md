@@ -1,11 +1,11 @@
 # 项目结构
 
-本文档详细介绍了 Research Dashboard 项目结构。
+本文档详细介绍了 Modular Dashboard 项目结构。
 
 ## 根目录
 
 ```text
-research-dashboard/
+modular-dashboard/
 ├── pyproject.toml              # 项目配置和依赖
 ├── README.md                   # 项目概述
 ├── LICENSE                     # 许可证信息

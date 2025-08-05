@@ -7,6 +7,7 @@ from urllib.request import urlopen
 
 from nicegui import ui
 
+from ...ui.styles import DashboardStyles
 from ..extended import ExtendedModule
 
 
@@ -249,14 +250,14 @@ class RandomFactModule(ExtendedModule):
         fact = data[0]
         extra = fact.get("extra", {})
 
-        with ui.card().classes("w-full card-hover"):
+        with ui.card().classes(f"{DashboardStyles.FULL_WIDTH} card-hover"):
             # Title
-            ui.label("📝 Random Fact").classes("text-lg font-bold mb-2")
+            ui.label("📝 Random Fact").classes(DashboardStyles.TITLE_H2 + " mb-2")
 
             # Original fact text
             if extra.get("fact_text"):
                 ui.label(extra["fact_text"]).classes(
-                    "text-sm text-gray-600 dark:text-gray-300 italic mb-2"
+                    DashboardStyles.BODY_TEXT + " italic mb-2"
                 )
 
             # Processed content
@@ -265,18 +266,18 @@ class RandomFactModule(ExtendedModule):
                 with ui.column().classes("w-full gap-1"):
                     for line in content_lines:
                         if line.strip():
-                            ui.label(line.strip()).classes(
-                                "text-sm text-gray-800 dark:text-gray-200"
-                            )
+                            ui.label(line.strip()).classes(DashboardStyles.BODY_TEXT)
 
             # Meta info
             with ui.row().classes("items-center gap-2 mt-2"):
                 if extra.get("source"):
                     ui.label(f"Source: {extra['source']}").classes(
-                        "text-xs text-gray-500"
+                        DashboardStyles.TEXT_MUTED
                     )
                 if extra.get("fact_id"):
-                    ui.label(f"ID: {extra['fact_id']}").classes("text-xs text-gray-500")
+                    ui.label(f"ID: {extra['fact_id']}").classes(
+                        DashboardStyles.TEXT_MUTED
+                    )
 
     def render_detail(self) -> None:
         """Render detailed view of random facts."""
@@ -286,7 +287,7 @@ class RandomFactModule(ExtendedModule):
             ui.label("No facts available").classes("text-gray-500 text-center w-full")
             return
 
-        ui.label("📝 Random Facts").classes("text-2xl font-bold mb-4")
+        ui.label("📝 Random Facts").classes(DashboardStyles.TITLE_H1 + " mb-4")
 
         # Show all facts
         for fact in data:
@@ -294,12 +295,12 @@ class RandomFactModule(ExtendedModule):
 
             with ui.card().classes("w-full mb-4 card-hover"):
                 # Title
-                ui.label(fact["title"]).classes("text-xl font-bold mb-2")
+                ui.label(fact["title"]).classes(DashboardStyles.TITLE_H2 + " mb-2")
 
                 # Original fact text
                 if extra.get("fact_text"):
                     ui.label(extra["fact_text"]).classes(
-                        "text-sm text-gray-600 dark:text-gray-300 italic mb-2"
+                        DashboardStyles.BODY_TEXT + " italic mb-2"
                     )
 
                 # Processed content
@@ -309,7 +310,7 @@ class RandomFactModule(ExtendedModule):
                         for line in content_lines:
                             if line.strip():
                                 ui.label(line.strip()).classes(
-                                    "text-sm text-gray-800 dark:text-gray-200"
+                                    DashboardStyles.BODY_TEXT
                                 )
 
                 # Meta info and actions
@@ -328,7 +329,9 @@ class RandomFactModule(ExtendedModule):
                     with ui.row().classes("gap-2"):
                         ui.button(
                             "New Fact", icon="refresh", on_click=self._refresh_fact
-                        ).props("outline").classes("text-sm")
+                        ).props("outline").classes(
+                            DashboardStyles.BUTTON_OUTLINE + " text-sm"
+                        )
 
                         if fact.get("link"):
                             ui.button(
@@ -337,7 +340,9 @@ class RandomFactModule(ExtendedModule):
                                 on_click=lambda link=fact["link"]: ui.run_javascript(
                                     f'window.open("{link}", "_blank")'
                                 ),
-                            ).props("outline").classes("text-sm")
+                            ).props("outline").classes(
+                                DashboardStyles.BUTTON_OUTLINE + " text-sm"
+                            )
 
     def _refresh_fact(self) -> None:
         """Refresh fact data."""

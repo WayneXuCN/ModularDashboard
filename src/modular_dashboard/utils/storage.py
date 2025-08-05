@@ -8,8 +8,8 @@ from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Any
 
-from .config.memory_config import MemoryConfig
-from .utils.system_monitor import get_memory_monitor
+from ..config.memory_config import MemoryConfig
+from ..utils.system_monitor import get_memory_monitor
 
 
 class DateTimeEncoder(json.JSONEncoder):

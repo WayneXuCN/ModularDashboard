@@ -1,10 +1,10 @@
 # 模块基类
 
-`Module` 基类为 Research Dashboard 中的所有模块提供了基础。
+`Module` 基类为 Modular Dashboard 中的所有模块提供了基础。
 
 ## 概述
 
-Research Dashboard 中的所有模块都继承自抽象的 `Module` 基类。这确保了一致的接口，并使得向系统添加新模块变得容易。
+Modular Dashboard 中的所有模块都继承自抽象的 `Module` 基类。这确保了一致的接口，并使得向系统添加新模块变得容易。
 
 ## 类定义
 

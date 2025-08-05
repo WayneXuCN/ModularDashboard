@@ -4,6 +4,7 @@ from typing import Any
 
 from nicegui import ui
 
+from ...ui.styles import DashboardStyles
 from ..extended import ExtendedModule
 
 
@@ -71,40 +72,44 @@ class ArxivModule(ExtendedModule):
 
                 # Summary
                 ui.label(paper["summary"][:100] + "...").classes(
-                    "text-gray-600 dark:text-gray-300 mt-1"
+                    DashboardStyles.TEXT_MUTED + " mt-1"
                 )
 
                 # Footer with date and tags
                 with ui.row().classes("items-center mt-2"):
-                    ui.label(paper["published"][:10]).classes("text-sm text-gray-500")
+                    ui.label(paper["published"][:10]).classes(
+                        DashboardStyles.SUBTLE_TEXT
+                    )
                     for tag in paper["tags"][:2]:  # Show only first 2 tags
                         ui.chip(tag).classes("mr-1")
 
     def render_detail(self) -> None:
         papers = self.fetch()
-        ui.label(f"Latest {len(papers)} Papers").classes("text-2xl font-bold mb-4")
+        ui.label(f"Latest {len(papers)} Papers").classes(
+            DashboardStyles.TITLE_H1 + " mb-4"
+        )
 
         for paper in papers:
             with ui.card().classes("w-full mb-4 card-hover"):
                 # Title with link
                 with ui.link(target=paper["link"]).classes("no-underline text-inherit"):
                     ui.label(paper["title"]).classes(
-                        "text-xl font-bold hover-underline"
+                        DashboardStyles.TITLE_H2 + " hover-underline"
                     )
 
                 # Authors
                 if "authors" in paper["extra"]:
                     ui.label(", ".join(paper["extra"]["authors"])).classes(
-                        "text-gray-600 dark:text-gray-300 italic"
+                        DashboardStyles.TEXT_MUTED + " italic"
                     )
 
                 # Publication date
                 ui.label(f"Published: {paper['published'][:10]}").classes(
-                    "text-sm text-gray-500 mt-1"
+                    DashboardStyles.SUBTLE_TEXT + " mt-1"
                 )
 
                 # Summary
-                ui.label(paper["summary"]).classes("mt-2")
+                ui.label(paper["summary"]).classes(DashboardStyles.BODY_TEXT + " mt-2")
 
                 # Tags
                 with ui.row().classes("mt-2"):

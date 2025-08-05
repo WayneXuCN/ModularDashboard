@@ -1,4 +1,4 @@
-# Research Dashboard 配置样例
+# Modular Dashboard 配置样例
 
 这个目录包含了不同布局模式的配置样例文件。
 

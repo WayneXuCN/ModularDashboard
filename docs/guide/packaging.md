@@ -1,10 +1,10 @@
 # 打包指南
 
-本指南解释如何打包 Research Dashboard 以进行分发。
+本指南解释如何打包 Modular Dashboard 以进行分发。
 
 ## 先决条件
 
-在打包 Research Dashboard 之前，请确保您已：
+在打包 Modular Dashboard 之前，请确保您已：
 
 1. 安装了 Python 3.8 或更高版本
 2. 安装了所有项目依赖
@@ -12,7 +12,7 @@
 
 ## 创建分发包
 
-Research Dashboard 使用标准的 Python 打包工具。要创建分发包：
+Modular Dashboard 使用标准的 Python 打包工具。要创建分发包：
 
 1. 确保所有依赖都列在 `pyproject.toml` 中
 2. 如有必要，更新 `pyproject.toml` 中的版本号
@@ -58,7 +58,7 @@ pyinstaller --onefile --windowed src/modular_dashboard/app.py
 
 ## 分发
 
-打包后，您可以通过以下方式分发 Research Dashboard：
+打包后，您可以通过以下方式分发 Modular Dashboard：
 
 1. PyPI 用于 Python  包分发
 2. GitHub Releases 用于独立可执行文件

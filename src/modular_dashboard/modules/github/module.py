@@ -4,6 +4,7 @@ from typing import Any
 
 from nicegui import ui
 
+from ...ui.styles import DashboardStyles
 from ..extended import ExtendedModule
 
 
@@ -62,24 +63,24 @@ class GithubModule(ExtendedModule):
         # Show only the first activity in the main view
         if activities:
             activity = activities[0]
-            with ui.element().classes("w-full"):
+            with ui.element().classes(DashboardStyles.FULL_WIDTH):
                 # Title with link
                 with ui.link(target=activity["link"]).classes(
                     "no-underline text-inherit"
                 ):
                     ui.label(activity["title"]).classes(
-                        "text-lg font-bold hover-underline"
+                        DashboardStyles.TITLE_H2 + " hover-underline"
                     )
 
                 # Summary
                 ui.label(activity["summary"][:100] + "...").classes(
-                    "text-gray-600 dark:text-gray-300 mt-1"
+                    DashboardStyles.TEXT_SECONDARY + " mt-1"
                 )
 
                 # Footer with date and tags
                 with ui.row().classes("items-center mt-2"):
                     ui.label(activity["published"][:10]).classes(
-                        "text-sm text-gray-500"
+                        DashboardStyles.TEXT_MUTED
                     )
                     for tag in activity["tags"][:2]:  # Show only first 2 tags
                         ui.chip(tag).classes("mr-1")
@@ -87,7 +88,7 @@ class GithubModule(ExtendedModule):
     def render_detail(self) -> None:
         activities = self.fetch()
         ui.label(f"Latest {len(activities)} Activities").classes(
-            "text-2xl font-bold mb-4"
+            DashboardStyles.TITLE_H1 + " mb-4"
         )
 
         for activity in activities:
@@ -97,22 +98,24 @@ class GithubModule(ExtendedModule):
                     "no-underline text-inherit"
                 ):
                     ui.label(activity["title"]).classes(
-                        "text-xl font-bold hover-underline"
+                        DashboardStyles.TITLE_H2 + " hover-underline"
                     )
 
                 # Author
                 if "author" in activity["extra"]:
                     ui.label(f"Author: {activity['extra']['author']}").classes(
-                        "text-gray-600 dark:text-gray-300 italic"
+                        DashboardStyles.TEXT_SECONDARY + " italic"
                     )
 
                 # Publication date
                 ui.label(f"Published: {activity['published'][:10]}").classes(
-                    "text-sm text-gray-500 mt-1"
+                    DashboardStyles.TEXT_MUTED + " mt-1"
                 )
 
                 # Summary
-                ui.label(activity["summary"]).classes("mt-2")
+                ui.label(activity["summary"]).classes(
+                    DashboardStyles.TEXT_SECONDARY + " mt-2"
+                )
 
                 # Tags
                 with ui.row().classes("mt-2"):

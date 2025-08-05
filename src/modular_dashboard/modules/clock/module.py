@@ -6,6 +6,7 @@ from typing import Any
 
 from nicegui import ui
 
+from ...ui.styles import DashboardStyles
 from ..extended import ExtendedModule
 
 
@@ -74,7 +75,14 @@ class ClockModule(ExtendedModule):
         """Update the clock display."""
         while True:
             try:
-                if self.time_label and hasattr(self.time_label, 'client') and self.time_label.client and self.date_label and hasattr(self.date_label, 'client') and self.date_label.client:
+                if (
+                    self.time_label
+                    and hasattr(self.time_label, "client")
+                    and self.time_label.client
+                    and self.date_label
+                    and hasattr(self.date_label, "client")
+                    and self.date_label.client
+                ):
                     now = self._get_current_time()
                     self.time_label.text = self._format_time(now)
                     self.date_label.text = self._format_date(now)
@@ -107,15 +115,17 @@ class ClockModule(ExtendedModule):
         """Render the clock module UI."""
         now = self._get_current_time()
 
-        with ui.column().classes("w-full items-center justify-center gap-2"):
+        with ui.column().classes(
+            f"{DashboardStyles.FULL_WIDTH} {DashboardStyles.CENTER_CONTENT} {DashboardStyles.GAP_SM}"
+        ):
             # Time display
             self.time_label = ui.label(self._format_time(now)).classes(
-                "text-4xl font-bold text-blue-600 tabular-nums"
+                DashboardStyles.TITLE_H1 + " text-blue-600 tabular-nums"
             )
 
             # Date display
             self.date_label = ui.label(self._format_date(now)).classes(
-                "text-lg text-gray-600 text-center"
+                DashboardStyles.TITLE_H2 + " text-gray-600 text-center"
             )
 
             # Start the clock update loop
@@ -125,23 +135,31 @@ class ClockModule(ExtendedModule):
         """Render detailed clock view."""
         now = self._get_current_time()
 
-        with ui.column().classes("w-full gap-8 max-w-2xl mx-auto items-center"):
-            ui.label("World Clock").classes("text-3xl font-bold text-center")
+        with ui.column().classes(
+            f"{DashboardStyles.FULL_WIDTH} {DashboardStyles.GAP_LG} max-w-2xl mx-auto {DashboardStyles.CENTER_CONTENT}"
+        ):
+            ui.label("World Clock").classes(DashboardStyles.TITLE_H1 + " text-center")
 
             # Main clock display
-            with ui.card().classes("w-full p-8 text-center"):
+            with ui.card().classes(
+                f"{DashboardStyles.FULL_WIDTH} {DashboardStyles.PADDING_XL} text-center"
+            ):
                 self.time_label = ui.label(self._format_time(now)).classes(
-                    "text-6xl font-bold text-blue-600 tabular-nums"
+                    DashboardStyles.TITLE_H1 + " text-blue-600 tabular-nums"
                 )
 
                 self.date_label = ui.label(self._format_date(now)).classes(
-                    "text-2xl text-gray-600 mt-4"
+                    DashboardStyles.TITLE_H2 + " text-gray-600 mt-4"
                 )
 
             # Time zone info
             with (
-                ui.card().classes("w-full p-4 text-center"),
-                ui.row().classes("w-full justify-center gap-4 text-sm"),
+                ui.card().classes(
+                    f"{DashboardStyles.FULL_WIDTH} {DashboardStyles.PADDING_MD} text-center"
+                ),
+                ui.row().classes(
+                    f"{DashboardStyles.FULL_WIDTH} {DashboardStyles.CENTER_CONTENT} {DashboardStyles.GAP_SM} text-sm"
+                ),
             ):
                 ui.label(f"Timezone: {self.timezone.upper()}")
                 ui.label(f"Format: {'24-hour' if self.format_24h else '12-hour'}")
@@ -149,25 +167,37 @@ class ClockModule(ExtendedModule):
                     ui.label("Show: Seconds")
 
             # Additional time zones
-            ui.label("Other Time Zones").classes("text-xl font-semibold mt-4")
+            ui.label("Other Time Zones").classes(DashboardStyles.TITLE_H2 + " mt-4")
 
             with ui.row().classes("w-full gap-4 justify-center"):
                 # Local time
                 local_time = datetime.now()
-                with ui.card().classes("p-4 text-center min-w-[150px]"):
-                    ui.label("Local").classes("font-semibold text-gray-600")
-                    ui.label(local_time.strftime("%H:%M")).classes("text-2xl font-bold")
+                with ui.card().classes(
+                    f"{DashboardStyles.PADDING_MD} text-center min-w-[150px]"
+                ):
+                    ui.label("Local").classes(
+                        DashboardStyles.FONT_SEMIBOLD + " text-gray-600"
+                    )
+                    ui.label(local_time.strftime("%H:%M")).classes(
+                        DashboardStyles.TITLE_H2 + " font-bold"
+                    )
                     ui.label(local_time.strftime("%Y-%m-%d")).classes(
-                        "text-sm text-gray-500"
+                        DashboardStyles.SUBTLE_TEXT
                     )
 
                 # UTC time
                 utc_time = datetime.utcnow()
-                with ui.card().classes("p-4 text-center min-w-[150px]"):
-                    ui.label("UTC").classes("font-semibold text-gray-600")
-                    ui.label(utc_time.strftime("%H:%M")).classes("text-2xl font-bold")
+                with ui.card().classes(
+                    f"{DashboardStyles.PADDING_MD} text-center min-w-[150px]"
+                ):
+                    ui.label("UTC").classes(
+                        DashboardStyles.FONT_SEMIBOLD + " text-gray-600"
+                    )
+                    ui.label(utc_time.strftime("%H:%M")).classes(
+                        DashboardStyles.TITLE_H2 + " font-bold"
+                    )
                     ui.label(utc_time.strftime("%Y-%m-%d")).classes(
-                        "text-sm text-gray-500"
+                        DashboardStyles.SUBTLE_TEXT
                     )
 
             # Start the clock update loop

@@ -1,6 +1,6 @@
 # 贡献指南
 
-感谢您有兴趣为 Research Dashboard 做贡献！本指南将帮助您了解如何参与项目开发。
+感谢您有兴趣为 Modular Dashboard 做贡献！本指南将帮助您了解如何参与项目开发。
 
 ## 行为准则
 
@@ -28,7 +28,7 @@
 
 ## 代码风格
 
-Research Dashboard 遵循 Python PEP 8 风格指南。代码会使用 `ruff` 自动格式化：
+Modular Dashboard 遵循 Python PEP 8 风格指南。代码会使用 `ruff` 自动格式化：
 
 ```bash
 uv run ruff format .
@@ -104,4 +104,4 @@ mkdocs serve
 2. 在 GitHub 上提交 issue
 3. 联系项目维护人员
 
-感谢您对 Research Dashboard 的贡献！
+感谢您对 Modular Dashboard 的贡献！

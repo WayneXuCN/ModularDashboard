@@ -1,4 +1,4 @@
-"""Documentation generation system for Research Dashboard."""
+"""Documentation generation system for Modular Dashboard."""
 
 import json
 from pathlib import Path
@@ -20,7 +20,7 @@ def generate_module_docs() -> None:
     with open(docs_dir / "index.md", "w") as f:
         f.write("# Modules Documentation\n\n")
         f.write(
-            "This section contains documentation for all modules in the Research Dashboard.\n\n"
+            "This section contains documentation for all modules in the Modular Dashboard.\n\n"
         )
         f.write("## Available Modules\n\n")
 
@@ -75,7 +75,7 @@ def generate_api_docs() -> None:
     with open(docs_dir / "index.md", "w") as f:
         f.write("# API Documentation\n\n")
         f.write(
-            "This section documents the internal APIs of the Research Dashboard.\n\n"
+            "This section documents the internal APIs of the Modular Dashboard.\n\n"
         )
 
         # Configuration API
@@ -123,13 +123,13 @@ def generate_development_docs() -> None:
     with open(docs_dir / "index.md", "w") as f:
         f.write("# Development Guide\n\n")
         f.write(
-            "This guide provides information for developers working on the Research Dashboard.\n\n"
+            "This guide provides information for developers working on the Modular Dashboard.\n\n"
         )
 
         # Project structure
         f.write("## Project Structure\n\n")
         f.write("```\n")
-        f.write("research-dashboard/\n")
+        f.write("modular-dashboard/\n")
         f.write("│\n")
         f.write("├── pyproject.toml             # Project configuration\n")
         f.write("├── README.md                  # Project overview\n")
@@ -180,8 +180,8 @@ def generate_documentation() -> None:
 
     # Generate main documentation index
     with open("docs/index.md", "w") as f:
-        f.write("# Research Dashboard Documentation\n\n")
-        f.write("Welcome to the Research Dashboard documentation.\n\n")
+        f.write("# Modular Dashboard Documentation\n\n")
+        f.write("Welcome to the Modular Dashboard documentation.\n\n")
         f.write("## Table of Contents\n\n")
         f.write("- [Modules](./modules/index.md)\n")
         f.write("- [API Reference](./api/index.md)\n")

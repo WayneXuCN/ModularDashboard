@@ -6,6 +6,7 @@ from typing import Any
 
 from nicegui import ui
 
+from ...ui.styles import DashboardStyles
 from ..extended import ExtendedModule
 
 
@@ -90,11 +91,23 @@ class ProgressModule(ExtendedModule):
                     # Update main progress display
                     progress, label = self._calculate_progress(self.selected_period)
 
-                    if self.main_progress_value and hasattr(self.main_progress_value, 'client') and self.main_progress_value.client:
+                    if (
+                        self.main_progress_value
+                        and hasattr(self.main_progress_value, "client")
+                        and self.main_progress_value.client
+                    ):
                         self.main_progress_value.text = f"{progress:.1f}%"
-                    if self.main_progress_bar and hasattr(self.main_progress_bar, 'client') and self.main_progress_bar.client:
+                    if (
+                        self.main_progress_bar
+                        and hasattr(self.main_progress_bar, "client")
+                        and self.main_progress_bar.client
+                    ):
                         self.main_progress_bar.value = progress / 100
-                    if self.main_progress_label and hasattr(self.main_progress_label, 'client') and self.main_progress_label.client:
+                    if (
+                        self.main_progress_label
+                        and hasattr(self.main_progress_label, "client")
+                        and self.main_progress_label.client
+                    ):
                         period_labels = {
                             "day": "Today",
                             "month": "This Month",
@@ -103,7 +116,11 @@ class ProgressModule(ExtendedModule):
                         self.main_progress_label.text = period_labels.get(
                             self.selected_period, "Progress"
                         )
-                    if self.main_date_label and hasattr(self.main_date_label, 'client') and self.main_date_label.client:
+                    if (
+                        self.main_date_label
+                        and hasattr(self.main_date_label, "client")
+                        and self.main_date_label.client
+                    ):
                         # Extract just the date part from the full label
                         date_part = (
                             label.split(" (")[1].rstrip(")") if " (" in label else label
@@ -113,9 +130,17 @@ class ProgressModule(ExtendedModule):
                     # Update individual progress displays
                     for period in ["day", "month", "year"]:
                         progress, label = self._calculate_progress(period)
-                        if period in self.progress_bars and hasattr(self.progress_bars[period], 'client') and self.progress_bars[period].client:
+                        if (
+                            period in self.progress_bars
+                            and hasattr(self.progress_bars[period], "client")
+                            and self.progress_bars[period].client
+                        ):
                             self.progress_bars[period].value = progress / 100
-                        if period in self.progress_labels and hasattr(self.progress_labels[period], 'client') and self.progress_labels[period].client:
+                        if (
+                            period in self.progress_labels
+                            and hasattr(self.progress_labels[period], "client")
+                            and self.progress_labels[period].client
+                        ):
                             self.progress_labels[period].text = f"{progress:.1f}%"
             except (RuntimeError, AttributeError):
                 # Client disconnected, stop updating
@@ -144,9 +169,13 @@ class ProgressModule(ExtendedModule):
 
     def render(self) -> None:
         """Render the progress module UI."""
-        with ui.column().classes("w-full gap-4"):
+        with ui.column().classes(
+            f"{DashboardStyles.FULL_WIDTH} {DashboardStyles.GAP_MD}"
+        ):
             # Period selection with Apple-style design
-            with ui.row().classes("w-full justify-center gap-2"):
+            with ui.row().classes(
+                f"{DashboardStyles.FULL_WIDTH} justify-center {DashboardStyles.GAP_SM}"
+            ):
                 period_labels = {"day": "Today", "month": "Month", "year": "Year"}
 
                 for period, label in period_labels.items():
@@ -164,16 +193,18 @@ class ProgressModule(ExtendedModule):
                 self._update_button_styles()
 
             # Main progress display with modern styling
-            with ui.card().classes("w-full p-6 rounded-2xl shadow-md"):
+            with ui.card().classes(
+                f"{DashboardStyles.FULL_WIDTH} {DashboardStyles.PADDING_XL} rounded-2xl shadow-md"
+            ):
                 # Period label
                 self.main_progress_label = ui.label("Today").classes(
-                    "text-lg font-semibold text-center"
+                    DashboardStyles.TITLE_H3 + " text-center"
                 )
 
                 # Large progress percentage
                 progress, label = self._calculate_progress(self.selected_period)
                 self.main_progress_value = ui.label(f"{progress:.1f}%").classes(
-                    "text-4xl font-bold text-center my-2"
+                    DashboardStyles.TITLE_H1 + " text-center my-2"
                 )
 
                 # Progress bar with rounded corners
@@ -184,7 +215,7 @@ class ProgressModule(ExtendedModule):
                 # Date label
                 date_part = label.split(" (")[1].rstrip(")") if " (" in label else label
                 self.main_date_label = ui.label(date_part).classes(
-                    "text-sm text-gray-500 text-center mt-2"
+                    DashboardStyles.SUBTLE_TEXT + " text-center mt-2"
                 )
 
             # Start the update loop
@@ -218,16 +249,36 @@ class ProgressModule(ExtendedModule):
         try:
             progress, label = self._calculate_progress(self.selected_period)
 
-            if self.main_progress_value and hasattr(self.main_progress_value, 'client') and self.main_progress_value.client:
+            if (
+                self.main_progress_value
+                and hasattr(self.main_progress_value, "client")
+                and self.main_progress_value.client
+            ):
                 self.main_progress_value.text = f"{progress:.1f}%"
-            if self.main_progress_bar and hasattr(self.main_progress_bar, 'client') and self.main_progress_bar.client:
+            if (
+                self.main_progress_bar
+                and hasattr(self.main_progress_bar, "client")
+                and self.main_progress_bar.client
+            ):
                 self.main_progress_bar.value = progress / 100
-            if self.main_progress_label and hasattr(self.main_progress_label, 'client') and self.main_progress_label.client:
-                period_labels = {"day": "Today", "month": "This Month", "year": "This Year"}
+            if (
+                self.main_progress_label
+                and hasattr(self.main_progress_label, "client")
+                and self.main_progress_label.client
+            ):
+                period_labels = {
+                    "day": "Today",
+                    "month": "This Month",
+                    "year": "This Year",
+                }
                 self.main_progress_label.text = period_labels.get(
                     self.selected_period, "Progress"
                 )
-            if self.main_date_label and hasattr(self.main_date_label, 'client') and self.main_date_label.client:
+            if (
+                self.main_date_label
+                and hasattr(self.main_date_label, "client")
+                and self.main_date_label.client
+            ):
                 date_part = label.split(" (")[1].rstrip(")") if " (" in label else label
                 self.main_date_label.text = date_part
         except (RuntimeError, AttributeError):
@@ -237,13 +288,15 @@ class ProgressModule(ExtendedModule):
     def render_detail(self) -> None:
         """Render detailed progress view."""
         with ui.column().classes("w-full gap-6 max-w-2xl mx-auto"):
-            ui.label("Time Progress Tracker").classes("text-3xl font-bold text-center")
+            ui.label("Time Progress Tracker").classes(
+                DashboardStyles.TITLE_H1 + " " + DashboardStyles.TEXT_CENTER
+            )
 
             # Explanation
             ui.markdown("""
             This module visualizes how much time has passed in the current day, month, and year.
             Use the buttons to switch between different time periods.
-            """).classes("text-center text-gray-600")
+            """).classes(DashboardStyles.TEXT_CENTER + " " + DashboardStyles.TEXT_MUTED)
 
             # Period selection with larger buttons
             with ui.row().classes("w-full justify-center gap-3 my-6"):
@@ -279,10 +332,10 @@ class ProgressModule(ExtendedModule):
                 }
 
                 ui.label(period_labels.get(self.selected_period, "Progress")).classes(
-                    "text-2xl font-semibold text-center"
+                    DashboardStyles.TITLE_H2 + " " + DashboardStyles.TEXT_CENTER
                 )
                 self.main_progress_value = ui.label(f"{progress:.1f}%").classes(
-                    "text-6xl font-bold text-blue-600 text-center my-4"
+                    DashboardStyles.TITLE_H1 + " text-blue-600 text-center my-4"
                 )
 
                 # Progress bar
@@ -293,7 +346,10 @@ class ProgressModule(ExtendedModule):
                 # Date label
                 date_part = label.split(" (")[1].rstrip(")") if " (" in label else label
                 self.main_date_label = ui.label(date_part).classes(
-                    "text-lg text-gray-600 text-center mt-2"
+                    DashboardStyles.BODY_TEXT
+                    + " "
+                    + DashboardStyles.TEXT_CENTER
+                    + " mt-2"
                 )
 
             # Start the update loop

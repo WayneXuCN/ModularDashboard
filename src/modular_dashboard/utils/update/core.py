@@ -71,6 +71,7 @@ class UpdateSource(ABC):
         """Download update package."""
         pass
 
+    @abstractmethod
     async def close(self):
         """Close resources (default no-op)."""
         pass

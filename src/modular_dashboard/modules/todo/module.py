@@ -5,6 +5,7 @@ from typing import Any
 
 from nicegui import ui
 
+from ...ui.styles import DashboardStyles
 from ..extended import ExtendedModule
 
 
@@ -53,7 +54,7 @@ class TodoModule(ExtendedModule):
         return [
             {
                 "id": 1,
-                "text": "Welcome to Research Dashboard!",
+                "text": "Welcome to Modular Dashboard!",
                 "completed": False,
                 "created": datetime.now().isoformat(),
             },
@@ -112,15 +113,22 @@ class TodoModule(ExtendedModule):
     def _refresh_todo_list(self) -> None:
         """Refresh the todo list display."""
         if self.todos_list:
-            self.todos_list.clear()
-            with self.todos_list:
-                self._render_todo_items()
+            try:
+                self.todos_list.clear()
+                with self.todos_list:
+                    self._render_todo_items()
+            except RuntimeError as e:
+                # Handle case where client has been deleted
+                if "client this element belongs to has been deleted" in str(e):
+                    pass  # Silently ignore as the UI element is no longer needed
+                else:
+                    raise  # Re-raise if it's a different RuntimeError
 
     def _render_todo_items(self) -> None:
         """Render the todo items."""
         if not self.todos:
             ui.label("No tasks yet. Add one above!").classes(
-                "text-gray-500 text-center w-full"
+                DashboardStyles.TEXT_MUTED + " text-center w-full"
             )
             return
 
@@ -173,12 +181,14 @@ class TodoModule(ExtendedModule):
 
     def render(self) -> None:
         """Render the todo module UI."""
-        with ui.column().classes("w-full gap-3"):
+        with ui.column().classes(
+            f"{DashboardStyles.FULL_WIDTH} {DashboardStyles.GAP_MD}"
+        ):
             # Add todo input
             with ui.row().classes("w-full gap-2"):
                 self.todo_input = ui.input(
                     placeholder="Add a new task...", on_change=lambda e: None
-                ).classes("flex-1")
+                ).classes(DashboardStyles.FLEX_GROW)
 
                 ui.button(
                     icon="add",
@@ -191,13 +201,17 @@ class TodoModule(ExtendedModule):
                 ).props("round")
 
             # Todo list
-            self.todos_list = ui.column().classes("w-full gap-1")
+            self.todos_list = ui.column().classes(
+                f"{DashboardStyles.FULL_WIDTH} {DashboardStyles.GAP_SM}"
+            )
             with self.todos_list:
                 self._render_todo_items()
 
     def render_detail(self) -> None:
         """Render detailed todo view."""
-        with ui.column().classes("w-full gap-6 max-w-2xl mx-auto"):
+        with ui.column().classes(
+            f"{DashboardStyles.FULL_WIDTH} {DashboardStyles.GAP_LG} max-w-2xl mx-auto"
+        ):
             ui.label("Task Manager").classes("text-3xl font-bold text-center")
 
             # Stats
@@ -222,12 +236,14 @@ class TodoModule(ExtendedModule):
                     ui.label("Pending").classes("text-sm text-gray-600")
 
             # Add todo section
-            with ui.card().classes("w-full p-4"):
-                ui.label("Add New Task").classes("text-lg font-semibold mb-3")
+            with ui.card().classes(
+                f"{DashboardStyles.FULL_WIDTH} {DashboardStyles.PADDING_LG}"
+            ):
+                ui.label("Add New Task").classes(DashboardStyles.TITLE_H2 + " mb-3")
                 with ui.row().classes("w-full gap-2"):
                     self.todo_input = ui.input(
                         placeholder="What needs to be done?", on_change=lambda e: None
-                    ).classes("flex-1")
+                    ).classes(DashboardStyles.FLEX_GROW)
 
                     ui.button(
                         icon="add",
@@ -240,8 +256,12 @@ class TodoModule(ExtendedModule):
                     ).props("round")
 
             # Todo list section
-            with ui.card().classes("w-full p-4"):
-                ui.label("All Tasks").classes("text-lg font-semibold mb-3")
-                self.todos_list = ui.column().classes("w-full gap-2")
+            with ui.card().classes(
+                f"{DashboardStyles.FULL_WIDTH} {DashboardStyles.PADDING_LG}"
+            ):
+                ui.label("All Tasks").classes(DashboardStyles.TITLE_H2 + " mb-3")
+                self.todos_list = ui.column().classes(
+                    f"{DashboardStyles.FULL_WIDTH} {DashboardStyles.GAP_MD}"
+                )
                 with self.todos_list:
                     self._render_todo_items()

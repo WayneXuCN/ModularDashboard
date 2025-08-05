@@ -7,6 +7,7 @@ from urllib.request import urlopen
 
 from nicegui import ui
 
+from ...ui.styles import DashboardStyles
 from ..extended import ExtendedModule
 
 
@@ -227,46 +228,59 @@ class GithubTrendingModule(ExtendedModule):
         data = self.fetch()
 
         if not data:
-            ui.label("No trending repositories available").classes("text-gray-500")
+            ui.label("No trending repositories available").classes(
+                DashboardStyles.TEXT_MUTED
+            )
             return
 
         # Show only the first repository in the main view
         repo = data[0]
         extra = repo.get("extra", {})
 
-        with ui.card().classes("w-full card-hover"):
+        with ui.card().classes(
+            f"{DashboardStyles.FULL_WIDTH} {DashboardStyles.PADDING_LG} {DashboardStyles.CARD_HOVER_EFFECT}"
+        ):
             # Repository name with link
-            with ui.link(target=repo["link"]).classes("no-underline text-inherit"):
+            with ui.link(target=repo["link"]).classes(
+                DashboardStyles.LINK_NO_UNDERLINE
+            ):
                 ui.label(repo["title"]).classes(
-                    "text-lg font-bold hover-underline text-blue-600 dark:text-blue-400"
+                    DashboardStyles.TITLE_H2
+                    + " hover-underline text-blue-600 dark:text-blue-400"
                 )
 
             # Language and stats
-            with ui.row().classes("items-center gap-4 mt-2"):
+            with ui.row().classes(
+                f"{DashboardStyles.FLEX_BETWEEN} {DashboardStyles.GAP_MD} mt-2"
+            ):
                 # Language
                 if extra.get("primary_language"):
                     ui.chip(extra["primary_language"]).classes(
-                        "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200"
+                        DashboardStyles.BADGE_BLUE
                     )
 
                 # Stars
-                with ui.row().classes("items-center gap-1"):
-                    ui.label("⭐").classes("text-sm")
+                with ui.row().classes(
+                    f"{DashboardStyles.FLEX_CENTER} {DashboardStyles.GAP_SM}"
+                ):
+                    ui.label("⭐").classes(DashboardStyles.TEXT_MUTED)
                     ui.label(f"{extra.get('stars', 0):,}").classes(
-                        "text-sm font-medium"
+                        DashboardStyles.TEXT_SM_MEDIUM
                     )
 
                 # Forks
-                with ui.row().classes("items-center gap-1"):
-                    ui.label("🍴").classes("text-sm")
+                with ui.row().classes(
+                    f"{DashboardStyles.FLEX_CENTER} {DashboardStyles.GAP_SM}"
+                ):
+                    ui.label("🍴").classes(DashboardStyles.TEXT_MUTED)
                     ui.label(f"{extra.get('forks', 0):,}").classes(
-                        "text-sm font-medium"
+                        DashboardStyles.TEXT_SM_MEDIUM
                     )
 
             # Description
             if repo.get("summary"):
                 ui.label(repo["summary"][:80] + "...").classes(
-                    "text-sm text-gray-600 dark:text-gray-300 mt-2"
+                    DashboardStyles.TEXT_SECONDARY + " mt-2"
                 )
 
     def render_detail(self) -> None:
@@ -275,66 +289,79 @@ class GithubTrendingModule(ExtendedModule):
 
         if not data:
             ui.label("No trending repositories available").classes(
-                "text-gray-500 text-center w-full"
+                DashboardStyles.TEXT_MUTED + " text-center w-full"
             )
             return
 
         period = self.config.get("period", "weekly")
         language = self.config.get("language", "")
 
-        ui.label("🔥 Trending Repositories").classes("text-2xl font-bold mb-4")
+        ui.label("🔥 Trending Repositories").classes(DashboardStyles.TITLE_H1 + " mb-4")
 
         # Filter info
         filter_text = f"({period.capitalize()}"
         if language:
             filter_text += f" • {language}"
         filter_text += ")"
-        ui.label(filter_text).classes("text-gray-500 mb-6")
+        ui.label(filter_text).classes(DashboardStyles.TEXT_MUTED + " mb-6")
 
         # Render all repositories
         for repo in data:
             extra = repo.get("extra", {})
 
-            with ui.card().classes("w-full mb-4 card-hover"):
+            with ui.card().classes(
+                f"{DashboardStyles.FULL_WIDTH} {DashboardStyles.PADDING_LG} mb-4 {DashboardStyles.CARD_HOVER_EFFECT}"
+            ):
                 # Repository name with link
-                with ui.link(target=repo["link"]).classes("no-underline text-inherit"):
+                with ui.link(target=repo["link"]).classes(
+                    DashboardStyles.LINK_NO_UNDERLINE
+                ):
                     ui.label(repo["title"]).classes(
-                        "text-xl font-bold hover-underline text-blue-600 dark:text-blue-400"
+                        DashboardStyles.TITLE_H2
+                        + " hover-underline text-blue-600 dark:text-blue-400"
                     )
 
                 # Stats row
-                with ui.row().classes("items-center gap-4 mt-2"):
+                with ui.row().classes(
+                    f"{DashboardStyles.FLEX_BETWEEN} {DashboardStyles.GAP_MD} mt-2"
+                ):
                     # Language
                     if extra.get("primary_language"):
                         ui.chip(extra["primary_language"]).classes(
-                            "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200"
+                            DashboardStyles.BADGE_BLUE
                         )
 
                     # Stars
-                    with ui.row().classes("items-center gap-1"):
-                        ui.label("⭐").classes("text-sm")
+                    with ui.row().classes(
+                        f"{DashboardStyles.FLEX_CENTER} {DashboardStyles.GAP_SM}"
+                    ):
+                        ui.label("⭐").classes(DashboardStyles.TEXT_MUTED)
                         ui.label(f"{extra.get('stars', 0):,}").classes(
-                            "text-sm font-medium"
+                            DashboardStyles.TEXT_SM_MEDIUM
                         )
 
                     # Forks
-                    with ui.row().classes("items-center gap-1"):
-                        ui.label("🍴").classes("text-sm")
+                    with ui.row().classes(
+                        f"{DashboardStyles.FLEX_CENTER} {DashboardStyles.GAP_SM}"
+                    ):
+                        ui.label("🍴").classes(DashboardStyles.TEXT_MUTED)
                         ui.label(f"{extra.get('forks', 0):,}").classes(
-                            "text-sm font-medium"
+                            DashboardStyles.TEXT_SM_MEDIUM
                         )
 
                     # Pull requests
-                    with ui.row().classes("items-center gap-1"):
-                        ui.label("🔄").classes("text-sm")
+                    with ui.row().classes(
+                        f"{DashboardStyles.FLEX_CENTER} {DashboardStyles.GAP_SM}"
+                    ):
+                        ui.label("🔄").classes(DashboardStyles.TEXT_MUTED)
                         ui.label(f"{extra.get('pull_requests', 0):,}").classes(
-                            "text-sm font-medium"
+                            DashboardStyles.TEXT_SM_MEDIUM
                         )
 
                 # Description
                 if repo.get("summary"):
                     ui.label(repo["summary"]).classes(
-                        "text-sm text-gray-600 dark:text-gray-300 mt-2"
+                        DashboardStyles.TEXT_SECONDARY + " mt-2"
                     )
 
                 # Contributors
@@ -345,14 +372,14 @@ class GithubTrendingModule(ExtendedModule):
                         else extra["contributor_logins"]
                     )
                     ui.label(f"Contributors: {contributors}").classes(
-                        "text-xs text-gray-500 mt-1"
+                        DashboardStyles.TEXT_XS_MUTED + " mt-1"
                     )
 
                 # Action button
-                with ui.row().classes("w-full justify-end mt-2"):
+                with ui.row().classes(f"{DashboardStyles.FULL_WIDTH} justify-end mt-2"):
                     ui.button(
                         "View on GitHub",
                         on_click=lambda link=repo["link"]: ui.run_javascript(
                             f'window.open("{link}", "_blank")'
                         ),
-                    ).props("outline").classes("text-sm")
+                    ).props("outline").classes(DashboardStyles.BUTTON_OUTLINE)

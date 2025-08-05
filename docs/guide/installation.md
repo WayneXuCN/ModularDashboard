@@ -1,10 +1,10 @@
 # 安装指南
 
-本指南将引导您完成在系统上安装 Research Dashboard。
+本指南将引导您完成在系统上安装 Modular Dashboard。
 
 ## 系统要求
 
-Research Dashboard 需要：
+Modular Dashboard 需要：
 
 - Python 3.8 或更高版本
 - pip 或 uv 包管理器
@@ -20,7 +20,7 @@ uv 是一个快速的 Python 包安装程序和解析器。如果您没有安装
 pip install uv
 ```
 
-然后安装 Research Dashboard 依赖：
+然后安装 Modular Dashboard 依赖：
 
 ```bash
 uv lock
@@ -45,8 +45,8 @@ pip install -r requirements.txt
 uv run -m modular_dashboard.app --help
 ```
 
-这应该会显示 Research Dashboard 应用程序的帮助信息。
+这应该会显示 Modular Dashboard 应用程序的帮助信息。
 
 ## 下一步
 
-安装完成后，请继续阅读[快速开始](./getting-started.md)指南，了解如何配置和运行 Research Dashboard。
+安装完成后，请继续阅读[快速开始](./getting-started.md)指南，了解如何配置和运行 Modular Dashboard。

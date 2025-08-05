@@ -1,6 +1,6 @@
 # 配置 API
 
-配置系统管理 Research Dashboard 配置的加载、验证和保存。
+配置系统管理 Modular Dashboard 配置的加载、验证和保存。
 
 ## 概述
 

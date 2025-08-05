@@ -7,6 +7,7 @@ from urllib.parse import urljoin
 import httpx
 from nicegui import ui
 
+from ...ui.styles import DashboardStyles
 from ..extended import ExtendedModule
 
 
@@ -220,23 +221,25 @@ class AnimalsModule(ExtendedModule):
         show_title = self.config.get("show_title", True)
         border_radius = self.config.get("border_radius", 8)
 
-        with ui.element().classes("w-full text-center"):
+        with ui.element().classes(f"{DashboardStyles.FULL_WIDTH} text-center"):
             if show_title:
-                ui.label(item["title"]).classes("text-lg font-bold mb-2")
+                ui.label(item["title"]).classes(DashboardStyles.TITLE_H2 + " mb-2")
 
             # Image with error handling using JavaScript
             with ui.element().classes("w-full"):
                 image = (
                     ui.image(item["image_url"])
                     .classes(
-                        "w-full object-cover rounded-lg border-2 border-gray-200 dark:border-gray-700"
+                        f"{DashboardStyles.FULL_WIDTH} object-cover rounded-lg border-2 border-gray-200 dark:border-gray-700"
                     )
                     .style(f"height: {height}px; border-radius: {border_radius}px;")
                 )
                 # Add error handling using JavaScript
                 image.on(
                     "error",
-                    lambda e: ui.run_javascript(f'this.src="https://via.placeholder.com/{height}x{height}?text=Image+Not+Available"'),
+                    lambda e: ui.run_javascript(
+                        f'this.src="https://via.placeholder.com/{height}x{height}?text=Image+Not+Available"'
+                    ),
                 )
 
             # Refresh button
@@ -246,10 +249,12 @@ class AnimalsModule(ExtendedModule):
 
     def render_detail(self) -> None:
         """Render detailed view with more options."""
-        ui.label("Animals Gallery").classes("text-2xl font-bold mb-4")
+        ui.label("Animals Gallery").classes(DashboardStyles.TITLE_H1 + " mb-4")
 
         # Configuration controls
-        with ui.card().classes("w-full mb-4 p-4"):
+        with ui.card().classes(
+            f"{DashboardStyles.FULL_WIDTH} mb-4 {DashboardStyles.PADDING_LG}"
+        ):
             ui.label("Settings").classes("text-lg font-semibold mb-2")
             self.render_config_ui()
 
@@ -258,13 +263,20 @@ class AnimalsModule(ExtendedModule):
 
         # Additional information
         if self.current_image_url and self.current_animal_type:
-            with ui.card().classes("w-full mt-4 p-4"):
-                ui.label("Current Image Info").classes("text-lg font-semibold mb-2")
+            with ui.card().classes(
+                f"{DashboardStyles.FULL_WIDTH} mt-4 {DashboardStyles.PADDING_LG}"
+            ):
+                ui.label("Current Image Info").classes(
+                    DashboardStyles.TITLE_H2 + " mb-2"
+                )
                 ui.label(f"Animal Type: {self.current_animal_type.title()}").classes(
-                    "text-sm"
+                    DashboardStyles.TEXT_SM
                 )
                 ui.label(f"Image URL: {self.current_image_url}").classes(
-                    "text-sm text-gray-600 break-all"
+                    DashboardStyles.TEXT_SM
+                    + " "
+                    + DashboardStyles.TEXT_SECONDARY
+                    + " break-all"
                 )
 
                 # Copy URL button

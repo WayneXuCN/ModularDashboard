@@ -8,6 +8,7 @@ from urllib.request import urlopen
 
 from nicegui import ui
 
+from ...ui.styles import DashboardStyles
 from ..extended import ExtendedModule
 
 
@@ -299,9 +300,11 @@ class ReleasesModule(ExtendedModule):
         """Render the releases module UI."""
         releases = self.fetch()
 
-        with ui.column().classes("w-full gap-3"):
+        with ui.column().classes(
+            f"{DashboardStyles.FULL_WIDTH} {DashboardStyles.GAP_MD}"
+        ):
             if not releases:
-                ui.label("No releases found").classes("text-gray-500")
+                ui.label("No releases found").classes(DashboardStyles.TEXT_MUTED)
                 return
 
             # Show only the first 3 releases in compact view
@@ -310,48 +313,50 @@ class ReleasesModule(ExtendedModule):
 
                 with (
                     ui.card().classes(
-                        "w-full p-3 cursor-pointer hover:shadow-md transition-shadow"
+                        f"{DashboardStyles.FULL_WIDTH} {DashboardStyles.PADDING_MD} {DashboardStyles.CARD_HOVER_EFFECT}"
                     ),
-                    ui.column().classes("w-full gap-2"),
+                    ui.column().classes(
+                        f"{DashboardStyles.FULL_WIDTH} {DashboardStyles.GAP_SM}"
+                    ),
                 ):
                     # Repository and tag
-                    with ui.row().classes("w-full justify-between items-start"):
+                    with ui.row().classes(
+                        f"{DashboardStyles.FULL_WIDTH} {DashboardStyles.FLEX_BETWEEN} items-start"
+                    ):
                         repo_name = extra.get("repository", "unknown")
                         platform = extra.get("platform", "unknown")
 
                         with ui.column().classes("gap-1"):
                             ui.label(f"{platform}").classes(
-                                "text-xs font-semibold text-blue-600"
+                                DashboardStyles.BADGE_PRIMARY + " text-xs"
                             )
-                            ui.label(repo_name).classes(
-                                "text-sm font-semibold text-gray-600"
-                            )
-                            ui.label(release["title"]).classes("text-lg font-semibold")
+                            ui.label(repo_name).classes(DashboardStyles.TITLE_H4)
+                            ui.label(release["title"]).classes(DashboardStyles.TITLE_H2)
 
                         # Release badges
-                        with ui.row().classes("gap-1"):
+                        with ui.row().classes(DashboardStyles.GAP_XS):
                             if extra.get("draft"):
                                 ui.label("DRAFT").classes(
-                                    "text-xs bg-gray-200 text-gray-700 px-2 py-1 rounded"
+                                    DashboardStyles.BADGE_SECONDARY + " text-xs"
                                 )
                             elif extra.get("prerelease"):
                                 ui.label("PRE-RELEASE").classes(
-                                    "text-xs bg-orange-200 text-orange-700 px-2 py-1 rounded"
+                                    DashboardStyles.BADGE_WARNING + " text-xs"
                                 )
                             else:
                                 ui.label("STABLE").classes(
-                                    "text-xs bg-green-200 text-green-700 px-2 py-1 rounded"
+                                    DashboardStyles.BADGE_SUCCESS + " text-xs"
                                 )
 
                     # Summary
                     if release.get("summary"):
                         ui.label(release["summary"]).classes(
-                            "text-sm text-gray-600 line-clamp-2"
+                            DashboardStyles.BODY_TEXT + " line-clamp-2"
                         )
 
                     # Meta info
                     with ui.row().classes(
-                        "w-full justify-between items-center text-xs text-gray-500"
+                        f"{DashboardStyles.FULL_WIDTH} {DashboardStyles.FLEX_BETWEEN} {DashboardStyles.SUBTLE_TEXT} text-xs"
                     ):
                         if extra.get("author"):
                             ui.label(f"by {extra['author']}")
@@ -366,19 +371,25 @@ class ReleasesModule(ExtendedModule):
         """Render detailed releases view."""
         releases = self.fetch()
 
-        with ui.column().classes("w-full gap-6 max-w-4xl mx-auto"):
-            ui.label("Latest Releases").classes("text-3xl font-bold text-center")
+        with ui.column().classes(
+            f"{DashboardStyles.FULL_WIDTH} {DashboardStyles.GAP_LG} {DashboardStyles.CONTAINER_CENTER}"
+        ):
+            ui.label("Latest Releases").classes(
+                DashboardStyles.TITLE_H1 + " " + DashboardStyles.TEXT_CENTER
+            )
 
             # Header with repository count
             unique_repos = len(
                 {r.get("extra", {}).get("repository", "") for r in releases}
             )
             ui.label(f"Monitoring {unique_repos} repositories").classes(
-                "text-gray-600 text-center"
+                DashboardStyles.TEXT_MUTED + " " + DashboardStyles.TEXT_CENTER
             )
 
             if not releases:
-                ui.label("No releases found").classes("text-gray-500 text-center")
+                ui.label("No releases found").classes(
+                    DashboardStyles.TEXT_MUTED + " " + DashboardStyles.TEXT_CENTER
+                )
                 return
 
             # Show all releases
@@ -386,48 +397,47 @@ class ReleasesModule(ExtendedModule):
                 extra = release.get("extra", {})
 
                 with (
-                    ui.card().classes("w-full p-6"),
-                    ui.column().classes("w-full gap-4"),
-                    ui.row().classes("w-full justify-between items-start"),
-                    ui.column().classes("gap-2"),
+                    ui.card().classes(
+                        f"{DashboardStyles.FULL_WIDTH} {DashboardStyles.PADDING_LG}"
+                    ),
+                    ui.column().classes(
+                        f"{DashboardStyles.FULL_WIDTH} {DashboardStyles.GAP_MD}"
+                    ),
+                    ui.row().classes(
+                        f"{DashboardStyles.FULL_WIDTH} {DashboardStyles.FLEX_BETWEEN} items-start"
+                    ),
+                    ui.column().classes(DashboardStyles.GAP_SM),
                 ):
                     repo_name = extra.get("repository", "unknown")
                     platform = extra.get("platform", "unknown")
 
-                    ui.label(f"{platform}").classes(
-                        "text-sm font-semibold text-blue-600"
-                    )
-                    ui.label(repo_name).classes("text-lg font-semibold text-gray-600")
-                    ui.label(release["title"]).classes("text-2xl font-bold")
+                    ui.label(f"{platform}").classes(DashboardStyles.BADGE_PRIMARY)
+                    ui.label(repo_name).classes(DashboardStyles.TITLE_H2)
+                    ui.label(release["title"]).classes(DashboardStyles.TITLE_H1)
 
                     if release.get("summary"):
-                        ui.label(release["summary"]).classes("text-lg text-gray-700")
+                        ui.label(release["summary"]).classes(DashboardStyles.BODY_TEXT)
 
                     # Release badges
-                    with ui.column().classes("gap-2 items-end"):
+                    with ui.column().classes(f"{DashboardStyles.GAP_SM} items-end"):
                         if extra.get("draft"):
-                            ui.label("DRAFT").classes(
-                                "text-sm bg-gray-200 text-gray-700 px-3 py-1 rounded-full"
-                            )
+                            ui.label("DRAFT").classes(DashboardStyles.BADGE_SECONDARY)
                         elif extra.get("prerelease"):
                             ui.label("PRE-RELEASE").classes(
-                                "text-sm bg-orange-200 text-orange-700 px-3 py-1 rounded-full"
+                                DashboardStyles.BADGE_WARNING
                             )
                         else:
-                            ui.label("STABLE").classes(
-                                "text-sm bg-green-200 text-green-700 px-3 py-1 rounded-full"
-                            )
+                            ui.label("STABLE").classes(DashboardStyles.BADGE_SUCCESS)
 
                         ui.button(
                             "View Release",
                             on_click=lambda e, url=release["link"]: ui.navigate.to(url),
-                        ).classes(
-                            "bg-blue-500 text-white hover:bg-blue-600 "
-                            "transition-colors duration-200"
-                        ).props("target=_blank")
+                        ).classes(DashboardStyles.BUTTON_PRIMARY).props("target=_blank")
 
                     # Meta information
-                    with ui.row().classes("w-full gap-4 text-sm text-gray-600"):
+                    with ui.row().classes(
+                        f"{DashboardStyles.FULL_WIDTH} {DashboardStyles.GAP_MD} {DashboardStyles.BODY_TEXT}"
+                    ):
                         if extra.get("author"):
                             ui.label(f"👤 {extra['author']}")
 
@@ -444,30 +454,38 @@ class ReleasesModule(ExtendedModule):
 
                     # Release body
                     if extra.get("body"):
-                        with ui.expansion("Release Notes").classes("w-full"):
+                        with ui.expansion("Release Notes").classes(
+                            DashboardStyles.FULL_WIDTH
+                        ):
                             ui.label(extra["body"]).classes(
-                                "text-sm text-gray-700 whitespace-pre-wrap"
+                                DashboardStyles.BODY_TEXT + " whitespace-pre-wrap"
                             )
 
                     # Downloadable assets
                     assets = extra.get("assets", [])
                     if assets:
-                        ui.label("Downloads:").classes("font-semibold text-sm mt-2")
-                        with ui.column().classes("w-full gap-2 ml-4"):
+                        ui.label("Downloads:").classes(
+                            DashboardStyles.TITLE_H4 + " mt-2"
+                        )
+                        with ui.column().classes(
+                            f"{DashboardStyles.FULL_WIDTH} {DashboardStyles.GAP_SM} ml-4"
+                        ):
                             for asset in assets[:5]:  # Show first 5 assets
                                 with ui.row().classes(
-                                    "w-full justify-between items-center p-2 hover:bg-gray-50 rounded"
+                                    f"{DashboardStyles.FULL_WIDTH} {DashboardStyles.FLEX_BETWEEN} {DashboardStyles.PADDING_SM} {DashboardStyles.HOVER_BG_LIGHT} rounded"
                                 ):
                                     asset_name = asset.get(
                                         "name",
                                         asset.get("link", {}).get("name", "Unknown"),
                                     )
-                                    ui.label(asset_name).classes("text-sm")
+                                    ui.label(asset_name).classes(
+                                        DashboardStyles.BODY_TEXT
+                                    )
 
                                     if asset.get("size"):
                                         ui.label(
                                             f"{asset['size'] / 1024 / 1024:.1f} MB"
-                                        ).classes("text-xs text-gray-500")
+                                        ).classes(DashboardStyles.SUBTLE_TEXT)
 
                                     asset_url = asset.get(
                                         "browser_download_url",
@@ -479,11 +497,14 @@ class ReleasesModule(ExtendedModule):
                                             on_click=lambda e,
                                             url=asset_url: ui.navigate.to(url),
                                         ).classes(
-                                            "text-xs bg-green-500 text-white hover:bg-green-600 "
-                                            "transition-colors duration-200"
+                                            DashboardStyles.BUTTON_SUCCESS + " text-xs"
                                         ).props("target=_blank dense")
 
                     # Error details
                     if extra.get("error"):
-                        with ui.expansion("Error Details").classes("w-full"):
-                            ui.label(extra["error"]).classes("text-sm text-red-600")
+                        with ui.expansion("Error Details").classes(
+                            DashboardStyles.FULL_WIDTH
+                        ):
+                            ui.label(extra["error"]).classes(
+                                DashboardStyles.TEXT_ERROR + " text-sm"
+                            )

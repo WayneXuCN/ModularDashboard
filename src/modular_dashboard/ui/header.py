@@ -2,7 +2,9 @@
 
 from nicegui import ui
 
+from ..config.manager import save_config
 from ..config.schema import AppConfig
+from .styles import DashboardStyles, DesignSystem
 
 
 class HeaderNavigation:
@@ -14,18 +16,16 @@ class HeaderNavigation:
     def render(self) -> None:
         """Render the header navigation."""
         with (
-            ui.card().classes("w-full border-0 shadow-sm bg-white/80 backdrop-blur-sm"),
+            ui.card().classes(f"w-full {DashboardStyles.HEADER}"),
             ui.row().classes(
-                "w-full justify-between items-center p-4 max-w-7xl mx-auto"
+                f"w-full justify-between items-center {DashboardStyles.PADDING_MD} {DashboardStyles.CONTAINER_CENTER}"
             ),
         ):
-            # Title with gradient styling
-            ui.label("Research Dashboard").classes(
-                "text-3xl font-light bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent"
-            )
+            # Title with unified styling
+            ui.label("Modular Dashboard").classes(DashboardStyles.TITLE_H1)
 
             # Controls container
-            with ui.row().classes("gap-3"):
+            with ui.row().classes(DashboardStyles.GAP_MD):
                 self._render_stats_button()
                 self._render_refresh_button()
                 self._render_theme_toggle()
@@ -35,34 +35,27 @@ class HeaderNavigation:
         ui.button(
             icon="refresh",
             on_click=lambda: ui.notify("Refreshing all modules...", type="positive"),
-        ).classes(
-            "bg-white/90 backdrop-blur-sm border border-slate-200/50 rounded-lg "
-            "text-slate-600 shadow-sm hover:bg-white hover:shadow-md "
-            "transition-all duration-300 hover:scale-105"
-        ).props("flat")
+        ).classes(DashboardStyles.BUTTON_SECONDARY).props("flat")
 
     def _render_stats_button(self) -> None:
         """Render the statistics page button."""
         ui.button(
             icon="analytics",
             on_click=lambda: ui.navigate.to("/stats"),
-        ).classes(
-            "bg-white/90 backdrop-blur-sm border border-slate-200/50 rounded-lg "
-            "text-slate-600 shadow-sm hover:bg-white hover:shadow-md "
-            "transition-all duration-300 hover:scale-105"
-        ).props("flat")
+        ).classes(DashboardStyles.BUTTON_SECONDARY).props("flat")
 
     def _render_theme_toggle(self) -> None:
         """Render the theme toggle."""
         options = {"Light": "light", "Dark": "dark"}
         initial_key = "Light" if self.config.theme == "light" else "Dark"
         theme_toggle = ui.toggle(options, value=initial_key).classes(
-            "bg-white/80 backdrop-blur-sm border border-slate-200/50 rounded-lg "
-            "shadow-sm transition-all duration-300"
+            f"{DashboardStyles.GLASS_BASE} rounded-{DesignSystem.BORDER_RADIUS_MD} "
+            f"{DesignSystem.SHADOW_SM} transition-all duration-300"
         )
 
         def on_theme_change(e):
             self.config.theme = e.value
+            save_config(self.config)  # Save the configuration to file
             if e.value == "dark":
                 ui.dark_mode().enable()
             else:

@@ -36,40 +36,41 @@ class UpdateUI:
 
     def _render_settings_section(self) -> None:
         """Render update settings section."""
-        with ui.expansion("更新设置", icon="settings").classes("w-full mb-4"):
-            with ui.column().classes("w-full gap-4 p-4"):
-                # Auto-update toggle
-                ui.switch(
-                    "自动更新",
-                    value=self.update_manager.policy.auto_update,
-                    on_change=lambda e: self._update_policy("auto_update", e.value),
-                ).classes("w-full")
+        with (
+            ui.expansion("更新设置", icon="settings").classes("w-full mb-4"),
+            ui.column().classes("w-full gap-4 p-4"),
+            ui.column().classes("w-full gap-4 p-4"),
+        ):
+            # Auto-update toggle
+            ui.switch(
+                "自动更新",
+                value=self.update_manager.policy.auto_update,
+                on_change=lambda e: self._update_policy("auto_update", e.value),
+            ).classes("w-full")
 
-                # Update types
-                ui.label("更新类型").classes("text-sm font-medium")
-                with ui.row().classes("w-full gap-2"):
-                    ui.checkbox(
-                        "补丁更新",
-                        value="patch" in self.update_manager.policy.update_types,
-                        on_change=lambda e: self._toggle_update_type("patch", e.value),
-                    )
-                    ui.checkbox(
-                        "次要更新",
-                        value="minor" in self.update_manager.policy.update_types,
-                        on_change=lambda e: self._toggle_update_type("minor", e.value),
-                    )
-                    ui.checkbox(
-                        "主要更新",
-                        value="major" in self.update_manager.policy.update_types,
-                        on_change=lambda e: self._toggle_update_type("major", e.value),
-                    )
-                    ui.checkbox(
-                        "安全更新",
-                        value="security" in self.update_manager.policy.update_types,
-                        on_change=lambda e: self._toggle_update_type(
-                            "security", e.value
-                        ),
-                    )
+            # Update types
+            ui.label("更新类型").classes("text-sm font-medium")
+            with ui.row().classes("w-full gap-2"):
+                ui.checkbox(
+                    "补丁更新",
+                    value="patch" in self.update_manager.policy.update_types,
+                    on_change=lambda e: self._toggle_update_type("patch", e.value),
+                )
+                ui.checkbox(
+                    "次要更新",
+                    value="minor" in self.update_manager.policy.update_types,
+                    on_change=lambda e: self._toggle_update_type("minor", e.value),
+                )
+                ui.checkbox(
+                    "主要更新",
+                    value="major" in self.update_manager.policy.update_types,
+                    on_change=lambda e: self._toggle_update_type("major", e.value),
+                )
+                ui.checkbox(
+                    "安全更新",
+                    value="security" in self.update_manager.policy.update_types,
+                    on_change=lambda e: self._toggle_update_type("security", e.value),
+                )
 
                 # Check interval
                 with ui.row().classes("w-full gap-4 items-center"):
@@ -141,7 +142,10 @@ class UpdateUI:
 
     def _render_update_item(self, module_id: str, update_info: UpdateInfo) -> None:
         """Render a single update item."""
-        with ui.card().classes("w-full p-3"), ui.row().classes("w-full justify-between items-center"):
+        with (
+            ui.card().classes("w-full p-3"),
+            ui.row().classes("w-full justify-between items-center"),
+        ):
             # Module info
             with ui.column().classes("flex-1"):
                 with ui.row().classes("w-full justify-between items-center"):
@@ -216,22 +220,20 @@ class UpdateUI:
 
     def _render_history_entry(self, entry: dict) -> None:
         """Render a single history entry."""
-        with ui.card().classes("w-full p-3"):
-            with ui.row().classes("w-full justify-between items-center"):
-                with ui.column().classes("flex-1"):
-                    ui.label(f"{entry['module_id']}").classes("font-semibold")
-                    ui.label(f"版本: {entry['version']}").classes(
-                        "text-sm text-gray-600"
-                    )
-                    ui.label(f"时间: {entry['timestamp']}").classes(
-                        "text-sm text-gray-500"
-                    )
+        with (
+            ui.card().classes("w-full p-3"),
+            ui.row().classes("w-full justify-between items-center"),
+        ):
+            with ui.column().classes("flex-1"):
+                ui.label(f"{entry['module_id']}").classes("font-semibold")
+                ui.label(f"版本: {entry['version']}").classes("text-sm text-gray-600")
+                ui.label(f"时间: {entry['timestamp']}").classes("text-sm text-gray-500")
 
-                # Status
-                if entry["success"]:
-                    ui.label("成功").classes("text-green-600 text-sm")
-                else:
-                    ui.label("失败").classes("text-red-600 text-sm")
+            # Status
+            if entry["success"]:
+                ui.label("成功").classes("text-green-600 text-sm")
+            else:
+                ui.label("失败").classes("text-red-600 text-sm")
 
     async def _check_updates(self) -> None:
         """Check for updates."""

@@ -8,6 +8,7 @@ from urllib.request import Request, urlopen
 
 from nicegui import ui
 
+from ...ui.styles import DashboardStyles
 from ..extended import ExtendedModule
 
 
@@ -146,7 +147,7 @@ class SiteMonitorModule(ExtendedModule):
 
         with ui.column().classes("w-full gap-2"):
             if not data:
-                ui.label("No sites configured").classes("text-gray-500")
+                ui.label("No sites configured").classes(DashboardStyles.TEXT_MUTED)
                 return
 
             # Show monitoring summary
@@ -155,10 +156,10 @@ class SiteMonitorModule(ExtendedModule):
             )
             total_count = len(data)
 
-            with ui.row().classes("w-full justify-between items-center mb-2"):
-                ui.label("Site Monitor").classes("text-lg font-semibold")
+            with ui.row().classes(f"{DashboardStyles.FLEX_BETWEEN} mb-2"):
+                ui.label("Site Monitor").classes(DashboardStyles.TITLE_H3)
                 ui.label(f"{online_count}/{total_count} online").classes(
-                    f"text-sm {'text-green-600' if online_count == total_count else 'text-orange-600'}"
+                    f"{DashboardStyles.SUBTLE_TEXT} {'text-green-600' if online_count == total_count else 'text-orange-600'}"
                 )
 
             # Show sites status
@@ -193,10 +194,10 @@ class SiteMonitorModule(ExtendedModule):
                         # Status and response time
                         with ui.row().classes("gap-2 items-center"):
                             ui.icon(status_icons.get(status, "help")).classes(
-                                f"text-{status_colors.get(status, 'gray')} text-sm"
+                                f"text-{status_colors.get(status, 'gray')} {DashboardStyles.SUBTLE_TEXT}"
                             )
                             ui.label(status.upper()).classes(
-                                f"text-xs font-semibold {status_colors.get(status, 'text-gray-600')}"
+                                f"{DashboardStyles.SUBTLE_TEXT} font-semibold {status_colors.get(status, 'text-gray-600')}"
                             )
 
                             if extra["response_time"] > 0:
@@ -206,24 +207,32 @@ class SiteMonitorModule(ExtendedModule):
                                     else "text-orange-600"
                                 )
                                 ui.label(f"{extra['response_time']}ms").classes(
-                                    f"text-xs {time_color}"
+                                    f"{DashboardStyles.SUBTLE_TEXT} {time_color}"
                                 )
 
                             if extra.get("status_code"):
                                 ui.label(f"HTTP {extra['status_code']}").classes(
-                                    "text-xs text-gray-500"
+                                    DashboardStyles.SUBTLE_TEXT + " text-gray-500"
                                 )
 
                     # Error indicator
                     if extra.get("error") and status != "online":
-                        ui.icon("error").classes("text-red-500 text-sm")
+                        ui.icon("error").classes(
+                            DashboardStyles.ICON_ERROR
+                            + " "
+                            + DashboardStyles.SUBTLE_TEXT
+                        )
 
     def render_detail(self) -> None:
         """Render detailed monitoring view."""
         data = self.fetch()
 
-        with ui.column().classes("w-full gap-6 max-w-4xl mx-auto"):
-            ui.label("Site Monitor").classes("text-3xl font-bold text-center")
+        with ui.column().classes(
+            f"{DashboardStyles.FULL_WIDTH} {DashboardStyles.GAP_LG} {DashboardStyles.CONTAINER_CENTER}"
+        ):
+            ui.label("Site Monitor").classes(
+                DashboardStyles.TITLE_H1 + " " + DashboardStyles.TEXT_CENTER
+            )
 
             # Summary statistics
             online_count = sum(
@@ -236,32 +245,40 @@ class SiteMonitorModule(ExtendedModule):
             total_count = len(data)
 
             with ui.row().classes("w-full justify-center gap-4 mb-6"):
-                with ui.card().classes("p-4 text-center"):
+                with ui.card().classes(f"{DashboardStyles.PADDING_LG} text-center"):
                     ui.label(str(total_count)).classes(
-                        "text-2xl font-bold text-blue-600"
+                        DashboardStyles.TITLE_H2 + " font-bold text-blue-600"
                     )
-                    ui.label("Total Sites").classes("text-sm text-gray-600")
+                    ui.label("Total Sites").classes(
+                        DashboardStyles.SUBTLE_TEXT + " text-gray-600"
+                    )
 
                 with ui.card().classes("p-4 text-center"):
                     ui.label(str(online_count)).classes(
-                        "text-2xl font-bold text-green-600"
+                        DashboardStyles.TITLE_H2 + " font-bold text-green-600"
                     )
-                    ui.label("Online").classes("text-sm text-gray-600")
+                    ui.label("Online").classes(
+                        DashboardStyles.SUBTLE_TEXT + " text-gray-600"
+                    )
 
                 with ui.card().classes("p-4 text-center"):
                     ui.label(str(offline_count)).classes(
-                        "text-2xl font-bold text-red-600"
+                        DashboardStyles.TITLE_H2 + " font-bold text-red-600"
                     )
-                    ui.label("Offline").classes("text-sm text-gray-600")
+                    ui.label("Offline").classes(
+                        DashboardStyles.SUBTLE_TEXT + " text-gray-600"
+                    )
 
                 with ui.card().classes("p-4 text-center"):
                     ui.label(str(error_count)).classes(
-                        "text-2xl font-bold text-orange-600"
+                        DashboardStyles.TITLE_H2 + " font-bold text-orange-600"
                     )
-                    ui.label("Errors").classes("text-sm text-gray-600")
+                    ui.label("Errors").classes(
+                        DashboardStyles.SUBTLE_TEXT + " text-gray-600"
+                    )
 
             # Sites list
-            ui.label("Monitoring Results").classes("text-xl font-semibold")
+            ui.label("Monitoring Results").classes(DashboardStyles.TITLE_H2)
 
             with ui.column().classes("w-full gap-3"):
                 for item in data:
@@ -284,20 +301,20 @@ class SiteMonitorModule(ExtendedModule):
 
                     with (
                         ui.card().classes(
-                            f"w-full p-4 border-l-4 border-{status_colors.get(status, 'gray')}"
+                            f"{DashboardStyles.FULL_WIDTH} {DashboardStyles.PADDING_LG} {DashboardStyles.BORDER_LEFT} border-{status_colors.get(status, 'gray')}"
                         ),
                         ui.column().classes("w-full gap-3"),
                         ui.row().classes("w-full justify-between items-start"),
                         ui.column().classes("gap-1"),
                     ):
-                        ui.label(extra["url"]).classes("text-lg font-semibold")
+                        ui.label(extra["url"]).classes(DashboardStyles.TITLE_H2)
 
                         with ui.row().classes("gap-2 items-center"):
                             ui.icon(status_icons.get(status, "help")).classes(
                                 f"text-{status_colors.get(status, 'gray')}"
                             )
                             ui.label(status.upper()).classes(
-                                f"text-sm font-bold text-{status_colors.get(status, 'gray')}"
+                                f"{DashboardStyles.SUBTLE_TEXT} font-bold text-{status_colors.get(status, 'gray')}"
                             )
 
                             if extra["response_time"] > 0:
@@ -307,12 +324,12 @@ class SiteMonitorModule(ExtendedModule):
                                     else "orange"
                                 )
                                 ui.label(f"{extra['response_time']}ms").classes(
-                                    f"text-sm text-{time_color}"
+                                    f"{DashboardStyles.SUBTLE_TEXT} text-{time_color}"
                                 )
 
                             if extra.get("status_code"):
                                 ui.label(f"HTTP {extra['status_code']}").classes(
-                                    "text-sm text-gray-500"
+                                    DashboardStyles.SUBTLE_TEXT + " text-gray-500"
                                 )
 
                         # Action buttons
@@ -323,23 +340,25 @@ class SiteMonitorModule(ExtendedModule):
                                     url
                                 ),
                             ).classes(
-                                "text-xs bg-blue-500 text-white hover:bg-blue-600"
+                                f"{DashboardStyles.SUBTLE_TEXT} bg-blue-500 text-white hover:bg-blue-600"
                             ).props("target=_blank dense")
 
                             ui.button(
                                 "Refresh",
                                 on_click=lambda: None,  # TODO: Implement refresh
                             ).classes(
-                                "text-xs bg-gray-500 text-white hover:bg-gray-600"
+                                f"{DashboardStyles.SUBTLE_TEXT} bg-gray-500 text-white hover:bg-gray-600"
                             ).props("dense")
 
                         # Error details
                         if extra.get("error") and status != "online":
                             with ui.expansion("Error Details").classes("w-full"):
-                                ui.label(extra["error"]).classes("text-sm text-red-600")
+                                ui.label(extra["error"]).classes(
+                                    DashboardStyles.SUBTLE_TEXT + " text-red-600"
+                                )
 
                         # Timestamp
                         with ui.row().classes("w-full justify-end"):
                             ui.label(
                                 f"Checked: {datetime.fromisoformat(extra['timestamp']).strftime('%Y-%m-%d %H:%M:%S')}"
-                            ).classes("text-xs text-gray-500")
+                            ).classes(DashboardStyles.SUBTLE_TEXT + " text-gray-500")

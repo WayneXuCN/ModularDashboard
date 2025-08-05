@@ -40,11 +40,17 @@ def initialize_app(config: dict[str, Any]) -> None:
         <link href="/static/css/style.css" rel="stylesheet">
     """)
 
+    # Initialize theme based on config
+    if config.get("theme") == "dark":
+        ui.dark_mode().enable()
+    else:
+        ui.dark_mode().disable()
+
 
 def run_app(native: bool = False) -> None:
-    """Run the Research Dashboard application.
+    """Run the Modular Dashboard application.
 
-    This function initializes and starts the Research Dashboard application
+    This function initializes and starts the Modular Dashboard application
     with the specified configuration. It sets up the UI, loads configuration
     and starts the web server.
 
