@@ -26,6 +26,7 @@ class HeaderNavigation:
 
             # Controls container
             with ui.row().classes("gap-3"):
+                self._render_stats_button()
                 self._render_refresh_button()
                 self._render_theme_toggle()
 
@@ -34,6 +35,17 @@ class HeaderNavigation:
         ui.button(
             icon="refresh",
             on_click=lambda: ui.notify("Refreshing all modules...", type="positive"),
+        ).classes(
+            "bg-white/90 backdrop-blur-sm border border-slate-200/50 rounded-lg "
+            "text-slate-600 shadow-sm hover:bg-white hover:shadow-md "
+            "transition-all duration-300 hover:scale-105"
+        ).props("flat")
+
+    def _render_stats_button(self) -> None:
+        """Render the statistics page button."""
+        ui.button(
+            icon="analytics",
+            on_click=lambda: ui.navigate.to("/stats"),
         ).classes(
             "bg-white/90 backdrop-blur-sm border border-slate-200/50 rounded-lg "
             "text-slate-600 shadow-sm hover:bg-white hover:shadow-md "

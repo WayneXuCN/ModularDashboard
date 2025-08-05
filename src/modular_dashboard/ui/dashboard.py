@@ -4,6 +4,7 @@ from nicegui import ui
 
 from ..config.schema import AppConfig
 from ..modules.registry import MODULE_REGISTRY
+from ..utils.lazy_module import module_cache
 from .fab import FloatingActionButton
 from .header import HeaderNavigation
 from .layout import DashboardLayout
@@ -17,9 +18,11 @@ def render_module_detail(module_id: str, config: AppConfig):
         _render_module_not_found(module_id)
         return
 
-    # Get module configuration and create instance
+    # Get module configuration and create lazy instance
     module_config = next((m for m in config.modules if m.id == module_id), None)
-    module = module_class(module_config.config) if module_config else module_class()
+    lazy_module = module_cache.get_or_create(
+        module_id, module_class, module_config.config if module_config else {}
+    )
 
     # Main container with refined background
     with (
@@ -31,10 +34,10 @@ def render_module_detail(module_id: str, config: AppConfig):
         )
     ):
         # Header with back button and module title
-        _render_detail_header(module)
+        _render_detail_header(lazy_module)
 
         # Content area with glass morphism card
-        _render_detail_content(module)
+        _render_detail_content(lazy_module)
 
 
 def _render_module_not_found(module_id: str) -> None:
