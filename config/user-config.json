@@ -5,6 +5,7 @@
     "columns": 3,
     "width": "default",
     "show_nav": true,
+    "show_search": true,
     "column_config": [
       {
         "width": "normal",
@@ -215,6 +216,25 @@
         "cache_ttl": 7200,
         "max_facts": 5,
         "enable_ai": false
+      }
+    },
+    {
+      "id": "search",
+      "enabled": true,
+      "collapsed": false,
+      "config": {
+        "search_engine": "duckduckgo",
+        "new_tab": false,
+        "autofocus": false,
+        "target": "_blank",
+        "placeholder": "Type here to search…",
+        "bangs": [
+          {
+            "title": "YouTube",
+            "shortcut": "!yt",
+            "url": "https://www.youtube.com/results?search_query={QUERY}"
+          }
+        ]
       }
     }
   ]

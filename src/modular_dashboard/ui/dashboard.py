@@ -14,6 +14,7 @@ from ..utils.lazy_module import module_cache
 from .fab import FloatingActionButton
 from .header import HeaderNavigation
 from .layout import DashboardLayout
+from .search import UISearchModule
 from .styles import DashboardStyles
 
 
@@ -116,8 +117,8 @@ class DashboardRenderer:
         )
         with ui.column().classes(f"dashboard-container {DashboardStyles.MAIN_BG}"):
             self._render_header()
+            self._render_search()
             self._render_content()
-            ui.separator()
             self._render_fab()
 
     def _render_header(self) -> None:
@@ -132,6 +133,23 @@ class DashboardRenderer:
     def _render_fab(self) -> None:
         """Render floating action button."""
         FloatingActionButton().render()
+
+    def _render_search(self) -> None:
+        """Render search bar if enabled in config."""
+        if self.config.layout.show_search:
+            # Check if search module is configured as a standalone module
+            search_module_config = next(
+                (m for m in self.config.modules if m.id == "search"), None
+            )
+            if search_module_config and search_module_config.enabled:
+                # Render search module as a standalone module
+                module_class = MODULE_REGISTRY.get("search")
+                if module_class:
+                    search_module = module_class(search_module_config.config)
+                    search_module.render()
+            else:
+                # Render search module with default configuration
+                UISearchModule().render()
 
 
 def render_dashboard(config: AppConfig) -> None:

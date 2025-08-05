@@ -33,6 +33,7 @@ class LayoutConfig:
     columns: int = 1  # Number of columns (1-3)
     width: str = "default"  # "slim", "default", "wide"
     show_nav: bool = True  # Whether to show navigation bar
+    show_search: bool = True  # Whether to show search bar
     column_config: list[ColumnConfig] = None  # Configuration for each column
 
     def __post_init__(self):

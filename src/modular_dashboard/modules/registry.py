@@ -10,6 +10,7 @@ from .progress.module import ProgressModule
 from .random_fact.module import RandomFactModule
 from .releases.module import ReleasesModule
 from .rss.module import RssModule
+from .search.module import SearchModule
 from .site_monitor.module import SiteMonitorModule
 from .system_monitor.module import SystemMonitorModule
 from .todo.module import TodoModule
@@ -27,6 +28,7 @@ MODULE_REGISTRY = {
     "progress": ProgressModule,
     "releases": ReleasesModule,
     "rss": RssModule,
+    "search": SearchModule,
     "system_monitor": SystemMonitorModule,
     "todo": TodoModule,
     "weather": WeatherModule,
