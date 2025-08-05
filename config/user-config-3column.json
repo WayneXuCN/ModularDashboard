@@ -13,7 +13,8 @@
           "animals",
           "clock",
           "system_monitor",
-          "progress"
+          "progress",
+          "random_fact"
         ]
       },
       {
@@ -29,7 +30,8 @@
         "modules": [
           "rss",
           "releases",
-          "arxiv"
+          "arxiv",
+          "random_fact"
         ]
       }
     ]
@@ -198,6 +200,18 @@
           "compact_view": false,
           "theme": "auto"
         }
+      }
+    },
+    {
+      "id": "random_fact",
+      "enabled": true,
+      "collapsed": false,
+      "config": {
+        "api_key": "",
+        "model": "Qwen/Qwen3-8B",
+        "cache_ttl": 7200,
+        "max_facts": 5,
+        "enable_ai": false
       }
     }
   ]

@@ -7,6 +7,7 @@ from .clock.module import ClockModule
 from .github.module import GithubModule
 from .github_trending.module import GithubTrendingModule
 from .progress.module import ProgressModule
+from .random_fact.module import RandomFactModule
 from .releases.module import ReleasesModule
 from .rss.module import RssModule
 from .site_monitor.module import SiteMonitorModule
@@ -21,6 +22,7 @@ MODULE_REGISTRY = {
     "clock": ClockModule,
     "github": GithubModule,
     "github_trending": GithubTrendingModule,
+    "random_fact": RandomFactModule,
     "site_monitor": SiteMonitorModule,
     "progress": ProgressModule,
     "releases": ReleasesModule,

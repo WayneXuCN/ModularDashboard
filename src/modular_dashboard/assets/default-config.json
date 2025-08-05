@@ -10,7 +10,8 @@
         "width": "normal",
         "modules": [
           "animals",
-          "clock"
+          "clock",
+          "random_fact"
         ]
       },
       {
@@ -146,6 +147,18 @@
           "https://www.apple.com",
           "https://www.microsoft.com"
         ]
+      }
+    },
+    {
+      "id": "random_fact",
+      "enabled": true,
+      "collapsed": false,
+      "config": {
+        "api_key": "",
+        "model": "Qwen/Qwen3-8B",
+        "cache_ttl": 7200,
+        "max_facts": 5,
+        "enable_ai": false
       }
     }
   ]
