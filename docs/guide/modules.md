@@ -5,20 +5,24 @@ Modular Dashboard 提供了丰富的内置模块，每个模块都有特定的�
 ## 📦 内置模块概览
 
 ### 数据源模块
+
 - **ArXiv 模块** - 学术论文搜索和展示
 - **GitHub 模块** - GitHub 活动监控
 - **RSS 模块** - RSS 订阅阅读器
 
 ### 工具模块
+
 - **时钟模块** - 数字时钟和日期显示
 - **天气模块** - 天气信息展示
 - **待办事项模块** - 任务管理和待办列表
 
 ### 监控模块
+
 - **版本发布模块** - 软件版本发布监控
 - **网站监控模块** - 网站可用性监控
 
 ### 娱乐模块
+
 - **动物图片模块** - 随机动物图片展示
 
 ## 🔧 模块管理
@@ -32,12 +36,10 @@ Modular Dashboard 提供了丰富的内置模块，每个模块都有特定的�
   "modules": [
     {
       "id": "arxiv",
-      "enabled": true,    // 启用模块
       "config": { ... }
     },
     {
       "id": "weather",
-      "enabled": false,   // 禁用模块
       "config": { ... }
     }
   ]
@@ -51,7 +53,6 @@ Modular Dashboard 提供了丰富的内置模块，每个模块都有特定的�
 ```json
 {
   "id": "arxiv",
-  "enabled": true,
   "config": {
     "refresh_interval": 3600,
     "keywords": ["machine learning", "AI"],
@@ -89,10 +90,10 @@ Modular Dashboard 提供了丰富的内置模块，每个模块都有特定的�
 **功能**：搜索和展示 ArXiv 学术论文
 
 **配置选项**：
+
 ```json
 {
   "id": "arxiv",
-  "enabled": true,
   "config": {
     "refresh_interval": 3600,        // 刷新间隔（秒）
     "keywords": [                   // 搜索关键词
@@ -109,6 +110,7 @@ Modular Dashboard 提供了丰富的内置模块，每个模块都有特定的�
 ```
 
 **使用场景**：
+
 - 科研人员跟踪最新论文
 - 技术人员了解前沿技术
 - 学术研究动态监控
@@ -118,10 +120,10 @@ Modular Dashboard 提供了丰富的内置模块，每个模块都有特定的�
 **功能**：监控 GitHub 用户活动和仓库动态
 
 **配置选项**：
+
 ```json
 {
   "id": "github",
-  "enabled": true,
   "config": {
     "refresh_interval": 1800,        // 刷新间隔（秒）
     "username": "wayneXuCN",         // GitHub 用户名
@@ -141,6 +143,7 @@ Modular Dashboard 提供了丰富的内置模块，每个模块都有特定的�
 ```
 
 **使用场景**：
+
 - 开源项目维护者监控项目动态
 - 开发者跟踪关注的项目
 - 团队协作和代码审查
@@ -150,10 +153,10 @@ Modular Dashboard 提供了丰富的内置模块，每个模块都有特定的�
 **功能**：订阅和阅读 RSS 源
 
 **配置选项**：
+
 ```json
 {
   "id": "rss",
-  "enabled": true,
   "config": {
     "refresh_interval": 1800,        // 刷新间隔（秒）
     "feed_urls": [                   // RSS 源列表
@@ -172,6 +175,7 @@ Modular Dashboard 提供了丰富的内置模块，每个模块都有特定的�
 ```
 
 **使用场景**：
+
 - 博客和新闻订阅
 - 技术文章阅读
 - 信息聚合和跟踪
@@ -181,10 +185,10 @@ Modular Dashboard 提供了丰富的内置模块，每个模块都有特定的�
 **功能**：显示当前时间和日期
 
 **配置选项**：
+
 ```json
 {
   "id": "clock",
-  "enabled": true,
   "config": {
     "timezone": "local",            // 时区（local 或 UTC）
     "format_24h": true,              // 24 小时制
@@ -203,10 +207,10 @@ Modular Dashboard 提供了丰富的内置模块，每个模块都有特定的�
 **功能**：显示天气信息
 
 **配置选项**：
+
 ```json
 {
   "id": "weather",
-  "enabled": true,
   "config": {
     "city": "北京",                  // 城市名称
     "api_key": "",                   // 天气 API 密钥
@@ -228,10 +232,10 @@ Modular Dashboard 提供了丰富的内置模块，每个模块都有特定的�
 **功能**：任务管理和待办事项
 
 **配置选项**：
+
 ```json
 {
   "id": "todo",
-  "enabled": true,
   "config": {
     "max_items": 10,                 // 最大项目数
     "auto_save": true,               // 自动保存
@@ -245,6 +249,7 @@ Modular Dashboard 提供了丰富的内置模块，每个模块都有特定的�
 ```
 
 **使用场景**：
+
 - 个人任务管理
 - 工作待办事项
 - 项目任务跟踪
@@ -254,10 +259,10 @@ Modular Dashboard 提供了丰富的内置模块，每个模块都有特定的�
 **功能**：监控软件版本发布
 
 **配置选项**：
+
 ```json
 {
   "id": "releases",
-  "enabled": true,
   "config": {
     "refresh_interval": 1800,        // 刷新间隔（秒）
     "repositories": [               // 监控的仓库
@@ -275,6 +280,7 @@ Modular Dashboard 提供了丰富的内置模块，每个模块都有特定的�
 ```
 
 **仓库格式支持**：
+
 - GitHub: `owner/repo`
 - GitLab: `gitlab:owner/repo`
 - Codeberg: `codeberg:owner/repo`
@@ -285,10 +291,10 @@ Modular Dashboard 提供了丰富的内置模块，每个模块都有特定的�
 **功能**：监控网站可用性
 
 **配置选项**：
+
 ```json
 {
   "id": "monitor",
-  "enabled": true,
   "config": {
     "timeout": 15,                   // 超时时间（秒）
     "interval": 60,                  // 检查间隔（秒）
@@ -316,10 +322,10 @@ Modular Dashboard 提供了丰富的内置模块，每个模块都有特定的�
 **功能**：显示随机动物图片
 
 **配置选项**：
+
 ```json
 {
   "id": "animals",
-  "enabled": true,
   "config": {
     "animal_type": "cat",            // 动物类型
     "height": 200,                   // 图片高度
@@ -333,6 +339,7 @@ Modular Dashboard 提供了丰富的内置模块，每个模块都有特定的�
 ```
 
 **支持的动物类型**：
+
 - `cat` - 猫
 - `dog` - 狗
 - `fox` - 狐狸
@@ -344,6 +351,7 @@ Modular Dashboard 提供了丰富的内置模块，每个模块都有特定的�
 ### 性能优化
 
 #### 合理设置刷新间隔
+
 ```json
 {
   "config": {
@@ -353,6 +361,7 @@ Modular Dashboard 提供了丰富的内置模块，每个模块都有特定的�
 ```
 
 #### 限制显示数量
+
 ```json
 {
   "config": {
@@ -365,6 +374,7 @@ Modular Dashboard 提供了丰富的内置模块，每个模块都有特定的�
 ### 网络优化
 
 #### 使用缓存
+
 ```json
 {
   "config": {
@@ -375,6 +385,7 @@ Modular Dashboard 提供了丰富的内置模块，每个模块都有特定的�
 ```
 
 #### 失败处理
+
 ```json
 {
   "config": {
@@ -387,6 +398,7 @@ Modular Dashboard 提供了丰富的内置模块，每个模块都有特定的�
 ## 🎯 模块组合示例
 
 ### 开发者工作台
+
 ```json
 {
   "layout": {
@@ -403,17 +415,18 @@ Modular Dashboard 提供了丰富的内置模块，每个模块都有特定的�
     ]
   },
   "modules": [
-    {"id": "github", "enabled": true},
-    {"id": "arxiv", "enabled": true},
-    {"id": "releases", "enabled": true},
-    {"id": "clock", "enabled": true},
-    {"id": "todo", "enabled": true},
-    {"id": "weather", "enabled": true}
+    {"id": "github"},
+    {"id": "arxiv"},
+    {"id": "releases"},
+    {"id": "clock"},
+    {"id": "todo"},
+    {"id": "weather"}
   ]
 }
 ```
 
 ### 信息阅读中心
+
 ```json
 {
   "layout": {
@@ -426,9 +439,9 @@ Modular Dashboard 提供了丰富的内置模块，每个模块都有特定的�
     ]
   },
   "modules": [
-    {"id": "rss", "enabled": true},
-    {"id": "arxiv", "enabled": true},
-    {"id": "animals", "enabled": true}
+    {"id": "rss"},
+    {"id": "arxiv"},
+    {"id": "animals"}
   ]
 }
 ```
@@ -436,18 +449,21 @@ Modular Dashboard 提供了丰富的内置模块，每个模块都有特定的�
 ## 🆘 常见问题
 
 ### 模块不显示数据
-1. 检查模块是否启用（`enabled: true`）
+
+1. 确认模块在布局配置中被引用
 2. 确认网络连接正常
 3. 验证 API 密钥配置
 4. 查看应用日志排查错误
 
 ### 数据更新缓慢
+
 1. 调整 `refresh_interval` 设置
 2. 检查网络延迟
 3. 考虑启用缓存
 4. 减少显示的数据量
 
 ### 模块显示异常
+
 1. 检查配置格式是否正确
 2. 确认模块在布局配置中被引用
 3. 尝试重置为默认配置

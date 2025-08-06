@@ -48,7 +48,6 @@ Modular Dashboard 提供了丰富的内置模块，涵盖数据源、工具、�
   "modules": [
     {
       "id": "arxiv",
-      "enabled": true,
       "config": {
         "keywords": ["machine learning", "AI"],
         "refresh_interval": 3600
@@ -56,7 +55,6 @@ Modular Dashboard 提供了丰富的内置模块，涵盖数据源、工具、�
     },
     {
       "id": "github", 
-      "enabled": true,
       "config": {
         "username": "your_username",
         "repositories": ["your_repo"]
@@ -98,12 +96,12 @@ Modular Dashboard 提供了丰富的内置模块，涵盖数据源、工具、�
 ```json
 {
   "modules": [
-    {"id": "github", "enabled": true},
-    {"id": "arxiv", "enabled": true},
-    {"id": "releases", "enabled": true},
-    {"id": "clock", "enabled": true},
-    {"id": "todo", "enabled": true},
-    {"id": "weather", "enabled": false}
+    {"id": "github"},
+    {"id": "arxiv"},
+    {"id": "releases"},
+    {"id": "clock"},
+    {"id": "todo"},
+    {"id": "weather"}
   ]
 }
 ```
@@ -112,10 +110,10 @@ Modular Dashboard 提供了丰富的内置模块，涵盖数据源、工具、�
 ```json
 {
   "modules": [
-    {"id": "rss", "enabled": true},
-    {"id": "arxiv", "enabled": true},
-    {"id": "animals", "enabled": true},
-    {"id": "clock", "enabled": true}
+    {"id": "rss"},
+    {"id": "arxiv"},
+    {"id": "animals"},
+    {"id": "clock"}
   ]
 }
 ```
@@ -124,10 +122,10 @@ Modular Dashboard 提供了丰富的内置模块，涵盖数据源、工具、�
 ```json
 {
   "modules": [
-    {"id": "monitor", "enabled": true},
-    {"id": "releases", "enabled": true},
-    {"id": "weather", "enabled": true},
-    {"id": "clock", "enabled": true}
+    {"id": "monitor"},
+    {"id": "releases"},
+    {"id": "weather"},
+    {"id": "clock"}
   ]
 }
 ```
@@ -211,7 +209,7 @@ class CustomModule(Module):
 ### 模块配置问题
 1. **查看文档** - 详细阅读各模块的配置说明
 2. **检查格式** - 确认 JSON 配置格式正确
-3. **验证启用** - 检查模块是否已启用
+3. **验证启用** - 检查模块是否在 `column_config` 中被引用
 4. **查看日志** - 检查应用日志中的错误信息
 
 ### 性能问题

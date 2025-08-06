@@ -8,7 +8,6 @@ from .memory_config import MemoryConfig
 @dataclass
 class ModuleConfig:
     id: str
-    enabled: bool = True
     position: int = 0
     collapsed: bool = False
     config: dict = None

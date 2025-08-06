@@ -4,7 +4,10 @@
   "auto_update": false,
   "policy": {
     "auto_update": false,
-    "update_types": ["patch", "security"],
+    "update_types": [
+      "patch",
+      "security"
+    ],
     "check_interval": 3600,
     "backup_before_update": true,
     "prerelease_updates": false

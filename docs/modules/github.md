@@ -19,7 +19,6 @@ GitHub 模模块支持以下配置选项：
 ```json
 {
   "id": "github",
-  "enabled": true,
   "collapsed": false,
   "config": {
     "refresh_interval": 3600,

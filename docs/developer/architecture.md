@@ -241,7 +241,6 @@ MODULE_REGISTRY = {
   "modules": [
     {
       "id": "arxiv",
-      "enabled": true,
       "config": {...}
     }
   ]

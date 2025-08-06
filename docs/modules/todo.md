@@ -29,7 +29,6 @@
 ```json
 {
   "id": "todo",
-  "enabled": true,
   "config": {
     "max_items": 20,
     "auto_save": true,

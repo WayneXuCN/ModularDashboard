@@ -4,7 +4,7 @@ import json
 import os
 from pathlib import Path
 
-from .schema import AppConfig, LayoutConfig, ModuleConfig
+from .schema import AppConfig, ColumnConfig, LayoutConfig, ModuleConfig
 
 
 def get_config_dir():
@@ -88,6 +88,13 @@ def load_config() -> AppConfig:
 
     # Convert to AppConfig object
     layout_data = config_data.get("layout", {})
+
+    # Properly convert column_config to ColumnConfig objects
+    column_config_data = layout_data.get("column_config", [])
+    column_configs = [ColumnConfig(**column) for column in column_config_data]
+
+    # Update layout_data with converted column_configs
+    layout_data["column_config"] = column_configs
     layout = LayoutConfig(**layout_data)
     modules = [ModuleConfig(**module) for module in config_data.get("modules", [])]
 
@@ -130,10 +137,16 @@ def save_config(config: AppConfig) -> None:
     The configuration is saved in JSON format with indentation for readability.
     Existing configuration files will be overwritten.
     """
+    # Convert ColumnConfig objects back to dictionaries
+    layout_dict = config.layout.__dict__.copy()
+    layout_dict["column_config"] = [
+        column.__dict__ for column in config.layout.column_config
+    ]
+
     config_data = {
         "version": config.version,
         "theme": config.theme,
-        "layout": config.layout.__dict__,
+        "layout": layout_dict,
         "modules": [module.__dict__ for module in config.modules],
     }
 

@@ -99,10 +99,9 @@ class DashboardLayout:
                 (m for m in self.config.modules if m.id == module_id), None
             )
 
-            # Skip if module is not found or not enabled
+            # Skip if module is not found or not in MODULE_REGISTRY
             if (
                 not module_config
-                or not module_config.enabled
                 or module_id not in MODULE_REGISTRY
             ):
                 continue

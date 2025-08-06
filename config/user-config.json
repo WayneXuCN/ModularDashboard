@@ -40,8 +40,6 @@
   "modules": [
     {
       "id": "arxiv",
-      "enabled": true,
-      "collapsed": false,
       "config": {
         "refresh_interval": 3600,
         "keywords": [
@@ -53,8 +51,6 @@
     },
     {
       "id": "github",
-      "enabled": true,
-      "collapsed": false,
       "config": {
         "refresh_interval": 3600,
         "username": "wayneXuCN",
@@ -66,8 +62,6 @@
     },
     {
       "id": "rss",
-      "enabled": true,
-      "collapsed": false,
       "config": {
         "refresh_interval": 3600,
         "feed_urls": [
@@ -84,8 +78,6 @@
     },
     {
       "id": "clock",
-      "enabled": true,
-      "collapsed": false,
       "config": {
         "timezone": "local",
         "format_24h": false,
@@ -96,8 +88,6 @@
     },
     {
       "id": "weather",
-      "enabled": true,
-      "collapsed": false,
       "config": {
         "city": "Beijing",
         "api_key": ""
@@ -105,8 +95,6 @@
     },
     {
       "id": "todo",
-      "enabled": true,
-      "collapsed": false,
       "config": {
         "max_items": 10,
         "auto_save": true
@@ -114,8 +102,6 @@
     },
     {
       "id": "releases",
-      "enabled": true,
-      "collapsed": false,
       "config": {
         "refresh_interval": 3600,
         "repositories": [
@@ -129,8 +115,6 @@
     },
     {
       "id": "animals",
-      "enabled": true,
-      "collapsed": false,
       "config": {
         "animal_type": "cat",
         "height": 200,
@@ -142,8 +126,6 @@
     },
     {
       "id": "site_monitor",
-      "enabled": true,
-      "collapsed": false,
       "config": {
         "timeout": 12,
         "sites": [
@@ -157,8 +139,6 @@
     },
     {
       "id": "github_trending",
-      "enabled": true,
-      "collapsed": false,
       "config": {
         "period": "weekly",
         "language": "",
@@ -168,8 +148,6 @@
     },
     {
       "id": "progress",
-      "enabled": true,
-      "collapsed": false,
       "config": {
         "default_period": "day",
         "auto_update": true,
@@ -178,8 +156,6 @@
     },
     {
       "id": "system_monitor",
-      "enabled": true,
-      "collapsed": false,
       "config": {
         "refresh_interval": 2,
         "enable_cpu": true,
@@ -208,8 +184,6 @@
     },
     {
       "id": "random_fact",
-      "enabled": true,
-      "collapsed": false,
       "config": {
         "api_key": "",
         "model": "Qwen/Qwen3-8B",
@@ -220,8 +194,6 @@
     },
     {
       "id": "search",
-      "enabled": true,
-      "collapsed": false,
       "config": {
         "search_engine": "duckduckgo",
         "new_tab": false,

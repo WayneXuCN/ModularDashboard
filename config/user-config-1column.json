@@ -3,25 +3,26 @@
   "theme": "light",
   "layout": {
     "columns": 1,
-    "width": "default",
+    "width": "slim",
     "show_nav": true,
+    "show_search": true,
     "column_config": [
       {
         "width": "normal",
         "modules": [
-          "github_trending",
-          "arxiv",
-          "github",
-          "rss",
+          "random_fact",
+          "site_monitor",
           "clock",
+          "system_monitor",
+          "progress",
+          "github_trending",
+          "github",
           "weather",
+          "rss",
           "todo",
           "releases",
-          "site_monitor",
-          "system_monitor",
           "animals",
-          "progress",
-          "random_fact"
+          "arxiv"
         ]
       }
     ]
@@ -29,8 +30,6 @@
   "modules": [
     {
       "id": "arxiv",
-      "enabled": true,
-      "collapsed": false,
       "config": {
         "refresh_interval": 3600,
         "keywords": [
@@ -42,8 +41,6 @@
     },
     {
       "id": "github",
-      "enabled": true,
-      "collapsed": false,
       "config": {
         "refresh_interval": 3600,
         "username": "wayneXuCN",
@@ -55,8 +52,6 @@
     },
     {
       "id": "rss",
-      "enabled": true,
-      "collapsed": false,
       "config": {
         "refresh_interval": 3600,
         "feed_urls": [
@@ -73,11 +68,9 @@
     },
     {
       "id": "clock",
-      "enabled": true,
-      "collapsed": false,
       "config": {
-        "timezone": "utc",
-        "format_24h": true,
+        "timezone": "local",
+        "format_24h": false,
         "show_seconds": true,
         "update_interval": 1,
         "date_format": "%A, %B %d, %Y"
@@ -85,53 +78,33 @@
     },
     {
       "id": "weather",
-      "enabled": true,
-      "collapsed": false,
       "config": {
-        "city": "Tokyo",
+        "city": "Beijing",
         "api_key": ""
       }
     },
     {
       "id": "todo",
-      "enabled": true,
-      "collapsed": false,
       "config": {
-        "max_items": 15,
+        "max_items": 10,
         "auto_save": true
       }
     },
     {
       "id": "releases",
-      "enabled": true,
-      "collapsed": false,
       "config": {
-        "refresh_interval": 7200,
+        "refresh_interval": 3600,
         "repositories": [
-          "google/tensorflow",
-          "gitlab:gitlab-org/jupyter",
-          "docker:library/redis"
+          "microsoft/vscode",
+          "gitlab:gitlab-org/gitlab",
+          "codeberg:forgejo/forgejo",
+          "docker:library/nginx"
         ],
-        "max_releases": 2
-      }
-    },
-    {
-      "id": "site_monitor",
-      "enabled": true,
-      "collapsed": false,
-      "config": {
-        "timeout": 8,
-        "sites": [
-          "https://www.google.com",
-          "https://www.github.com",
-          "https://www.baidu.com"
-        ]
+        "max_releases": 5
       }
     },
     {
       "id": "animals",
-      "enabled": true,
-      "collapsed": false,
       "config": {
         "animal_type": "cat",
         "height": 200,
@@ -142,9 +115,20 @@
       }
     },
     {
+      "id": "site_monitor",
+      "config": {
+        "timeout": 12,
+        "sites": [
+          "https://www.google.com",
+          "https://www.github.com",
+          "https://api.github.com",
+          "https://www.wikipedia.org",
+          "https://www.stackoverflow.com"
+        ]
+      }
+    },
+    {
       "id": "github_trending",
-      "enabled": true,
-      "collapsed": false,
       "config": {
         "period": "weekly",
         "language": "",
@@ -154,8 +138,6 @@
     },
     {
       "id": "progress",
-      "enabled": true,
-      "collapsed": false,
       "config": {
         "default_period": "day",
         "auto_update": true,
@@ -164,8 +146,6 @@
     },
     {
       "id": "system_monitor",
-      "enabled": true,
-      "collapsed": false,
       "config": {
         "refresh_interval": 2,
         "enable_cpu": true,
@@ -174,7 +154,9 @@
         "enable_network": true,
         "enable_temperature": true,
         "enable_gpu": true,
-        "disk_paths": ["/"],
+        "disk_paths": [
+          "/"
+        ],
         "network_interfaces": [],
         "alerts": {
           "cpu_percent": 80,
@@ -192,14 +174,29 @@
     },
     {
       "id": "random_fact",
-      "enabled": true,
-      "collapsed": false,
       "config": {
         "api_key": "",
         "model": "Qwen/Qwen3-8B",
         "cache_ttl": 7200,
         "max_facts": 5,
         "enable_ai": false
+      }
+    },
+    {
+      "id": "search",
+      "config": {
+        "search_engine": "duckduckgo",
+        "new_tab": false,
+        "autofocus": false,
+        "target": "_blank",
+        "placeholder": "Type here to search…",
+        "bangs": [
+          {
+            "title": "YouTube",
+            "shortcut": "!yt",
+            "url": "https://www.youtube.com/results?search_query={QUERY}"
+          }
+        ]
       }
     }
   ]

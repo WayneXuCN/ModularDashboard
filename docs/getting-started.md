@@ -140,7 +140,6 @@ uv run -m modular_dashboard.app
   "modules": [
     {
       "id": "arxiv",
-      "enabled": true,
       "config": {
         "keywords": ["machine learning", "AI"]
       }
@@ -157,7 +156,6 @@ uv run -m modular_dashboard.app
 ```json
 {
   "id": "arxiv",
-  "enabled": true,
   "config": {
     "keywords": ["您的兴趣关键词"],
     "refresh_interval": 3600
@@ -169,7 +167,6 @@ uv run -m modular_dashboard.app
 ```json
 {
   "id": "github",
-  "enabled": true,
   "config": {
     "username": "您的GitHub用户名",
     "repositories": ["您关注的项目"]
@@ -181,7 +178,6 @@ uv run -m modular_dashboard.app
 ```json
 {
   "id": "rss",
-  "enabled": true,
   "config": {
     "feed_urls": ["https://example.com/feed.xml"],
     "show_limit": 5
@@ -215,7 +211,6 @@ uv run -m modular_dashboard.app
 ```json
 {
   "id": "clock",
-  "enabled": true,
   "config": {
     "timezone": "local",
     "format_24h": true,
@@ -228,7 +223,6 @@ uv run -m modular_dashboard.app
 ```json
 {
   "id": "weather",
-  "enabled": true,
   "config": {
     "city": "北京",
     "api_key": "您的天气API密钥"
@@ -240,7 +234,6 @@ uv run -m modular_dashboard.app
 ```json
 {
   "id": "todo",
-  "enabled": true,
   "config": {
     "max_items": 10,
     "auto_save": true

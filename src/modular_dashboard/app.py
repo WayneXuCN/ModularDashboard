@@ -87,8 +87,16 @@ def run_app(native: bool = False) -> None:
 
             tracemalloc.start()
 
-            # Force initialization of all modules to collect stats
+            # Get all module IDs that are enabled in column_config
+            enabled_module_ids = set()
+            for column_config in config.layout.column_config:
+                enabled_module_ids.update(column_config.modules)
+
+            # Force initialization of only enabled modules to collect stats
+            # Only initialize modules that are both in column_config and have configuration in modules section
             for module_config in config.modules:
+                if module_config.id not in enabled_module_ids:
+                    continue
                 module_class = MODULE_REGISTRY.get(module_config.id)
                 if module_class:
                     try:

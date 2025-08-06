@@ -49,7 +49,6 @@ Modular Dashboard 通过位于系统配置目录中的 JSON 配置文件进行�
   "modules": [
     {
       "id": "arxiv",
-      "enabled": true,
       "collapsed": false,
       "config": {
         "refresh_interval": 3600,
@@ -196,54 +195,51 @@ Modular Dashboard 通过位于系统配置目录中的 JSON 配置文件进行�
 #### ArXiv 模块
 ```json
 {
-  "id": "arxiv",
-  "enabled": true,
-  "config": {
-    "refresh_interval": 3600,        // 刷新间隔（秒）
-    "keywords": [                   // 搜索关键词
-      "machine learning",
-      "artificial intelligence", 
-      "quantum computing"
-    ]
-  }
-}
+      "id": "arxiv",
+      "config": {
+        "refresh_interval": 3600,        // 刷新间隔（秒）
+        "keywords": [                   // 搜索关键词
+          "machine learning",
+          "artificial intelligence", 
+          "quantum computing"
+        ]
+      }
+    }
 ```
 
 #### GitHub 模块
 ```json
 {
-  "id": "github",
-  "enabled": true,
-  "config": {
-    "refresh_interval": 3600,        // 刷新间隔（秒）
-    "username": "wayneXuCN",         // GitHub用户名
-    "repositories": [               // 监控的仓库
-      "ModularDashboard",
-      "nicegui"
-    ]
-  }
-}
+      "id": "github",
+      "config": {
+        "refresh_interval": 3600,        // 刷新间隔（秒）
+        "username": "wayneXuCN",         // GitHub用户名
+        "repositories": [               // 监控的仓库
+          "ModularDashboard",
+          "nicegui"
+        ]
+      }
+    }
 ```
 
 #### RSS 模块
 ```json
 {
-  "id": "rss",
-  "enabled": true,
-  "config": {
-    "refresh_interval": 3600,        // 刷新间隔（秒）
-    "feed_urls": [                   // RSS源URL数组
-      "https://sspai.com/feed",
-      "https://waynexucn.github.io/feed.xml"
-    ],
-    "fetch_limit": 10,               // 每个源获取条数
-    "show_limit": 5,                 // 主视图显示条数
-    "show_author": true,             // 显示作者
-    "show_description": true,        // 显示描述
-    "show_date": true,               // 显示日期
-    "show_image": true               // 显示图片
-  }
-}
+      "id": "rss",
+      "config": {
+        "refresh_interval": 3600,        // 刷新间隔（秒）
+        "feed_urls": [                   // RSS源URL数组
+          "https://sspai.com/feed",
+          "https://waynexucn.github.io/feed.xml"
+        ],
+        "fetch_limit": 10,               // 每个源获取条数
+        "show_limit": 5,                 // 主视图显示条数
+        "show_author": true,             // 显示作者
+        "show_description": true,        // 显示描述
+        "show_date": true,               // 显示日期
+        "show_image": true               // 显示图片
+      }
+    }
 ```
 
 ### 工具模块配置
@@ -251,40 +247,37 @@ Modular Dashboard 通过位于系统配置目录中的 JSON 配置文件进行�
 #### 时钟模块
 ```json
 {
-  "id": "clock",
-  "enabled": true,
-  "config": {
-    "timezone": "local",            // 时区
-    "format_24h": true,              // 24小时制
-    "show_seconds": false,           // 显示秒
-    "update_interval": 1,            // 更新间隔（秒）
-    "date_format": "%Y-%m-%d"        // 日期格式
-  }
-}
+      "id": "clock",
+      "config": {
+        "timezone": "local",            // 时区
+        "format_24h": true,              // 24小时制
+        "show_seconds": false,           // 显示秒
+        "update_interval": 1,            // 更新间隔（秒）
+        "date_format": "%Y-%m-%d"        // 日期格式
+      }
+    }
 ```
 
 #### 天气模块
 ```json
 {
-  "id": "weather",
-  "enabled": true,
-  "config": {
-    "city": "北京",                  // 城市名称
-    "api_key": ""                    // 天气API密钥
-  }
-}
+      "id": "weather",
+      "config": {
+        "city": "北京",                  // 城市名称
+        "api_key": ""                    // 天气API密钥
+      }
+    }
 ```
 
 #### 待办事项模块
 ```json
 {
-  "id": "todo",
-  "enabled": true,
-  "config": {
-    "max_items": 10,                 // 最大项目数
-    "auto_save": true                // 自动保存
-  }
-}
+      "id": "todo",
+      "config": {
+        "max_items": 10,                 // 最大项目数
+        "auto_save": true                // 自动保存
+      }
+    }
 ```
 
 ### 监控模块配置
@@ -292,36 +285,34 @@ Modular Dashboard 通过位于系统配置目录中的 JSON 配置文件进行�
 #### 版本发布模块
 ```json
 {
-  "id": "releases",
-  "enabled": true,
-  "config": {
-    "refresh_interval": 1800,        // 刷新间隔（秒）
-    "repositories": [               // 监控的仓库
-      "torvalds/linux",
-      "gitlab:gitlab-org/gitlab-runner",
-      "codeberg:forgejo/forgejo",
-      "docker:library/postgres"
-    ],
-    "max_releases": 3                // 显示版本数
-  }
-}
+      "id": "releases",
+      "config": {
+        "refresh_interval": 1800,        // 刷新间隔（秒）
+        "repositories": [               // 监控的仓库
+          "torvalds/linux",
+          "gitlab:gitlab-org/gitlab-runner",
+          "codeberg:forgejo/forgejo",
+          "docker:library/postgres"
+        ],
+        "max_releases": 3                // 显示版本数
+      }
+    }
 ```
 
 #### 网站监控模块
 ```json
 {
-  "id": "monitor",
-  "enabled": true,
-  "config": {
-    "timeout": 15,                   // 超时时间（秒）
-    "sites": [                       // 监控的网站
-      "https://www.google.com",
-      "https://www.github.com",
-      "https://www.apple.com",
-      "https://www.microsoft.com"
-    ]
-  }
-}
+      "id": "monitor",
+      "config": {
+        "timeout": 15,                   // 超时时间（秒）
+        "sites": [                       // 监控的网站
+          "https://www.google.com",
+          "https://www.github.com",
+          "https://www.apple.com",
+          "https://www.microsoft.com"
+        ]
+      }
+    }
 ```
 
 ### 娱乐模块配置
@@ -329,17 +320,16 @@ Modular Dashboard 通过位于系统配置目录中的 JSON 配置文件进行�
 #### 动物图片模块
 ```json
 {
-  "id": "animals",
-  "enabled": true,
-  "config": {
-    "animal_type": "cat",            // 动物类型
-    "height": 200,                   // 图片高度
-    "auto_refresh": false,           // 自动刷新
-    "refresh_interval": 30,          // 刷新间隔（秒）
-    "show_title": true,              // 显示标题
-    "border_radius": 8               // 圆角大小
-  }
-}
+      "id": "animals",
+      "config": {
+        "animal_type": "cat",            // 动物类型
+        "height": 200,                   // 图片高度
+        "auto_refresh": false,           // 自动刷新
+        "refresh_interval": 30,          // 刷新间隔（秒）
+        "show_title": true,              // 显示标题
+        "border_radius": 8               // 圆角大小
+      }
+    }
 ```
 
 ## 配置管理最佳实践

@@ -24,7 +24,6 @@ RSS 模块支持以下配置选项：
 ```json
 {
   "id": "rss",
-  "enabled": true,
   "collapsed": false,
   "config": {
     "refresh_interval": 3600,

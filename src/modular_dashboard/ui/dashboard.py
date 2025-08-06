@@ -35,16 +35,26 @@ class ModuleDetailRenderer:
 
     def _get_module_instance(self, module_id: str) -> Any | None:
         """Get module instance with lazy loading."""
+        # Check if module is enabled in column_config
+        enabled_module_ids = set()
+        for column_config in self.config.layout.column_config:
+            enabled_module_ids.update(column_config.modules)
+
+        if module_id not in enabled_module_ids:
+            return None
+
         module_class = MODULE_REGISTRY.get(module_id)
         if not module_class:
             return None
 
+        # Check if module has configuration in modules section
         module_config = next(
             (m for m in self.config.modules if m.id == module_id), None
         )
-        return module_cache.get_or_create(
-            module_id, module_class, module_config.config if module_config else {}
-        )
+        if not module_config:
+            return None
+
+        return module_cache.get_or_create(module_id, module_class, module_config.config)
 
     def _render_layout(self, module) -> None:
         """Render main detail layout."""
@@ -135,13 +145,20 @@ class DashboardRenderer:
         FloatingActionButton().render()
 
     def _render_search(self) -> None:
-        """Render search bar if enabled in config."""
+        """Render search bar if configured in column_config."""
         if self.config.layout.show_search:
             # Check if search module is configured as a standalone module
             search_module_config = next(
                 (m for m in self.config.modules if m.id == "search"), None
             )
-            if search_module_config and search_module_config.enabled:
+
+            # Check if search module is in any column configuration
+            search_in_columns = any(
+                "search" in column.modules
+                for column in self.config.layout.column_config
+            )
+
+            if search_module_config and search_in_columns:
                 # Render search module as a standalone module
                 module_class = MODULE_REGISTRY.get("search")
                 if module_class:
